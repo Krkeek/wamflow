@@ -1,0 +1,32 @@
+.Container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3%;
+}
+.BrandName {
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+.BrandNameSpan {
+    color: var(--secondary-color)
+}
+
+.BrandDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.Button {
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    border: none;
+    padding: 0.7rem 1.3rem;
+    cursor: pointer;
+
+}
