@@ -1,0 +1,11 @@
+.Feature {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5%;
+}
+
+.Feature p {
+    font-weight: bolder;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+}
