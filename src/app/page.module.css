@@ -57,3 +57,9 @@
   width: 60%;
   font-size: 1.1rem;
 }
+
+.BgImage {
+  height: 100%;
+  background: url('/assets/hero.webp') no-repeat 85%;
+  background-size: contain;
+}
