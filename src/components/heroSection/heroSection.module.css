@@ -1,0 +1,44 @@
+.Container{
+    height: 100vh;
+    width: 100vw;
+}
+
+
+.TopBarContainer{
+    height: 10%;
+    width: 100%;
+}
+
+.ContentContainer {
+    height: 90%;
+    width: 100%;
+    display: flex;
+}
+.LeftDiv {
+    width: 60%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+
+.RightDiv {
+    width: 40%;
+}
+
+.Title {
+    font-size: 3rem;
+    font-weight: bolder;
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.TitleSpan {
+    color: var(--secondary-color);
+}
+.Description {
+    margin-left: 10%;
+    margin-top: 5%;
+    width: 60%;
+    font-size: 1.1rem;
+}
+
