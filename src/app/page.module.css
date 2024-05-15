@@ -3,7 +3,7 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px),
   linear-gradient(90deg, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
   background-size: 100px 100px;
-  animation: moveGrid 12s linear infinite;
+  animation: moveGrid 5s linear infinite;
 }
 
 @keyframes moveGrid {
@@ -19,4 +19,8 @@
   background: no-repeat;
   background-size: 80%;
   background-position: 40% 0;
+  opacity: 0;
+
 }
+
+

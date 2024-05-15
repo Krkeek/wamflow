@@ -10,10 +10,10 @@ const HeroSection = () =>{
                     </div>
                     <div className={`${styles.ContentContainer}`}>
                         <div className={`${styles.LeftDiv}`}>
-                            <div className={`${styles.Title}`}>
+                            <div className={`${styles.Title} headerAnimation`}>
                                 Revolutionize the way you design and implement <span className={`${styles.TitleSpan}`}>web-based applications</span>
                             </div>
-                            <div className={`${styles.Description}`}>
+                            <div className={`${styles.Description} descriptionAnimation`}>
                                 Graphical notation that provides a UML-like notation that is specifically tailored to
                                 the
                                 needs of inter-organizational web-based applications. Empower your team, visualize,

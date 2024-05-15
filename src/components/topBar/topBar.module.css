@@ -12,6 +12,9 @@
     color: var(--secondary-color)
 }
 
+.Logo {
+}
+
 .BrandDiv {
     display: flex;
     justify-content: center;
