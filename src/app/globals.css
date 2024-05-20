@@ -4,7 +4,9 @@
     --text-color-two: #808080;
     --default-text-color: black;
     --default-textButton-color: white;
-    --default-lineColor: #6C757D
+    --default-lineColor: #6C757D;
+    --input-color: #D9D9D9;
+    --placeHolder-color: rgba(0, 0, 0, 0.5)
 }
 
 html,body{

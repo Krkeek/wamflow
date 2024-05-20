@@ -1,0 +1,151 @@
+.Container {
+    height: 50%;
+    width: 90%;
+    background-color: var(--secondary-color-two);
+    border-radius: 20px;
+    padding: 1% 5%;
+    box-sizing: border-box;
+}
+.Top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 20%;
+    margin-bottom: 5%;
+}
+
+.TopButtons {
+    border: none;
+    border-radius: 5px;
+    transition: background-color 500ms ease;
+    cursor: pointer;
+
+}
+.RightSide {
+    display: flex;
+}
+
+.LeftSide {
+    font-size: 1.1rem;
+}
+
+.Input {
+    background-color: var(--input-color);
+    border: none;
+    border-radius: 10px;
+    width: 80%;
+    height: 12%;
+    padding-left: 5%;
+    font-size: 1.1rem;
+    outline: none;
+    margin-bottom: 5%;
+}
+
+.Input::placeholder {
+    font-size: 1.1rem;
+    color: var(--placeHolder-color);
+
+}
+
+.UriDiv {
+    width: 100%;
+    height: 12%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.UriDiv input {
+    height: 100%;
+    margin: 0;
+}
+
+.EyeButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.DimensionsDiv {
+    width: 100%;
+    height: 12%;
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+}
+.DimensionsDiv p {
+    color: var(--placeHolder-color);
+    width: 10%;
+}
+
+.InputView {
+    border-radius: 10px;
+    width: 60%;
+    height: 100%;
+    margin-right: 3%;
+    background-color: var(--input-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5%;
+    box-sizing: border-box;
+}
+
+.WidthInput {
+    padding: 0;
+    height: 100%;
+    width: 40%;
+    border: none;
+    margin: 0 10%;
+    background-color: var(--input-color);
+    outline: none;
+    font-size: 1.1rem;
+
+}
+
+.PositionDiv {
+    margin-top: 5%;
+    display: flex;
+}
+
+.PositionDiv button {
+    margin: 0 2%;
+}
+
+.PositionButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+}
+
+.Indicator {
+    width: 6px;
+    height: 6px;
+    background: transparent;
+    border-radius: 100%;
+    border: 1px solid transparent;
+    margin-top: 5px;
+}
+
+.IndicatorActive {
+    background: var(--secondary-color);
+    border: 1px solid black;
+    transition: background-color 500ms ease, border-color 500ms ease;
+
+}
+
+
+.EmptyContainer{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--placeHolder-color);
+    font-size: 0.8rem;
+}
