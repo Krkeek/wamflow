@@ -1,0 +1,24 @@
+.Container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5%;
+    padding-top: 10%;
+
+}
+
+.SVG {
+    cursor: move;
+}
+.Id {
+    color: var(--default-text-color);
+    font-size: 0.9rem;
+    margin: 9% 9% 5%;
+
+}
+.Line {
+    width: 35%;
+    height: 1px;
+    background-color: var(--default-lineColor);
+}

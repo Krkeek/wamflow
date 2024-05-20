@@ -1,11 +1,17 @@
 :root{
-    --secondary-color: rgba(2, 62, 138, 0.9)
+    --secondary-color: #023E8A;
+    --secondary-color-two: #E9ECEF;
+    --text-color-two: #808080;
+    --default-text-color: black;
+    --default-textButton-color: white;
+    --default-lineColor: #6C757D
 }
 
 html,body{
     padding: 0;
     margin: 0;
     overflow-x: hidden;
+    color: var(--default-text-color);
 }
 
 ::-webkit-scrollbar{

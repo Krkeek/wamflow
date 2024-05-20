@@ -23,8 +23,9 @@
 
 
 .Button {
+    text-decoration: none;
     font-size: 1rem;
-    color: white;
+    color: var(--default-textButton-color);
     font-weight: 500;
     background-color: var(--secondary-color);
     border-radius: 12px;

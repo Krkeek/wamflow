@@ -1,5 +1,6 @@
 import styles from './topBar.module.css'
 import Image from "next/image";
+import Link from "next/link";
 
 const TopBar = () =>{
 
@@ -11,7 +12,7 @@ const TopBar = () =>{
                     <Image className={`logoAnimation ${styles.Logo}`} src={'/assets/logo.webp'} alt={'logo'} width={40} height={40} />
                     <p className={`brandNameAnimation ${styles.BrandName}`}>Wam<span className={`${styles.BrandNameSpan}`}>flow</span></p>
                 </div>
-                <button className={`${styles.Button}`}>Get Started</button>
+                <Link href={'/homePage'} className={`${styles.Button}`}>Get Started</Link>
 
             </div>
         </>

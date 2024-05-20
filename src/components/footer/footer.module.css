@@ -8,13 +8,13 @@
 }
 
 .CopyRight {
-    color: white;
+    color: var(--default-textButton-color);
     font-size: 0.8rem;
     font-weight: normal;
 }
 
 .FooterLink {
-    color: white;
+    color: var(--default-textButton-color);
     font-size: 0.8rem;
     font-weight: normal;
     text-decoration: none;
