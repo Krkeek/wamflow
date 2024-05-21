@@ -14,8 +14,6 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: 
         height: '200vh',
         gridSize: 1,
         cellViewNamespace: shapes,
-   /*     drawGrid: {name: "mesh", args: {color: 'rgba(0, 0, 0, 0.4)'}},
-        drawGridSize: 100,*/
         background: {color: '#E9ECEF'},
          defaultLink: () => {
             if (linkSelected === 'invocation')

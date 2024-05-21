@@ -1,18 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface LinkSelectedState {
-    value: string
+    value: any
 }
 
+// Define the initial state using that type
 const initialState: LinkSelectedState = {
-    value: 'invocation'
+    value: null
 }
 
 export const linkSelectedSlice = createSlice({
     name: 'linkSelected',
     initialState,
     reducers: {
-        setLinkSelected: (state, action: PayloadAction<string>) => {
+        setLinkSelected: (state, action: PayloadAction<any>) => {
             state.value = action.payload
         }
     }

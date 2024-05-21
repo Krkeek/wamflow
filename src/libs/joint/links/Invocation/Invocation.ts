@@ -3,6 +3,7 @@
              export const Invocation = dia.Link.define('Invocation', {
                  customData: {
                      action: 'invokes',
+                     label: 'Invocation-Label',
                  },
                  attrs: {
                      line: {

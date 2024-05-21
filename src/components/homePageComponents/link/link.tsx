@@ -2,7 +2,7 @@ import styles from './link.module.css'
 import {LinkInterface} from "../../../../declarations";
 import Image from "next/image";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
-import {setLinkSelected} from "@/libs/redux/features/linkSelectedSlice";
+import {setLinkName} from "@/libs/redux/features/linkNameSlice";
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
 
 type propsType = {
@@ -13,11 +13,11 @@ type propsType = {
 const Link = (props: propsType) =>{
     const link = props.link;
     const dispatch = useAppDispatch()
-    const linkSelected = useAppSelector(state => state.linkSelected.value)
+    const linkSelected = useAppSelector(state => state.linkName.value)
 
     const handleSelectLink = () =>{
         dispatch(setToggleContainer(false))
-        dispatch(setLinkSelected(link.id))
+        dispatch(setLinkName(link.id))
     }
 
     return(

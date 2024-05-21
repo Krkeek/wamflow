@@ -38,7 +38,9 @@ const HomePage = () =>{
     const connectionMode = useAppSelector(state => state.connectionMode.value)
     const projectName = useAppSelector(state => state.projectInfo.name)
     const elementSelected = useAppSelector(state => state.elementSelected.value)
+    const linkName = useAppSelector(state => state.linkName.value)
     const linkSelected = useAppSelector(state => state.linkSelected.value)
+
     const toggleContainer = useAppSelector(state => state.toggleContainer.value)
     const paperRef = useRef<HTMLDivElement>(null);
     const [paper, setPaper] = useState<Paper | null >(null)
@@ -53,9 +55,9 @@ const HomePage = () =>{
 
     useEffect(() => {
         if (paperRef.current){
-            setPaper(viewJoint(paperRef.current, graph, linkSelected, isMobileView ))
+            setPaper(viewJoint(paperRef.current, graph, linkName, isMobileView ))
         }
-    },[linkSelected]);
+    },[linkName]);
 
     useEffect(() => {
         graph.set('projectTitle', projectName);
@@ -71,6 +73,7 @@ const HomePage = () =>{
 
         if (paper){
             paperEventListener({
+                linkSelected,
                 elementSelected,
                 dispatch,
                 paper,
