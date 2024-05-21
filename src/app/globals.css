@@ -6,7 +6,8 @@
     --default-textButton-color: white;
     --default-lineColor: #6C757D;
     --input-color: #D9D9D9;
-    --placeHolder-color: rgba(0, 0, 0, 0.5)
+    --placeHolder-color: rgba(0, 0, 0, 0.5);
+    --grid-color: rgba(0, 0, 0, 0.3);
 }
 
 html,body{

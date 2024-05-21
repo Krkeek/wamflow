@@ -7,6 +7,7 @@ import ShapeDetailContainer from "@/components/homePageComponents/shapeDetailCon
 import {gsap} from "gsap";
 import {useGSAP} from "@gsap/react";
 import {HomePageAnimation} from "@/animation/HomePageAnimation";
+import PaperView from "@/components/homePageComponents/paperView/paperView";
 const HomePage = () =>{
 
     useGSAP(()=>{
@@ -31,7 +32,7 @@ const HomePage = () =>{
                         <ShapesContainer />
                     </div>
                     <div className={`${styles.Middle}`}>
-
+                        <PaperView />
                     </div>
                     <div className={`${styles.RightSide}`}>
                         <ShapeDetailContainer />
