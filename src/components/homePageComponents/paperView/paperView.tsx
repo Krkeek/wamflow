@@ -1,14 +1,15 @@
 'use client'
 import styles from './paperView.module.css'
 import {useEffect, useRef} from "react";
-import {joint} from "@/libs/joint/joint";
+import {startJoint} from "@/libs/joint/joint";
 
 const PaperView = () =>{
 
-    const paperRef = useRef(null);
+    const paperRef = useRef<HTMLDivElement>(null);
 
     useEffect(()=>{
-        joint(paperRef.current)
+        if (paperRef.current)
+            startJoint(paperRef.current)
     })
 
     return(

@@ -16,18 +16,17 @@ export default function Home() {
         return ()=> ctx.revert()
     })
 
-
-
     return (
     <>
         <ReactLenis root>
-            <div className={`${styles.GridContainer}`}>
-                <div className={`${styles.BgImage} bgAnimation`} style={{backgroundImage: 'url(\'/assets/diagram.png\')'}}>
-                    <HeroSection/>
-                    <FeatureSection/>
+                <div className={`${styles.GridContainer}`}>
+                    <div className={`${styles.BgImage} bgAnimation`}
+                         style={{backgroundImage: 'url(\'/assets/diagram.png\')'}}>
+                        <HeroSection/>
+                        <FeatureSection/>
+                    </div>
                 </div>
-            </div>
         </ReactLenis>
     </>
-  );
+    );
 }
