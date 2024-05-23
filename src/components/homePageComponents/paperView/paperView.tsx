@@ -1,22 +1,23 @@
 'use client'
 import styles from './paperView.module.css'
-import {useEffect, useRef} from "react";
-import {startJoint} from "@/libs/joint/joint";
+import {useContext, useEffect, useRef} from "react";
+import {viewJoint} from "@/libs/joint/viewJoint";
+import {GraphContext} from "@/libs/joint/GraphContext";
 
 const PaperView = () =>{
 
     const paperRef = useRef<HTMLDivElement>(null);
+    const graph = useContext(GraphContext);
+
 
     useEffect(()=>{
         if (paperRef.current)
-            startJoint(paperRef.current)
+            viewJoint(paperRef.current, graph)
     })
 
     return(
         <>
-            <div ref={paperRef} className={`${styles.Container}`}>
-
-            </div>
+            <div ref={paperRef} className={`${styles.Container}`}></div>
         </>
     );
 }
