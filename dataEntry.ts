@@ -9,10 +9,8 @@ export const ShapesData: ShapeInterface[] = [
         name: "Security Realm",
         SVGUrl: "/assets/shapes/securityRealm.svg",
         code: `
-<svg width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="2.00506" y="1.87939" width="86.6955" height="86.6955" rx="13.4528" fill="white" stroke="black" stroke-width="2.9895"/>
 <path d="M63.2898 1.50571L89.0742 25.048" stroke="black" stroke-width="2.9895"/>
-</svg>
 
         `
     },

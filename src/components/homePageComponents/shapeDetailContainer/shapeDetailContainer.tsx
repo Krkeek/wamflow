@@ -3,8 +3,12 @@ import styles from './shapeDetailContainer.module.css'
 import Image from "next/image";
 import {useState} from "react";
 import {retry} from "next/dist/compiled/@next/font/dist/google/retry";
+import {ElementProps} from "../../../../declarations";
 
-const ShapeDetailContainer = () =>{
+type propsType = {
+    elementSelected : ElementProps
+}
+const ShapeDetailContainer = (props: propsType) =>{
     const [shapeSelected, setShapeSelected] = useState(true);
     const [showUri, setShowUri] = useState(false);
     const [inFront, setInFront] = useState(true);
@@ -28,9 +32,9 @@ const ShapeDetailContainer = () =>{
 
                             </div>
                         </div>
-                        <input className={`${styles.Input}`} placeholder={'Name'}/>
+                        <input className={`${styles.Input}`} placeholder={'Name'} />
                         <div className={`${styles.UriDiv}`}>
-                            <input className={`${styles.Input}`} placeholder={'Uri'}/>
+                            <input className={`${styles.Input}`} placeholder={'Uri'} />
                             <button className={`${styles.EyeButton}`}><Image onClick={() => setShowUri(!showUri)}
                                                                              src={!showUri ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
                                                                              alt={'trash'}
@@ -39,9 +43,9 @@ const ShapeDetailContainer = () =>{
                         <div className={`${styles.DimensionsDiv}`}>
                             <div className={`${styles.InputView}`}>
                                 <p>W</p>
-                                <input type={'text'} className={`${styles.WidthInput}`}/>
+                                <input type={'text'} className={`${styles.WidthInput}`} />
                                 <p>H</p>
-                                <input type={'text'} className={`${styles.WidthInput}`}/>
+                                <input type={'text'} className={`${styles.WidthInput}`} />
                             </div>
                             <p>pixels</p>
                         </div>

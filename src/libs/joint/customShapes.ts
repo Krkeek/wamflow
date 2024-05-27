@@ -1,123 +1,121 @@
-import {dia, util} from "@joint/core";
-import {getShapeById} from "@/libs/getShapeById";
-
-
-export const defineCustomShapes = (elementId: string) =>{
-
-    return dia.Element.define(elementId,{
-        size: {width: 100, height: 100},
-        attrs: {
-            body: {
-                width: 'calc(w)',
-                height: 'calc(h)'
-            }
-        },
-        markup: util.svg `
-        ${getShapeById(elementId)?.code}
-        `
-    })
-
-}
-
+// import {dia, shapes, util} from "@joint/core";
+// import { getShapeById } from "../getShapeById";
 //
-// 'use client'
-// import {dia, shapes, util} from '@joint/core';
-// import {getShapeById} from "@/libs/getShapeById";
 //
-//  const SECURITY_REALM = 'securityRealm';
-//  const APPLICATION = 'application';
-//  const SERVICE = 'service';
-//  const IDENTITY_PROVIDER = 'identityProvider';
-//  const PROCESS_UNIT = 'processUnit';
-//  const DATABASE_PROVIDER = 'databaseProvider';
+// export const defineCustomShapes = (elementId: string) =>{
 //
-// export const SecurityRealm = dia.Element.define(SECURITY_REALM,{
-//             size: {width: 100, height: 100},
-//             attrs: {
-//                 body: {
-//                     width: 'calc(w)',
-//                     height: 'calc(h)'
-//                 }
+//     // @ts-ignore
+//     // const element =  dia.Element.define(elementId,{
+//     //     size: {
+//     //         width: 200,
+//     //         height: 200
+//     //     },
+//     //     attrs: {
+//     //         name: "test",
+//     //         type: "typeTest",
+//     //         uri: "www.test.com",
+//     //     },
+//     //
+//     //     markup: util.svg `
+//     //     ${getShapeById(elementId)?.code}
+//     //     `
+//     //
+//     // })
+//
+//
+//     const element = dia.Element.define(elementId, {
+//         attrs: {
+//             magnet: true,
+//             body: {
+//                 width: 'calc(w)',
+//                 height: 'calc(h)',
+//                 strokeWidth: 2,
+//                 stroke: '#000000',
+//                 fill: '#FFFFFF',
+//                 rx: '10',
+//                 ry: '10'
 //             },
-//             markup: util.svg `
-//             ${getShapeById(SECURITY_REALM)?.code}
-//             `
-// })
+//             label: {
+//                 textVerticalAnchor: 'middle',
+//                 textAnchor: 'middle',
+//                 x: 'calc(0.5*w)',
+//                 y: 'calc(0.5*h)',
+//                 fontSize: 14,
+//                 fill: '#333333'
+//             },
+//
+//         },
+//         ports:{
+//             groups: {
+//                 'in': {
+//                     position: 'left',
+//                     attrs: {
+//                         circle: {
+//                             r: 6,
+//                             magnet: true,
+//                             stroke: '#31d0c6',
+//                             strokeWidth: 2,
+//                             fill: 'red'
+//                         }
+//                     },
+//                     label: {
+//                         position: 'left',
+//                         attrs: {
+//                             text: {
+//                                 fill: '#6a6c8a'
+//                             }
+//                         }
+//                     }
+//                 },
+//                 'out': {
+//                     position: 'right',
+//                     attrs: {
+//                         circle: {
+//                             r: 6,
+//                             magnet: true,
+//                             stroke: '#31d0c6',
+//                             strokeWidth: 2,
+//                             fill: 'blue'
+//                         }
+//                     },
+//                     label: {
+//                         position: 'right',
+//                         attrs: {
+//                             text: {
+//                                 fill: '#6a6c8a'
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
 //
 //
-// export const Application = dia.Element.define(APPLICATION,{
-//     size: {width: 100, height: 100},
-//     attrs: {
-//         body: {
-//             width: 'calc(w)',
-//             height: 'calc(h)'
+//
+//
 //         }
-//     },
-//     markup: util.svg `
-//             ${getShapeById(APPLICATION)?.code}
-//             `
-// })
 //
-// export const Service = dia.Element.define(SERVICE,{
-//     size: {width: 100, height: 100},
-//     attrs: {
-//         body: {
-//             width: 'calc(w)',
-//             height: 'calc(h)'
-//         }
-//     },
-//     markup: util.svg `
-//             ${getShapeById(SERVICE)?.code}
-//             `
-// })
 //
-// export const IdentityProvider = dia.Element.define(IDENTITY_PROVIDER,{
-//     size: {width: 100, height: 100},
-//     attrs: {
-//         body: {
-//             width: 'calc(w)',
-//             height: 'calc(h)'
-//         }
 //     },
-//     markup: util.svg `
-//             ${getShapeById(IDENTITY_PROVIDER)?.code}
-//             `
-// })
+//         {
+//         markup: [{
+//             tagName: 'rect',
+//             selector: 'body',
+//         }, {
+//             tagName: 'text',
+//             selector: 'label'
+//         }]
+//     }
 //
-// export const ProcessUnit = dia.Element.define(PROCESS_UNIT,{
-//     size: {width: 100, height: 100},
-//     attrs: {
-//         body: {
-//             width: 'calc(w)',
-//             height: 'calc(h)'
-//         }
-//     },
-//     markup: util.svg `
-//             ${getShapeById(PROCESS_UNIT)?.code}
-//             `
-// })
 //
-// export const DatabaseProvider = dia.Element.define(DATABASE_PROVIDER,{
-//     size: {width: 100, height: 100},
-//     attrs: {
-//         body: {
-//             width: 'calc(w)',
-//             height: 'calc(h)'
-//         }
-//     },
-//     markup: util.svg `
-//             ${getShapeById(DATABASE_PROVIDER)?.code}
-//             `
-// })
+//     );
 //
-// Object.assign(shapes, {
+//
+//     Object.assign(shapes, {
 //     myNamespace: {
-//         SecurityRealm,
-//         Application,
-//         Service,
-//         IdentityProvider,
-//         ProcessUnit,
-//         DatabaseProvider
+//         element
 //     }
 // });
+//     return element
+//
+// }
 //

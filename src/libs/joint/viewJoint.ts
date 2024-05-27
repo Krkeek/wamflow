@@ -2,7 +2,9 @@
 import {dia, shapes} from '@joint/core'
 
 export const viewJoint = (divElement: HTMLDivElement, graph: any) =>{
-    const paper = new dia.Paper({
+
+
+    return  new dia.Paper({
         el: divElement,
         model: graph,
         width: 1000,
@@ -11,8 +13,11 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any) =>{
         cellViewNamespace: shapes,
          drawGrid: {name: "mesh", args: {color: 'rgba(0, 0, 0, 0.4)'}},
          drawGridSize: 100,
+        defaultLink: () => new shapes.standard.Link(),
+        linkPinning: false,
 
     })
 }
+
 
 
