@@ -8,6 +8,7 @@ export interface ShapeInterface {
 
 
 export type ElementProps = {
+    id: string
     name: string,
     uri: string,
     width: number,

@@ -14,13 +14,8 @@ const HomePage = () =>{
 
 
 
-    const [elementSelected, setElementSelected] = useState<ElementProps>({
-        name: " ",
-        uri: " ",
-        width: 25,
-        height: 25
-    })
-    const setElementSelectedFn = (newElement: ElementProps) => setElementSelected(newElement);
+    const [elementSelected, setElementSelected] = useState<string | null>(null)
+    const setElementSelectedFn = (newElement: string) => setElementSelected(newElement);
     const [connectionMode, setConnectionMode] = useState(false);
     const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
 
@@ -54,7 +49,7 @@ const HomePage = () =>{
                         <PaperView elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
-                        <ShapeDetailContainer elementSelected={elementSelected} />
+                        <ShapeDetailContainer elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />
                     </div>
                 </div>
             </div>

@@ -7,8 +7,8 @@ import {ElementProps} from "../../../../declarations";
 import {createLinkElement} from "@/libs/joint/createLinkElement";
 
 type propsType = {
-    elementSelected: ElementProps,
-    setElementSelected: (el: ElementProps) => void
+    elementSelected: string | null,
+    setElementSelected: (el: any) => void
 }
 
 const PaperView = (props: propsType) =>{
@@ -21,13 +21,12 @@ const PaperView = (props: propsType) =>{
         if (paperRef.current){
             const paper = viewJoint(paperRef.current, graph);
             paper.on('element:pointerclick',(cellView)=>{
-                console.log(cellView);
-                props.setElementSelected({
-                    name: " "+ cellView.model.attributes.attrs?.name,
-                    uri: " " + cellView.model.attributes.attrs?.uri,
-                    width: 25,
-                    height: 25
-                })
+                props.setElementSelected(cellView.model.id)
+
+            })
+
+            paper.on('blank:pointerclick',()=>{
+                props.setElementSelected(null)
 
             })
         }
