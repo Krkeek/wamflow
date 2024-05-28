@@ -1,6 +1,7 @@
 'use client'
 import {createContext} from "react";
 import {dia, shapes, util} from "@joint/core";
+import attr = gsap.plugins.attr;
 
 
 
@@ -24,6 +25,7 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
             strokeWidth: 2.2,
             stroke: 'black',
             fill: 'white',
+            cursor: 'move'
         },
         label: {
             textVerticalAnchor: 'middle',
@@ -79,7 +81,8 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
             }
         }
 
-    }
+    },
+
 },
     {
         markup: [ {
@@ -88,8 +91,10 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
         }, {
             tagName: 'text',
             selector: 'label'
-        }]
-    }
+        }],
+
+    },
+
 )
 
 export const Application = dia.Element.define("Application", {
@@ -102,6 +107,8 @@ export const Application = dia.Element.define("Application", {
                 strokeWidth: 2.2,
                 stroke: 'black',
                 fill: 'white',
+                cursor: 'move'
+
             },
             label: {
                 textVerticalAnchor: 'middle',
@@ -183,6 +190,8 @@ export const Service = dia.Element.define("Service", {
                 strokeWidth: 2.2,
                 stroke: 'black',
                 fill: 'white',
+                cursor: 'move'
+
             },
             label: {
                 textVerticalAnchor: 'middle',
@@ -261,6 +270,8 @@ export const IdentityProvider = dia.Element.define("IdentityProvider", {
                 strokeWidth: 2.2,
                 stroke: 'black',
                 fill: 'white',
+                cursor: 'move'
+
             },
             label: {
                 textVerticalAnchor: 'middle',
@@ -403,7 +414,7 @@ export const DatabaseProvider = shapes.standard.Cylinder.extend({
                 strokeWidth: 2.2
             }
         },
-        ports: {
+        ports   : {
             groups: {
                 'in': {
                     position: 'left',

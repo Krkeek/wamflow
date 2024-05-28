@@ -21,11 +21,26 @@ const PaperView = (props: propsType) =>{
         if (paperRef.current){
             const paper = viewJoint(paperRef.current, graph);
             paper.on('element:pointerclick',(cellView)=>{
-                props.setElementSelected(cellView.model.id)
+                if (props.elementSelected !== null){
+                    const prevElement = graph.getCell(props.elementSelected);
+                    if (prevElement){
+                        prevElement.attr('path/stroke','black');
+                        prevElement.attr('body/stroke','black');
+                    }
+                }
+                props.setElementSelected(cellView.model.id);
+                cellView.model.attr('path/stroke','#023E8A');
+                cellView.model.attr('body/stroke','#023E8A');
+
 
             })
 
             paper.on('blank:pointerclick',()=>{
+                const prevElement = graph.getCell(props.elementSelected);
+                if (prevElement){
+                    prevElement.attr('path/stroke','black');
+                    prevElement.attr('body/stroke','black');
+                }
                 props.setElementSelected(null)
 
             })

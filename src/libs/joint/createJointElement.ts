@@ -8,7 +8,6 @@ import {
 } from "@/libs/joint/GraphContext";
 
 export const createJointElement = (elementId: string, graph: any) =>{
-    console.log(elementId)
 
     let element;
     switch (elementId){
@@ -32,13 +31,13 @@ export const createJointElement = (elementId: string, graph: any) =>{
             break;
     }
 
-        element?.addPorts(
-            [
-                { id: 'port1', group: 'in' },
-                { id: 'port2', group: 'out' },
-
-            ]
-        )
+        // element?.addPorts(
+        //     [
+        //         { id: 'port1', group: 'in' },
+        //         { id: 'port2', group: 'out' },
+        //
+        //     ]
+        // )
     if (element){
         element.position(100,30);
         element.resize(100,100);

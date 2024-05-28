@@ -29,19 +29,40 @@ const ShapeDetailContainer = (props: propsType) =>{
     })
 
 
-
-
-
     const handleSaveData = () =>{
 
+        if (formData.width === 0 && formData.height === 0){
 
-        elementCellView.resize(formData.width,formData.height);
+        }
+        else if (formData.height === 0 && formData.width !== 0 ){
+            elementCellView.resize(formData.width, elementCellView.size().height);
+
+        }
+        else if (formData.height !== 0 && formData.width === 0){
+            elementCellView.resize( elementCellView.size().width, formData.height);
+        }
+        else {
+            elementCellView.resize(formData.width,formData.height);
+        }
+
         props.setElementSelected(null)
+        setFormData({
+            name: "",
+            uri: "",
+            height: 0,
+            width: 0
+        })
 
     }
 
     const handleDeleteElement = () =>{
         elementCellView.remove();
+        setFormData({
+            name: "",
+            uri: "",
+            height: 0,
+            width: 0
+        })
         props.setElementSelected(null)
     }
 
@@ -65,7 +86,7 @@ const ShapeDetailContainer = (props: propsType) =>{
 
                             </div>
                         </div>
-                        <input className={`${styles.Input}`} placeholder={elementCellView.attributes.attrs.name}
+                        <input className={`${styles.Input}`} placeholder={`Name: ${elementCellView.attributes.attrs.name}`}
                                // onChange={e => {
                                //     setFormData(prevState => ({...prevState,
                                //         name: e.target.value
@@ -73,7 +94,7 @@ const ShapeDetailContainer = (props: propsType) =>{
                                // }}
                         />
                         <div className={`${styles.UriDiv}`}>
-                            <input className={`${styles.Input}`} placeholder={elementCellView.attributes.attrs.uri}
+                            <input className={`${styles.Input}`} placeholder={`Uri: ${elementCellView.attributes.attrs.name}`}
                                    // onChange={e => {
                                    //     setFormData(prevState => ({...prevState,
                                    //         uri: e.target.value
