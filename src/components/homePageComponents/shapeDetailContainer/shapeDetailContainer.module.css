@@ -162,6 +162,33 @@
     height: 12%;
     font-size: 1.1rem;
 
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1300px){
+    /*Tablet*/
+
+    .LeftSide {
+        font-size: 1rem;
+    }
+    .Input {
+        font-size: 1rem;
+    }
+
+    .Input::placeholder {
+        font-size: 0.9rem;
+        color: var(--placeHolder-color);
+    }
+    .DimensionsDiv {
+        font-size: 0.9rem;
+    }
+    .WidthInput {
+        font-size: 0.9rem;
+    }
+
+    .ScaleDiv {
+        font-size: 0.9rem;
+    }
 
 
 }

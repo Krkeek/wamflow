@@ -62,3 +62,15 @@
     background-color: var(--secondary-color);
     color: var(--default-textButton-color);
 }
+
+@media screen and (min-width: 768px) and (max-width: 1300px){
+    /*Tablet*/
+ .ExportButton {
+     font-size: 0.9rem;
+
+ }
+
+    .ModeButtons {
+        font-size: 0.8rem;
+    }
+}

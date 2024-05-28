@@ -33,3 +33,12 @@
 .Import:hover {
     border-radius: 5px;
 }
+
+
+@media screen and (min-width: 768px) and (max-width: 1300px){
+    /*Tablet*/
+    .Title {
+        font-size: 1rem;
+    }
+
+}
