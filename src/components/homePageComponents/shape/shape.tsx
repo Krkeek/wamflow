@@ -14,7 +14,7 @@ const Shape = (props: propsType) =>{
         <>
             <div className={`${styles.Container}`}>
                 <Image onClick={() => props.handleCreateElement(props.shape.id)} className={`${styles.SVG}`} src={props.shape.SVGUrl} alt={'shape'} width={70} height={70}/>
-                <p className={`${styles.Id}`}>{props.shape.id}</p>
+                <p className={`${styles.Id}`}>{props.shape.name}</p>
                 <div className={`${styles.Line}`}></div>
             </div>
 

@@ -3,8 +3,6 @@ import styles from './paperView.module.css'
 import {useContext, useEffect, useRef} from "react";
 import {viewJoint} from "@/libs/joint/viewJoint";
 import {GraphContext} from "@/libs/joint/GraphContext";
-import {ElementProps} from "../../../../declarations";
-import {createLinkElement} from "@/libs/joint/createLinkElement";
 
 type propsType = {
     elementSelected: string | null,
@@ -43,7 +41,10 @@ const PaperView = (props: propsType) =>{
                 }
                 props.setElementSelected(null)
 
+
             })
+
+
         }
     })
 

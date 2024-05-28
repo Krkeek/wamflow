@@ -40,7 +40,6 @@ export const createJointElement = (elementId: string, graph: any) =>{
         // )
     if (element){
         element.position(100,30);
-        element.resize(100,100);
         element.addTo(graph)
     }
 
