@@ -24,11 +24,15 @@ const PaperView = (props: propsType) =>{
                     if (prevElement){
                         prevElement.attr('path/stroke','black');
                         prevElement.attr('body/stroke','black');
+                        prevElement.attr('top/stroke','black');
+
                     }
                 }
                 props.setElementSelected(cellView.model.id);
                 cellView.model.attr('path/stroke','#023E8A');
                 cellView.model.attr('body/stroke','#023E8A');
+                cellView.model.attr('top/stroke','#023E8A');
+
 
 
             })
