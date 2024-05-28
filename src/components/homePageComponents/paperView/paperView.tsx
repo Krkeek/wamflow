@@ -42,6 +42,8 @@ const PaperView = (props: propsType) =>{
                 if (prevElement){
                     prevElement.attr('path/stroke','black');
                     prevElement.attr('body/stroke','black');
+                    prevElement.attr('top/stroke','black');
+
                 }
                 props.setElementSelected(null)
 

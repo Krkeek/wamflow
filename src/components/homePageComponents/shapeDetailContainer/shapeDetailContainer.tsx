@@ -8,6 +8,7 @@ import {elementTools} from "@joint/core";
 import {name} from "next/dist/telemetry/ci-info";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {initialize} from "next/client";
+import {scaleDimensions} from "@/libs/scaleDimensions";
 
 type propsType = {
     elementSelected : string | null,
@@ -25,11 +26,13 @@ const ShapeDetailContainer = (props: propsType) =>{
         name: "",
         uri: "",
         height: 0,
-        width: 0
+        width: 0,
+        scale: 1,
     })
 
     const handleSaveData = () =>{
 
+        //Edit the name and uri
         if (formData.name !== ""){
             elementCellView.attributes.attrs.name = formData.name
         }
@@ -37,31 +40,43 @@ const ShapeDetailContainer = (props: propsType) =>{
             elementCellView.attributes.attrs.uri = formData.uri
         }
 
+        //resize
         if (formData.width === 0 && formData.height === 0){
+            let newDimensions = scaleDimensions(elementCellView.size().width, elementCellView.size().height, formData.scale );
+                elementCellView.resize(newDimensions.width, newDimensions.height);
 
         }
-        else if (formData.height === 0 && formData.width !== 0 ){
-            elementCellView.resize(formData.width, elementCellView.size().height);
+        else if (formData.height === 0 && formData.width !== 0 ) {
+            let newDimensions = scaleDimensions(formData.width, elementCellView.size().height, formData.scale);
+            elementCellView.resize(newDimensions.width, newDimensions.height);
+
 
         }
         else if (formData.height !== 0 && formData.width === 0){
-            elementCellView.resize( elementCellView.size().width, formData.height);
+            let newDimensions = scaleDimensions( elementCellView.size().width, formData.height , formData.scale );
+                elementCellView.resize(newDimensions.width, newDimensions.height);
+
         }
         else {
-            elementCellView.resize(formData.width,formData.height);
+            let newDimensions = scaleDimensions(formData.width, formData.height, formData.scale);
+            elementCellView.resize(newDimensions.width, newDimensions.height);
         }
+
 
         const prevElement = graph.getCell(props.elementSelected);
         if (prevElement){
             prevElement.attr('path/stroke','black');
             prevElement.attr('body/stroke','black');
+            prevElement.attr('top/stroke','black');
+
         }
         props.setElementSelected(null)
         setFormData({
             name: "",
             uri: "",
             height: 0,
-            width: 0
+            width: 0,
+            scale: 1
         })
 
     }
@@ -72,7 +87,8 @@ const ShapeDetailContainer = (props: propsType) =>{
             name: "",
             uri: "",
             height: 0,
-            width: 0
+            width: 0,
+            scale: 1
         })
         props.setElementSelected(null)
     }
@@ -97,6 +113,7 @@ const ShapeDetailContainer = (props: propsType) =>{
 
                             </div>
                         </div>
+                        <div className={`${styles.UriDiv}`}>
                         <input className={`${styles.Input}`} placeholder={`Name: ${elementCellView.attributes.attrs.name}`}
                                onChange={e => {
                                    setFormData(prevState => ({...prevState,
@@ -104,6 +121,7 @@ const ShapeDetailContainer = (props: propsType) =>{
                                    }))
                                }}
                         />
+                        </div>
                         <div className={`${styles.UriDiv}`}>
                             <input className={`${styles.Input}`} placeholder={`Uri: ${elementCellView.attributes.attrs.uri}`}
                                    onChange={e => {
@@ -143,6 +161,21 @@ const ShapeDetailContainer = (props: propsType) =>{
                             </div>
                             <p>pixels</p>
                         </div>
+                        <div className={`${styles.ScaleDiv}`}>
+                            <div className={`${styles.InputView}`}>
+                                <p>Scale</p>
+                                <input type={'text'} className={`${styles.WidthInput}`}
+                                       placeholder={'x1'}
+                                       onChange={e => {
+                                           const value = parseFloat(e.target.value);
+                                           setFormData(prevState => ({...prevState,
+                                               scale: value
+                                           }))
+                                       }}
+
+                                />
+                            </div>
+                        </div>
                         <div className={`${styles.PositionDiv}`}>
                             <button className={`${styles.PositionButton}`}><Image
                                 onClick={() => setInFront(true)}
@@ -163,10 +196,10 @@ const ShapeDetailContainer = (props: propsType) =>{
                         </div>
 
                     </div>
-                ):
+                ) :
                     (
                         <div className={`${styles.Container} ${styles.EmptyContainer}`}>
-                            No component selected
+                        No component selected
                         </div>
                     )
             }

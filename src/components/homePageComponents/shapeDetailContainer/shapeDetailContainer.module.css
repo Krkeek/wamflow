@@ -1,5 +1,5 @@
 .Container {
-    height: 50%;
+    height: 65%;
     width: 90%;
     background-color: var(--secondary-color-two);
     border-radius: 20px;
@@ -54,6 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 5%;
 
 }
 .UriDiv input {
@@ -91,6 +92,10 @@
     align-items: center;
     padding: 0 5%;
     box-sizing: border-box;
+}
+.InputView p {
+    color: var(--placeHolder-color);
+
 }
 
 .WidthInput {
@@ -149,4 +154,14 @@
     align-items: center;
     color: var(--placeHolder-color);
     font-size: 0.8rem;
+}
+
+.ScaleDiv {
+    width: 70%;
+    margin-top: 5%;
+    height: 12%;
+    font-size: 1.1rem;
+
+
+
 }
