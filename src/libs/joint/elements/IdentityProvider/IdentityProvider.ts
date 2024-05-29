@@ -7,6 +7,8 @@ export const IdentityProvider = dia.Element.define("IdentityProvider", {
             title: 'Identity Provider',
             name: '',
             uri: '',
+            showName: false,
+            showUri: false,
             magnet: true,
             path: {
                 refDResetOffset: `M74.3946 65.3453V11.8404C74.3946 3.30662 64.0769 -0.967114 58.0426 5.06717L4.53775 58.5721C-1.49653 64.6063 2.77722 74.924 11.311 74.924H64.8158C70.106 74.924 74.3946 70.6355 74.3946 65.3453Z`,

@@ -1,7 +1,7 @@
 'use client'
 import styles from './elementDetailContainer.module.css'
 import Image from "next/image";
-import { useContext, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {saveElementData} from "@/libs/saveElementData";
 import {resizeElement} from "@/libs/resizeElement";
@@ -11,11 +11,13 @@ type propsType = {
     setElementSelected : (el: any) => void
 }
 const ElementDetailContainer = (props: propsType) =>{
+
     const graph = useContext(GraphContext);
     const elementSelected = props.elementSelected;
     const elementCellView = graph.getCell(elementSelected);
-    const [showUri, setShowUri] = useState(false);
+
     const [inFront, setInFront] = useState(true);
+    const [elementUpdated, setElementUpdated] = useState(false);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -23,8 +25,26 @@ const ElementDetailContainer = (props: propsType) =>{
         height: 0,
         width: 0,
         scale: 1,
+
     })
 
+
+    useEffect(() => {
+        if (elementCellView){
+            elementCellView.attr('label/display', elementCellView.attributes.attrs.showName ? 'block' : 'none');
+            elementCellView.attr('label2/display', elementCellView.attributes.attrs.showUri ? 'block' : 'none');
+        }
+    }, [elementCellView, elementUpdated]);
+
+
+    const handleShowName = () =>{
+        elementCellView.attributes.attrs.showName = !elementCellView.attributes.attrs.showName;
+        setElementUpdated(!elementUpdated)
+    }
+    const handleShowUri = () => {
+        elementCellView.attributes.attrs.showUri = !elementCellView.attributes.attrs.showUri;
+        setElementUpdated(!elementUpdated)
+    }
 
     const handleSaveData = () =>{
 
@@ -46,7 +66,8 @@ const ElementDetailContainer = (props: propsType) =>{
             uri: "",
             height: 0,
             width: 0,
-            scale: 1
+            scale: 1,
+
         })
 
     }
@@ -60,7 +81,7 @@ const ElementDetailContainer = (props: propsType) =>{
             uri: "",
             height: 0,
             width: 0,
-            scale: 1
+            scale: 1,
         })
     }
 
@@ -85,24 +106,32 @@ const ElementDetailContainer = (props: propsType) =>{
                             </div>
                         </div>
                         <div className={`${styles.UriDiv}`}>
-                        <input className={`${styles.Input}`} placeholder={`Name: ${elementCellView.attributes.attrs.name}`}
-                               onChange={e => {
-                                   setFormData(prevState => ({...prevState,
-                                       name: e.target.value
-                                   }))
-                               }}
-                        />
+                            <input className={`${styles.Input}`}
+                                   placeholder={`Name: ${elementCellView.attributes.attrs.name}`}
+                                   onChange={e => {
+                                       setFormData(prevState => ({
+                                           ...prevState,
+                                           name: e.target.value
+                                       }))
+                                   }}
+                            />
+                            <button className={`${styles.EyeButton}`}><Image onClick={handleShowName}
+                                                                             src={!elementCellView.attributes.attrs.showName ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
+                                                                             alt={'trash'}
+                                                                             width={25} height={25}/></button>
                         </div>
                         <div className={`${styles.UriDiv}`}>
-                            <input className={`${styles.Input}`} placeholder={`Uri: ${elementCellView.attributes.attrs.uri}`}
+                            <input className={`${styles.Input}`}
+                                   placeholder={`Uri: ${elementCellView.attributes.attrs.uri}`}
                                    onChange={e => {
-                                       setFormData(prevState => ({...prevState,
+                                       setFormData(prevState => ({
+                                           ...prevState,
                                            uri: e.target.value
                                        }))
                                    }}
                             />
-                            <button className={`${styles.EyeButton}`}><Image onClick={() => setShowUri(!showUri)}
-                                                                             src={!showUri ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
+                            <button className={`${styles.EyeButton}`}><Image onClick={handleShowUri}
+                                                                             src={!elementCellView.attributes.attrs.showUri ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
                                                                              alt={'trash'}
                                                                              width={25} height={25}/></button>
                         </div>

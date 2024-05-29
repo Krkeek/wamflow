@@ -9,6 +9,8 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
             title: 'Security Realm',
             name: '',
             uri: '',
+            showName: false,
+            showUri: false,
             magnet: true,
             path: {
                 refDResetOffset:  `M 10,100

@@ -9,6 +9,8 @@ export const ProcessUnit = shapes.standard.Circle.extend({
                 title: 'Process Unit',
                 name: '',
                 uri: '',
+                showName: false,
+                showUri: false,
                 body: {
                     fill: 'white',
                     stroke: 'black',

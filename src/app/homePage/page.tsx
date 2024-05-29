@@ -8,16 +8,14 @@ import {gsap} from "gsap";
 import {useGSAP} from "@gsap/react";
 import {HomePageAnimation} from "@/animation/HomePageAnimation";
 import PaperView from "@/components/homePageComponents/paperView/paperView";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 const HomePage = () =>{
-
 
 
     const [elementSelected, setElementSelected] = useState<string | null>(null)
     const setElementSelectedFn = (newElement: string) => setElementSelected(newElement);
     const [connectionMode, setConnectionMode] = useState(false);
     const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
-
 
     useEffect(()=>{
         console.log(elementSelected)
