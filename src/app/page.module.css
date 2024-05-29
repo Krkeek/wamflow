@@ -16,10 +16,9 @@
 }
 
 .BgImage {
-  background-size: 80%;
   background: no-repeat 40% 0;
+  background-size: 80%;
   opacity: 0;
-
 }
 
 
