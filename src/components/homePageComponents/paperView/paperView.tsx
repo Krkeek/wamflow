@@ -18,6 +18,7 @@ const PaperView = (props: propsType) =>{
     useEffect(()=>{
         if (paperRef.current){
             const paper = viewJoint(paperRef.current, graph);
+            //When clicking on an element
             paper.on('element:pointerclick',(cellView)=>{
                 if (props.elementSelected !== null){
                     const prevElement = graph.getCell(props.elementSelected);
@@ -33,10 +34,9 @@ const PaperView = (props: propsType) =>{
                 cellView.model.attr('body/stroke','#023E8A');
                 cellView.model.attr('top/stroke','#023E8A');
 
-
-
             })
 
+            //When clicking on a blank place on the paper
             paper.on('blank:pointerclick',()=>{
                 const prevElement = graph.getCell(props.elementSelected);
                 if (prevElement){
@@ -46,11 +46,7 @@ const PaperView = (props: propsType) =>{
 
                 }
                 props.setElementSelected(null)
-
-
             })
-
-
         }
     })
 

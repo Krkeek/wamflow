@@ -1,7 +1,6 @@
 'use client'
 import styles from './optionsBar.module.css'
 import Image from "next/image";
-import {useState} from "react";
 
 type propsType = {
     connectionMode: boolean,

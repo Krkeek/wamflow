@@ -9,7 +9,6 @@ import {useGSAP} from "@gsap/react";
 import {HomePageAnimation} from "@/animation/HomePageAnimation";
 import PaperView from "@/components/homePageComponents/paperView/paperView";
 import {useEffect, useState} from "react";
-import {ElementProps} from "../../../declarations";
 const HomePage = () =>{
 
 
@@ -25,7 +24,6 @@ const HomePage = () =>{
     },[elementSelected])
 
     useGSAP(()=>{
-
         const ctx = gsap.context(()=>{
             HomePageAnimation()
         })

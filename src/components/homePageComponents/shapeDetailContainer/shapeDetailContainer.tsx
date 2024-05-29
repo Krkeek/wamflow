@@ -1,14 +1,10 @@
 'use client'
 import styles from './shapeDetailContainer.module.css'
 import Image from "next/image";
-import {createContext, useContext, useEffect, useState} from "react";
-import {retry} from "next/dist/compiled/@next/font/dist/google/retry";
-import {ElementProps} from "../../../../declarations";
-import {elementTools} from "@joint/core";
-import {name} from "next/dist/telemetry/ci-info";
+import { useContext, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
-import {initialize} from "next/client";
-import {scaleDimensions} from "@/libs/scaleDimensions";
+import {saveElementData} from "@/libs/saveElementData";
+import {resizeElement} from "@/libs/resizeElement";
 
 type propsType = {
     elementSelected : string | null,
@@ -21,7 +17,6 @@ const ShapeDetailContainer = (props: propsType) =>{
     const [showUri, setShowUri] = useState(false);
     const [inFront, setInFront] = useState(true);
 
-
     const [formData, setFormData] = useState({
         name: "",
         uri: "",
@@ -30,39 +25,14 @@ const ShapeDetailContainer = (props: propsType) =>{
         scale: 1,
     })
 
+
     const handleSaveData = () =>{
 
-        //Edit the name and uri
-        if (formData.name !== ""){
-            elementCellView.attributes.attrs.name = formData.name
-        }
-        if (formData.uri !== ""){
-            elementCellView.attributes.attrs.uri = formData.uri
-        }
-
-        //resize
-        if (formData.width === 0 && formData.height === 0){
-            let newDimensions = scaleDimensions(elementCellView.size().width, elementCellView.size().height, formData.scale );
-                elementCellView.resize(newDimensions.width, newDimensions.height);
-
-        }
-        else if (formData.height === 0 && formData.width !== 0 ) {
-            let newDimensions = scaleDimensions(formData.width, elementCellView.size().height, formData.scale);
-            elementCellView.resize(newDimensions.width, newDimensions.height);
+        saveElementData(formData, elementCellView);
+        resizeElement(formData, elementCellView)
 
 
-        }
-        else if (formData.height !== 0 && formData.width === 0){
-            let newDimensions = scaleDimensions( elementCellView.size().width, formData.height , formData.scale );
-                elementCellView.resize(newDimensions.width, newDimensions.height);
-
-        }
-        else {
-            let newDimensions = scaleDimensions(formData.width, formData.height, formData.scale);
-            elementCellView.resize(newDimensions.width, newDimensions.height);
-        }
-
-
+        //Deselect the previous element and reset the form
         const prevElement = graph.getCell(props.elementSelected);
         if (prevElement){
             prevElement.attr('path/stroke','black');
@@ -81,8 +51,10 @@ const ShapeDetailContainer = (props: propsType) =>{
 
     }
 
+
     const handleDeleteElement = () =>{
         elementCellView.remove();
+        props.setElementSelected(null)
         setFormData({
             name: "",
             uri: "",
@@ -90,7 +62,6 @@ const ShapeDetailContainer = (props: propsType) =>{
             width: 0,
             scale: 1
         })
-        props.setElementSelected(null)
     }
 
 

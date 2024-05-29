@@ -7,10 +7,10 @@ export interface ShapeInterface {
 }
 
 
-export type ElementProps = {
-    id: string
+export type ElementForm = {
     name: string,
     uri: string,
+    height: number,
     width: number,
-    height: number
+    scale: number,
 }
