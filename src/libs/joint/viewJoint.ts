@@ -16,9 +16,30 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any) =>{
         defaultLink: () => new shapes.standard.Link(),
         linkPinning: false,
         restrictTranslate: true,
+        embeddingMode: true,
+        validateEmbedding: (childView, parentView) =>{
+            const parentModel = parentView.model;
+            return parentModel.get('type') === 'SecurityRealm';
+        },
+        highlighting: {
+            'default': {
+                name: 'stroke', // `joint.highlighters.stroke`
+                options: {
+                    padding: 2
+                }
+            },
+            'connecting': {
+                name: 'addClass',  // `joint.highlighters.addClass`
+                options: {
+                    className: 'highlight-connecting'
+                }
+            },
+            // Disable highlighter for embedding
+            'embedding': false
+        }
+    });
 
-    })
+
 }
-
 
 

@@ -5,29 +5,38 @@ import {ElementForm} from "../../declarations";
 
 export const resizeElement = (formData: ElementForm, elementCellView: any) =>{
 
-    let newDimensions: { width: number; height: number };
-    //resize
-    if (formData.width === 0 && formData.height === 0){
-         newDimensions = scaleDimensions(elementCellView.size().width, elementCellView.size().height, formData.scale );
+
+    if (!isNumber(formData.width) || !isNumber(formData.height) || !isNumber(formData.scale)){
+        alert('Width, height or scale is not a number')
+
+    }else {
+        let newDimensions: { width: number; height: number };
+        //resize
+        if (formData.width === 0 && formData.height === 0){
+            newDimensions = scaleDimensions(elementCellView.size().width, elementCellView.size().height, formData.scale );
+
+        }
+        else if (formData.height === 0 && formData.width !== 0 ) {
+            newDimensions = scaleDimensions(formData.width, elementCellView.size().height, formData.scale);
+
+        }
+        else if (formData.height !== 0 && formData.width === 0){
+            newDimensions = scaleDimensions( elementCellView.size().width, formData.height , formData.scale );
+        }
+        else {
+            newDimensions = scaleDimensions(formData.width, formData.height, formData.scale);
+        }
+
+        const isValid = isValidDimensions(newDimensions);
+
+        isValid.status  ?
+            elementCellView.resize(newDimensions.width, newDimensions.height)
+            :
+            alert(isValid.reason)
+
 
     }
-    else if (formData.height === 0 && formData.width !== 0 ) {
-         newDimensions = scaleDimensions(formData.width, elementCellView.size().height, formData.scale);
 
-    }
-    else if (formData.height !== 0 && formData.width === 0){
-         newDimensions = scaleDimensions( elementCellView.size().width, formData.height , formData.scale );
-    }
-    else {
-         newDimensions = scaleDimensions(formData.width, formData.height, formData.scale);
-    }
-
-    const isValid = isValidDimensions(newDimensions);
-
-     isValid.status  ?
-        elementCellView.resize(newDimensions.width, newDimensions.height)
-        :
-        alert(isValid.reason)
 
 }
 
@@ -57,4 +66,11 @@ const isValidDimensions = (dimensions: {width: number, height: number}) =>{
             reason: ''
         }
     }
+}
+
+
+export const isNumber = (input: any) => {
+    const regex = /^[^a-zA-Z\s]+$/;
+    return regex.test(input);
+
 }

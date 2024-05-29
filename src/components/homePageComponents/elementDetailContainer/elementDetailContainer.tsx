@@ -152,10 +152,11 @@ const ElementDetailContainer = (props: propsType) =>{
                                 <input type={'text'} className={`${styles.WidthInput}`} placeholder={elementCellView.size().height}
 
                                        onChange={e => {
+
                                            const value = parseFloat(e.target.value);
-                                           setFormData(prevState => ({...prevState,
-                                               height: value
-                                           }))
+                                               setFormData(prevState => ({...prevState,
+                                                   height: value
+                                               }))
                                        }}
                                 />
                             </div>
@@ -167,10 +168,11 @@ const ElementDetailContainer = (props: propsType) =>{
                                 <input type={'text'} className={`${styles.WidthInput}`}
                                        placeholder={'x1'}
                                        onChange={e => {
-                                           const value = parseFloat(e.target.value);
-                                           setFormData(prevState => ({...prevState,
-                                               scale: value
-                                           }))
+                                               const value = parseFloat(e.target.value);
+                                               setFormData(prevState => ({...prevState,
+                                                   scale: value
+                                               }))
+
                                        }}
 
                                 />

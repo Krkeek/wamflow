@@ -47,6 +47,7 @@ const PaperView = (props: propsType) =>{
                 }
                 props.setElementSelected(null)
             })
+
         }
     })
 
