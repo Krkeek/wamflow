@@ -1,4 +1,5 @@
 import {shapes, util} from "@joint/core";
+import {ports} from "@/libs/joint/elements/DatabaseProvider/ports";
 
 export const DatabaseProvider = shapes.standard.Cylinder.extend({
     defaults: util.defaultsDeep({
@@ -38,52 +39,7 @@ export const DatabaseProvider = shapes.standard.Cylinder.extend({
                 },
 
             },
-            ports   : {
-                groups: {
-                    'in': {
-                        position: 'left',
-                        attrs: {
-                            circle: {
-                                r: 3,
-                                magnet: true,
-                                stroke: '#023E8A',
-                                strokeWidth: 2,
-                                fill: '#023E8A'
-                            }
-                        },
-                        label: {
-                            title: '',
-                            position: 'left',
-                            attrs: {
-                                text: {
-                                    fill: '#6a6c8a'
-                                }
-                            }
-                        }
-                    },
-                    'out': {
-                        position: 'right',
-                        attrs: {
-                            circle: {
-                                r: 3,
-                                magnet: true,
-                                stroke: '#023E8A',
-                                strokeWidth: 2,
-                                fill: '#023E8A',
-
-                            }
-                        },
-                        label: {
-                            position: 'right',
-                            attrs: {
-                                text: {
-                                    fill: '#6a6c8a'
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            ports: ports
         }, shapes.standard.Cylinder.prototype.defaults,
 
         {

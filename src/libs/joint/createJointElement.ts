@@ -1,10 +1,10 @@
 'use client'
-import {SecurityRealm} from "@/libs/joint/elements/SecurityRealm";
-import {Application} from "@/libs/joint/elements/Application";
-import {Service} from "@/libs/joint/elements/Service";
-import {IdentityProvider} from "@/libs/joint/elements/IdentityProvider";
-import {ProcessUnit} from "@/libs/joint/elements/ProcessUnit";
-import {DatabaseProvider} from "@/libs/joint/elements/DatabaseProvider";
+import {SecurityRealm} from "@/libs/joint/elements/SecurityRealm/SecurityRealm";
+import {Application} from "@/libs/joint/elements/Application/Application";
+import {Service} from "@/libs/joint/elements/Service/Service";
+import {IdentityProvider} from "@/libs/joint/elements/IdentityProvider/IdentityProvider";
+import {ProcessUnit} from "@/libs/joint/elements/ProcessUnit/ProcessUnit";
+import {DatabaseProvider} from "@/libs/joint/elements/DatabaseProvider/DatabaseProvider";
 
 export const createJointElement = (elementId: string, graph: any) =>{
 
@@ -29,14 +29,13 @@ export const createJointElement = (elementId: string, graph: any) =>{
             element = new DatabaseProvider()
             break;
     }
-
-        // element?.addPorts(
-        //     [
-        //         { id: 'port1', group: 'in' },
-        //         { id: 'port2', group: 'out' },
-        //
-        //     ]
-        // )
+            //
+            // element?.addPorts(
+            //     [
+            //         { id: 'port1', group: 'in' },
+            //         { id: 'port2', group: 'out' },
+            //
+            //     ])
     if (element){
         element.position(100,30);
         element.addTo(graph)

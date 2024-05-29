@@ -1,4 +1,5 @@
 import {dia} from "@joint/core";
+import {ports} from "@/libs/joint/elements/IdentityProvider/ports";
 
 export const IdentityProvider = dia.Element.define("IdentityProvider", {
         size: { width: 70, height: 70 },
@@ -36,51 +37,7 @@ export const IdentityProvider = dia.Element.define("IdentityProvider", {
             },
 
         },
-        ports: {
-            groups: {
-                'in': {
-                    position: 'left',
-                    attrs: {
-                        circle: {
-                            r: 3,
-                            magnet: true,
-                            stroke: '#023E8A',
-                            strokeWidth: 2,
-                            fill: '#023E8A'
-                        }
-                    },
-                    label: {
-                        position: 'left',
-                        attrs: {
-                            text: {
-                                fill: '#6a6c8a'
-                            }
-                        }
-                    }
-                },
-                'out': {
-                    position: 'right',
-                    attrs: {
-                        circle: {
-                            r: 3,
-                            magnet: true,
-                            stroke: '#023E8A',
-                            strokeWidth: 2,
-                            fill: '#023E8A',
-
-                        }
-                    },
-                    label: {
-                        position: 'right',
-                        attrs: {
-                            text: {
-                                fill: '#6a6c8a'
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        ports: ports
     },
     {
         markup: [{
