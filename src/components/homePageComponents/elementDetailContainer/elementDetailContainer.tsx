@@ -1,5 +1,5 @@
 'use client'
-import styles from './shapeDetailContainer.module.css'
+import styles from './elementDetailContainer.module.css'
 import Image from "next/image";
 import { useContext, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
@@ -10,7 +10,7 @@ type propsType = {
     elementSelected : string | null,
     setElementSelected : (el: any) => void
 }
-const ShapeDetailContainer = (props: propsType) =>{
+const ElementDetailContainer = (props: propsType) =>{
     const graph = useContext(GraphContext);
     const elementSelected = props.elementSelected;
     const elementCellView = graph.getCell(elementSelected);
@@ -178,4 +178,4 @@ const ShapeDetailContainer = (props: propsType) =>{
         </>
     );
 }
-export default ShapeDetailContainer
+export default ElementDetailContainer

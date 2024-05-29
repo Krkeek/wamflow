@@ -2,8 +2,8 @@
 import DiagramHeader from "@/components/homePageComponents/diagramHeader/diagramHeader";
 import styles from './homePage.module.css'
 import OptionsBar from "@/components/homePageComponents/optionsBar/optionsBar";
-import ShapesContainer from "@/components/homePageComponents/shapesContainer/shapesContainer";
-import ShapeDetailContainer from "@/components/homePageComponents/shapeDetailContainer/shapeDetailContainer";
+import ElementsContainer from "@/components/homePageComponents/elementsContainer/elementsContainer";
+import ElementDetailContainer from "@/components/homePageComponents/elementDetailContainer/elementDetailContainer";
 import {gsap} from "gsap";
 import {useGSAP} from "@gsap/react";
 import {HomePageAnimation} from "@/animation/HomePageAnimation";
@@ -41,13 +41,13 @@ const HomePage = () =>{
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>
-                        <ShapesContainer />
+                        <ElementsContainer />
                     </div>
                     <div className={`${styles.Middle}`}>
                         <PaperView elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
-                        <ShapeDetailContainer elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />
+                        <ElementDetailContainer elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />
                     </div>
                 </div>
             </div>

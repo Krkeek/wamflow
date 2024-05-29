@@ -1,12 +1,12 @@
 'use client'
-import styles from './shapesContainer.module.css'
+import styles from './elementsContainer.module.css'
 import {ShapesData} from "../../../../dataEntry";
-import Shape from "@/components/homePageComponents/shape/shape";
+import Element from "@/components/homePageComponents/element/element";
 import {createJointElement} from "@/libs/joint/createJointElement";
 import {useContext} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 
-const ShapesContainer = () =>{
+const ElementsContainer = () =>{
     const graph = useContext(GraphContext);
     const handleCreateElement = (elementId: string) =>{
            createJointElement(elementId, graph)
@@ -17,11 +17,11 @@ const ShapesContainer = () =>{
             <div className={`${styles.Container}`}>
                 {
                 ShapesData.map((shape, index)=>(
-                    <Shape key={index} shape={shape} handleCreateElement={handleCreateElement} />
+                    <Element key={index} shape={shape} handleCreateElement={handleCreateElement} />
                 ))
                 }
             </div>
         </>
     )
 }
-export default ShapesContainer
+export default ElementsContainer

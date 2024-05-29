@@ -1,5 +1,5 @@
 'use client'
-import styles from './shape.module.css'
+import styles from './element.module.css'
 import {ShapeInterface} from "../../../../declarations";
 import Image from "next/image";
 type propsType = {
@@ -8,7 +8,7 @@ type propsType = {
 
 }
 
-const Shape = (props: propsType) =>{
+const Element = (props: propsType) =>{
 
     return(
         <>
@@ -21,4 +21,4 @@ const Shape = (props: propsType) =>{
         </>
     );
 }
-export default Shape
+export default Element

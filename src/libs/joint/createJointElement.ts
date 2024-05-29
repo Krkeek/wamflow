@@ -1,11 +1,10 @@
 'use client'
-import {
-    Application,
-    DatabaseProvider,
-    IdentityProvider, ProcessUnit,
-    SecurityRealm,
-    Service
-} from "@/libs/joint/GraphContext";
+import {SecurityRealm} from "@/libs/joint/elements/SecurityRealm";
+import {Application} from "@/libs/joint/elements/Application";
+import {Service} from "@/libs/joint/elements/Service";
+import {IdentityProvider} from "@/libs/joint/elements/IdentityProvider";
+import {ProcessUnit} from "@/libs/joint/elements/ProcessUnit";
+import {DatabaseProvider} from "@/libs/joint/elements/DatabaseProvider";
 
 export const createJointElement = (elementId: string, graph: any) =>{
 
