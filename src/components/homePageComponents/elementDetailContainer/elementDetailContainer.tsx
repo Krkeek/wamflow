@@ -8,7 +8,8 @@ import {resizeElement} from "@/libs/resizeElement";
 
 type propsType = {
     elementSelected : string | null,
-    setElementSelected : (el: any) => void
+    setElementSelected : (el: any) => void,
+
 }
 const ElementDetailContainer = (props: propsType) =>{
 
@@ -16,7 +17,6 @@ const ElementDetailContainer = (props: propsType) =>{
     const elementSelected = props.elementSelected;
     const elementCellView = graph.getCell(elementSelected);
 
-    const [inFront, setInFront] = useState(true);
     const [elementUpdated, setElementUpdated] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -178,20 +178,19 @@ const ElementDetailContainer = (props: propsType) =>{
                         </div>
                         <div className={`${styles.PositionDiv}`}>
                             <button className={`${styles.PositionButton}`}><Image
-                                onClick={() => setInFront(true)}
+                                onClick={() => elementCellView.toFront()}
                                 src={'/assets/front.webp'}
                                 alt={'front'}
                                 width={21} height={30}/>
-                                <div className={`${styles.Indicator} ${inFront ? styles.IndicatorActive : ' '} `}></div>
+                                <div className={`${styles.Indicator} ${styles.IndicatorActive} `}></div>
 
                             </button>
                             <button className={`${styles.PositionButton}`}><Image
                                 src={'/assets/back.webp'}
-                                onClick={() => setInFront(false)}
+                                onClick={() => elementCellView.toBack()}
                                 alt={'back'}
                                 width={21} height={30}/>
-                                <div
-                                    className={`${styles.Indicator}  ${!inFront ? styles.IndicatorActive : ' '} `}></div>
+                                <div className={`${styles.Indicator}  ${styles.IndicatorActive} `}></div>
                             </button>
                         </div>
 

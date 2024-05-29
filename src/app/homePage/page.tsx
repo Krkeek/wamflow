@@ -11,7 +11,6 @@ import PaperView from "@/components/homePageComponents/paperView/paperView";
 import {useEffect, useRef, useState} from "react";
 const HomePage = () =>{
 
-
     const [elementSelected, setElementSelected] = useState<string | null>(null)
     const setElementSelectedFn = (newElement: string) => setElementSelected(newElement);
     const [connectionMode, setConnectionMode] = useState(false);
@@ -29,7 +28,6 @@ const HomePage = () =>{
         return () => ctx.revert()
     })
 
-
     return(
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
@@ -45,7 +43,7 @@ const HomePage = () =>{
                         <PaperView elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
-                        <ElementDetailContainer elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />
+                        <ElementDetailContainer  elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />
                     </div>
                 </div>
             </div>
