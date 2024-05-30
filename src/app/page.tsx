@@ -8,6 +8,7 @@ import {gsap} from "gsap";
 import {LandingPageAnimation} from "@/animation/LandingPage";
 import GraphProvider from "@/libs/joint/GraphProvider";
 gsap.registerPlugin(useGSAP);
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function Home() {
 
@@ -30,6 +31,7 @@ export default function Home() {
                 </div>
             </ReactLenis>
         </GraphProvider>
+        <SpeedInsights />
     </>
     );
 }
