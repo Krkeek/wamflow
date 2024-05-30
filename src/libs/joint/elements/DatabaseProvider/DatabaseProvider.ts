@@ -4,11 +4,11 @@ import {ports} from "@/libs/joint/elements/DatabaseProvider/ports";
 export const DatabaseProvider = shapes.standard.Cylinder.extend({
     defaults: util.defaultsDeep({
             size: { width: 60, height: 70 },
+            type: 'DatabaseProvider',
             attrs: {
                 title: 'Database Provider',
                 name: '',
                 uri: '',
-                type: 'DatabaseProvider',
                 body: {
                     fill: 'white',
                     stroke: 'black',

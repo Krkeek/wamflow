@@ -11,11 +11,15 @@ import PaperView from "@/components/homePageComponents/paperView/paperView";
 import {useEffect, useRef, useState} from "react";
 const HomePage = () =>{
 
+    const [projectInfo, setProjectInfo] = useState({
+        name: 'Untitled'
+    })
+
     const [elementSelected, setElementSelected] = useState<string | null>(null)
     const setElementSelectedFn = (newElement: string) => setElementSelected(newElement);
     const [connectionMode, setConnectionMode] = useState(false);
     const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
-
+    const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
     useEffect(()=>{
         console.log(elementSelected)
     },[elementSelected])
@@ -32,8 +36,8 @@ const HomePage = () =>{
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
               <div className={`${styles.TopBar}`}>
-                  <DiagramHeader />
-                  <OptionsBar  connectionMode={connectionMode} setConnectionMode={setConnectionModeFn}/>
+                  <DiagramHeader name={projectInfo.name} setProjectInfo={setProjectInfoFn}  />
+                  <OptionsBar name={projectInfo.name}  connectionMode={connectionMode} setConnectionMode={setConnectionModeFn}/>
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>
