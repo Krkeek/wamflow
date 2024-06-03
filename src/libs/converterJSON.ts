@@ -3,7 +3,6 @@
 export const exportJSON = (graph: any, name: string) =>{
     const jsonObject = graph.toJSON();
     const jsonString = JSON.stringify(jsonObject, null, 2); // Convert JSON object to string with pretty print
-
     const blob = new Blob([jsonString], { type: "application/json" });
     const link = document.createElement("a");
     link.download = `${name}.json`;
@@ -16,7 +15,7 @@ export const exportJSON = (graph: any, name: string) =>{
 
 
 export const importJSON = async (graph: any, file: any) => {
-    const JSONObject = await parseJsonFile(file)
+    const JSONObject = await parseJsonFile(file);
     graph.fromJSON(JSONObject);
 
 }
@@ -29,3 +28,4 @@ export const parseJsonFile = async (file: any) => {
         fileReader.readAsText(file)
     })
 }
+

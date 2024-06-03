@@ -8,12 +8,22 @@ import {gsap} from "gsap";
 import {useGSAP} from "@gsap/react";
 import {HomePageAnimation} from "@/animation/HomePageAnimation";
 import PaperView from "@/components/homePageComponents/paperView/paperView";
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
+import {GraphContext} from "@/libs/joint/GraphContext";
 const HomePage = () =>{
 
+    const graph = useContext(GraphContext);
+    const projectTitle = graph.get('projectTitle');
+
     const [projectInfo, setProjectInfo] = useState({
-        name: 'Untitled'
+        name: projectTitle
     })
+
+    useEffect(() => {
+        graph.set('projectTitle', projectInfo.name)
+        console.log(graph.toJSON())
+
+    }, [projectInfo]);
 
     const [elementSelected, setElementSelected] = useState<string | null>(null)
     const setElementSelectedFn = (newElement: string) => setElementSelected(newElement);
@@ -21,7 +31,9 @@ const HomePage = () =>{
     const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
     const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
     useEffect(()=>{
-        console.log(elementSelected)
+        console.log(elementSelected);
+        const el = graph.getCell(elementSelected);
+        console.log(el)
     },[elementSelected])
 
     useGSAP(()=>{
@@ -37,7 +49,7 @@ const HomePage = () =>{
             <div className={`${styles.Container} ContainerAnimation`}>
               <div className={`${styles.TopBar}`}>
                   <DiagramHeader name={projectInfo.name} setProjectInfo={setProjectInfoFn}  />
-                  <OptionsBar name={projectInfo.name}  connectionMode={connectionMode} setConnectionMode={setConnectionModeFn}/>
+                  <OptionsBar name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>

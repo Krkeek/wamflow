@@ -21,6 +21,15 @@
     width: 90%;
 }
 
+.Title::placeholder {
+    opacity: 1;
+}
+
+.Title:focus::placeholder {
+        opacity: 0.5;
+
+}
+
 .LeftDiv {
     display: flex;
     justify-content: center;

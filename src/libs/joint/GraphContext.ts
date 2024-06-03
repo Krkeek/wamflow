@@ -10,5 +10,7 @@ import {DatabaseProvider} from "@/libs/joint/elements/DatabaseProvider/DatabaseP
 
 
 const namespace = { shapes, SecurityRealm,  Application, Service, IdentityProvider, ProcessUnit, DatabaseProvider};
-export const defaultGraph = new dia.Graph({},{cellNamespace: namespace});
+export const defaultGraph = new dia.Graph({
+    projectTitle: 'Untitled'
+},{cellNamespace: namespace});
 export const GraphContext = createContext<any>(defaultGraph);

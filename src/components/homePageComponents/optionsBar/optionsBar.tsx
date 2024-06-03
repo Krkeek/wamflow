@@ -8,13 +8,27 @@ import {exportJSON} from "@/libs/converterJSON";
 type propsType = {
     connectionMode: boolean,
     setConnectionMode: (mode: boolean) => void,
-    name: string
+    name: string,
+    elementSelected : string | null,
+    setElementSelected : (el: any) => void,
+
 }
 
 const OptionsBar = (props: propsType) =>{
     const graph = useContext(GraphContext);
     const exportList = useRef(null)
 
+    const handleExport = () =>{
+        const prevElement = graph.getCell(props.elementSelected);
+        if (prevElement){
+            prevElement.attr('path/stroke','black');
+            prevElement.attr('body/stroke','black');
+            prevElement.attr('top/stroke','black');
+
+        }
+        props.setElementSelected(null)
+        exportJSON(graph, props.name);
+    }
 
 
     const handleExtendExport = (status: boolean) =>{
@@ -55,7 +69,7 @@ const OptionsBar = (props: propsType) =>{
                         <button className={`${styles.ExportButton} ${styles.ExportButtonExtended} ${styles.ActiveExportList}`}>Export
                             as
                         </button>
-                        <button onClick={() => exportJSON(graph, props.name)}
+                        <button onClick={handleExport}
                                 className={`${styles.ExtendElement}`}>JSON
                         </button>
                         <button

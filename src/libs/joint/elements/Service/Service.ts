@@ -2,14 +2,16 @@ import {dia} from "@joint/core";
 import {ports} from "@/libs/joint/elements/Service/ports";
 
 export const Service = dia.Element.define("Service", {
-        size: { width: 70, height: 65 },
 
-        attrs: {
+        customData: {
             title: 'Service',
             name: '',
             uri: '',
             showName: false,
             showUri: false,
+        },
+        size: { width: 70, height: 65 },
+        attrs: {
             magnet: true,
             path: {
                 refDResetOffset: `M31.7544 8.43415C36.7317 -0.186735 49.1748 -0.186749 54.1521 8.43413L82.1492 56.9266C87.1265 65.5475 80.9049 76.3236 70.9504 76.3236H14.9561C5.0016 76.3236 -1.22 65.5475 3.75727 56.9266L31.7544 8.43415Z`,
@@ -59,12 +61,12 @@ export const Service = dia.Element.define("Service", {
         initialize: function() {
             // @ts-ignore
             dia.Element.prototype.initialize.apply(this, arguments);
-            this.attr('label/text', this.attr('name'));
-            this.attr('label2/text', this.attr('uri'));
+            this.attr('label/text', this.prop('customData/name'));
+            this.attr('label2/text', this.prop('customData/uri'));
 
             this.on('change:attrs', () => {
-                this.attr('label/text', this.attr('name'));
-                this.attr('label2/text', this.attr('uri'));
+                this.attr('label/text', this.prop('customData/name'));
+                this.attr('label2/text', this.prop('customData/uri'));
 
             });
         },

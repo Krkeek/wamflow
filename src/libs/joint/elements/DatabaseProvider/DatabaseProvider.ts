@@ -3,12 +3,17 @@ import {ports} from "@/libs/joint/elements/DatabaseProvider/ports";
 
 export const DatabaseProvider = shapes.standard.Cylinder.extend({
     defaults: util.defaultsDeep({
-            size: { width: 60, height: 70 },
-            type: 'DatabaseProvider',
-            attrs: {
+            customData: {
                 title: 'Database Provider',
                 name: '',
                 uri: '',
+                showName: false,
+                showUri: false,
+            },
+
+            size: { width: 60, height: 70 },
+            type: 'DatabaseProvider',
+            attrs: {
                 body: {
                     fill: 'white',
                     stroke: 'black',
@@ -67,12 +72,12 @@ export const DatabaseProvider = shapes.standard.Cylinder.extend({
     initialize: function() {
         // @ts-ignore
         shapes.standard.Cylinder.prototype.initialize.apply(this, arguments);
-        this.attr('label/text', this.attr('name'));
-        this.attr('label2/text', this.attr('uri'));
+        this.attr('label/text', this.prop('customData/name'));
+        this.attr('label2/text', this.prop('customData/uri'));
 
         this.on('change:attrs', () => {
-            this.attr('label/text', this.attr('name'));
-            this.attr('label2/text', this.attr('uri'));
+            this.attr('label/text', this.prop('customData/name'));
+            this.attr('label2/text', this.prop('customData/uri'));
 
         });
     }

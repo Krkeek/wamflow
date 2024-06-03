@@ -3,14 +3,16 @@ import {ports} from "@/libs/joint/elements/SecurityRealm/ports";
 
 
 export const SecurityRealm = dia.Element.define("SecurityRealm",{
-        size: { width: 250, height: 250 },
-        attrs: {
-
+        customData: {
             title: 'Security Realm',
             name: '',
             uri: '',
             showName: false,
             showUri: false,
+        },
+
+        size: { width: 250, height: 250 },
+        attrs: {
             magnet: true,
             path: {
                 refDResetOffset:  `M 10,100
@@ -72,12 +74,12 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
         initialize: function() {
             // @ts-ignore
             dia.Element.prototype.initialize.apply(this, arguments);
-            this.attr('label/text', this.attr('name'));
-            this.attr('label2/text', this.attr('uri'));
+            this.attr('label/text', this.prop('customData/name'));
+            this.attr('label2/text', this.prop('customData/uri'));
 
             this.on('change:attrs', () => {
-                this.attr('label/text', this.attr('name'));
-                this.attr('label2/text', this.attr('uri'));
+                this.attr('label/text', this.prop('customData/name'));
+                this.attr('label2/text', this.prop('customData/uri'));
 
             });
         },

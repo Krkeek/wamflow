@@ -3,14 +3,17 @@ import {ports} from "@/libs/joint/elements/ProcessUnit/ports";
 
 export const ProcessUnit = shapes.standard.Circle.extend({
     defaults: util.defaultsDeep({
-            size: { width: 70, height: 70 },
-            type: 'ProcessUnit',
-            attrs: {
+            customData: {
                 title: 'Process Unit',
                 name: '',
                 uri: '',
                 showName: false,
                 showUri: false,
+            },
+
+            size: { width: 70, height: 70 },
+            type: 'ProcessUnit',
+            attrs: {
                 body: {
                     fill: 'white',
                     stroke: 'black',
@@ -56,12 +59,12 @@ export const ProcessUnit = shapes.standard.Circle.extend({
     initialize: function() {
         // @ts-ignore
         shapes.standard.Circle.prototype.initialize.apply(this, arguments);
-        this.attr('label/text', this.attr('name'));
-        this.attr('label2/text', this.attr('uri'));
+        this.attr('label/text', this.prop('customData/name'));
+        this.attr('label2/text', this.prop('customData/uri'));
 
         this.on('change:attrs', () => {
-            this.attr('label/text', this.attr('name'));
-            this.attr('label2/text', this.attr('uri'));
+            this.attr('label/text', this.prop('customData/name'));
+            this.attr('label2/text', this.prop('customData/uri'));
 
         });
     }

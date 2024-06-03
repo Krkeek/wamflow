@@ -3,12 +3,14 @@ import {ports} from "@/libs/joint/elements/Application/ports";
 
 export const Application = dia.Element.define("Application", {
         size: { width: 70, height: 70 },
-        attrs: {
+        customData: {
             title: 'Application',
             name: '',
             uri: '',
             showName: false,
             showUri: false,
+        },
+        attrs: {
             magnet: true,
             path: {
                 refDResetOffset:  `M1.94713 15.1788C1.94713 8.03705 7.73668 2.24748 14.8785 2.24748H72.351C79.4928 2.24748 85.2823 8.03704 85.2823 15.1788V72.6513C85.2823 79.7931 79.4928 85.5827 72.351 85.5827H14.8785C7.73669 85.5827 1.94713 79.7931 1.94713 72.6513V15.1788Z`,
@@ -57,12 +59,12 @@ export const Application = dia.Element.define("Application", {
         initialize: function() {
             // @ts-ignore
             dia.Element.prototype.initialize.apply(this, arguments);
-            this.attr('label/text', this.attr('name'));
-            this.attr('label2/text', this.attr('uri'));
+            this.attr('label/text', this.prop('customData/name'));
+            this.attr('label2/text', this.prop('customData/uri'));
 
             this.on('change:attrs', () => {
-                this.attr('label/text', this.attr('name'));
-                this.attr('label2/text', this.attr('uri'));
+                this.attr('label/text', this.prop('customData/name'));
+                this.attr('label2/text', this.prop('customData/uri'));
 
             });
         },

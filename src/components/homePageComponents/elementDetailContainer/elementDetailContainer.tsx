@@ -31,18 +31,19 @@ const ElementDetailContainer = (props: propsType) =>{
 
     useEffect(() => {
         if (elementCellView){
-            elementCellView.attr('label/display', elementCellView.attributes.attrs.showName ? 'block' : 'none');
-            elementCellView.attr('label2/display', elementCellView.attributes.attrs.showUri ? 'block' : 'none');
+            elementCellView.attr('label/display', elementCellView.prop('customData/showName') ? 'block' : 'none');
+            elementCellView.attr('label2/display', elementCellView.prop('customData/showUri') ? 'block' : 'none');
         }
     }, [elementCellView, elementUpdated]);
 
 
     const handleShowName = () =>{
-        elementCellView.attributes.attrs.showName = !elementCellView.attributes.attrs.showName;
+        elementCellView.prop('customData/showName', !elementCellView.prop('customData/showName'))
         setElementUpdated(!elementUpdated)
     }
     const handleShowUri = () => {
-        elementCellView.attributes.attrs.showUri = !elementCellView.attributes.attrs.showUri;
+        elementCellView.prop('customData/showUri', !elementCellView.prop('customData/showUri'))
+
         setElementUpdated(!elementUpdated)
     }
 
@@ -94,7 +95,7 @@ const ElementDetailContainer = (props: propsType) =>{
                 (
                     <div className={`${styles.Container}`}>
                         <div className={`${styles.Top}`}>
-                            <div className={`${styles.LeftSide}`}>{elementCellView.attributes.attrs.title}</div>
+                            <div className={`${styles.LeftSide}`}>{elementCellView.prop('customData/title')}</div>
                             <div className={`${styles.RightSide}`}>
                                 <button onClick={handleDeleteElement} className={`${styles.TopButtons}`}><Image src={'/assets/trash.webp'}
                                                                                   alt={'trash'}
@@ -107,7 +108,7 @@ const ElementDetailContainer = (props: propsType) =>{
                         </div>
                         <div className={`${styles.UriDiv}`}>
                             <input className={`${styles.Input}`}
-                                   placeholder={`Name: ${elementCellView.attributes.attrs.name}`}
+                                   placeholder={`Name: ${elementCellView.prop('customData/name')}`}
                                    onChange={e => {
                                        setFormData(prevState => ({
                                            ...prevState,
@@ -116,13 +117,13 @@ const ElementDetailContainer = (props: propsType) =>{
                                    }}
                             />
                             <button className={`${styles.EyeButton}`}><Image onClick={handleShowName}
-                                                                             src={!elementCellView.attributes.attrs.showName ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
+                                                                             src={!elementCellView.prop('customData/showName') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
                                                                              alt={'trash'}
                                                                              width={25} height={25}/></button>
                         </div>
                         <div className={`${styles.UriDiv}`}>
                             <input className={`${styles.Input}`}
-                                   placeholder={`Uri: ${elementCellView.attributes.attrs.uri}`}
+                                   placeholder={`Uri: ${elementCellView.prop('customData/uri')}`}
                                    onChange={e => {
                                        setFormData(prevState => ({
                                            ...prevState,
@@ -131,7 +132,7 @@ const ElementDetailContainer = (props: propsType) =>{
                                    }}
                             />
                             <button className={`${styles.EyeButton}`}><Image onClick={handleShowUri}
-                                                                             src={!elementCellView.attributes.attrs.showUri ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
+                                                                             src={!elementCellView.prop('customData/showUri') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
                                                                              alt={'trash'}
                                                                              width={25} height={25}/></button>
                         </div>
