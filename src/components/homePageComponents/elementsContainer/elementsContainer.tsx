@@ -6,13 +6,19 @@ import {createJointElement} from "@/libs/joint/createJointElement";
 import {useContext, useEffect, useRef} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 
-const ElementsContainer = () =>{
+type props = {
+    setConnectionMode: (mode: boolean) => void,
+
+}
+
+const ElementsContainer = ( props: props) =>{
 
 
     const graph = useContext(GraphContext);
-    const handleCreateElement = (elementId: string) =>{
-           createJointElement(elementId, graph)
-    }
+        const handleCreateElement = (elementId: string) =>{
+                props.setConnectionMode(false);
+               createJointElement(elementId, graph)
+        }
 
     return(
         <>

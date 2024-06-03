@@ -26,7 +26,7 @@ export const ports = {
             position: 'left',
             attrs: {
                 circle: {
-                    r: 3,
+                    r: 0,
                     magnet: true,
                     stroke: '#023E8A',
                     strokeWidth: 2,
@@ -40,7 +40,7 @@ export const ports = {
             position: 'right',
             attrs: {
                 circle: {
-                    r: 3,
+                    r: 0,
                     magnet: true,
                     stroke: '#023E8A',
                     strokeWidth: 2,
@@ -54,7 +54,7 @@ export const ports = {
             position: 'top',
             attrs: {
                 circle: {
-                    r: 3,
+                    r: 0,
                     magnet: true,
                     stroke: '#023E8A',
                     strokeWidth: 2,
@@ -68,7 +68,7 @@ export const ports = {
             position: 'bottom',
             attrs: {
                 circle: {
-                    r: 3,
+                    r: 0,
                     magnet: true,
                     stroke: '#023E8A',
                     strokeWidth: 2,

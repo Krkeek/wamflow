@@ -51,7 +51,7 @@ const HomePage = () =>{
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>
-                        <ElementsContainer />
+                        <ElementsContainer setConnectionMode={setConnectionModeFn} />
                     </div>
                     <div className={`${styles.Middle}`}>
                         <PaperView connectionMode={connectionMode} elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
