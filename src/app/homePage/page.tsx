@@ -21,7 +21,6 @@ const HomePage = () =>{
 
     useEffect(() => {
         graph.set('projectTitle', projectInfo.name)
-        console.log(graph.toJSON())
 
     }, [projectInfo]);
 
@@ -31,7 +30,6 @@ const HomePage = () =>{
     const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
     const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
     useEffect(()=>{
-        console.log(elementSelected);
         const el = graph.getCell(elementSelected);
         console.log(el)
     },[elementSelected])
@@ -56,7 +54,7 @@ const HomePage = () =>{
                         <ElementsContainer />
                     </div>
                     <div className={`${styles.Middle}`}>
-                        <PaperView elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
+                        <PaperView connectionMode={connectionMode} elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
                         <ElementDetailContainer  elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />

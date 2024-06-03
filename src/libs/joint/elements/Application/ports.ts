@@ -1,7 +1,28 @@
 
 export const ports = {
+    items: [
+        {
+            id: 'port1',
+            group: 'leftPort',
+        },
+
+        {
+            id: 'port4',
+            group: 'rightPort',
+        },
+
+        {
+            id: 'port7',
+            group: 'topPort',
+        },
+        {
+            id: 'port10',
+            group: 'bottomPort',
+        },
+
+    ],
     groups: {
-        'in': {
+        'leftPort': {
             position: 'left',
             attrs: {
                 circle: {
@@ -11,17 +32,11 @@ export const ports = {
                     strokeWidth: 2,
                     fill: '#023E8A'
                 }
-            },
-            label: {
-                position: 'left',
-                attrs: {
-                    text: {
-                        fill: '#6a6c8a'
-                    }
-                }
+
             }
+
         },
-        'out': {
+        'rightPort': {
             position: 'right',
             attrs: {
                 circle: {
@@ -29,19 +44,40 @@ export const ports = {
                     magnet: true,
                     stroke: '#023E8A',
                     strokeWidth: 2,
-                    fill: '#023E8A',
+                    fill: '#023E8A'
+                }
 
-                }
-            },
-            label: {
-                position: 'right',
-                attrs: {
-                    text: {
-                        fill: '#6a6c8a'
-                    }
-                }
             }
-        }
-    }
 
+        },
+        'topPort': {
+            position: 'top',
+            attrs: {
+                circle: {
+                    r: 3,
+                    magnet: true,
+                    stroke: '#023E8A',
+                    strokeWidth: 2,
+                    fill: '#023E8A'
+                }
+
+            }
+
+        },
+        'bottomPort': {
+            position: 'bottom',
+            attrs: {
+                circle: {
+                    r: 3,
+                    magnet: true,
+                    stroke: '#023E8A',
+                    strokeWidth: 2,
+                    fill: '#023E8A'
+                }
+
+            }
+
+        },
+
+    }
 }

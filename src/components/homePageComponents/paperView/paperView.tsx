@@ -6,7 +6,8 @@ import {GraphContext} from "@/libs/joint/GraphContext";
 
 type propsType = {
     elementSelected: string | null,
-    setElementSelected: (el: any) => void
+    setElementSelected: (el: any) => void,
+    connectionMode: boolean
 }
 
 const PaperView = (props: propsType) =>{
@@ -15,9 +16,19 @@ const PaperView = (props: propsType) =>{
     const graph = useContext(GraphContext);
 
 
+
     useEffect(()=>{
         if (paperRef.current){
             const paper = viewJoint(paperRef.current, graph);
+
+            // paper.on('element:magnet:pointerdown',(cellView) =>{
+            //     console.log('Pointer down event triggered');
+            //         paper.setInteractivity({
+            //             elementMove: false
+            //         });
+            // })
+
+
             //When clicking on an element
             paper.on('element:pointerclick',(cellView)=>{
                 if (props.elementSelected !== null){
@@ -50,6 +61,8 @@ const PaperView = (props: propsType) =>{
 
         }
     })
+
+
 
     return(
         <>

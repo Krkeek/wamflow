@@ -1,9 +1,10 @@
 'use client'
 import styles from './optionsBar.module.css'
 import Image from "next/image";
-import {useContext, useRef} from "react";
+import {useContext, useEffect, useRef} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {exportJSON} from "@/libs/converterJSON";
+import {activeConnectionMode, deactivateConnectionMode} from "@/libs/activeConnectionMode";
 
 type propsType = {
     connectionMode: boolean,
@@ -17,6 +18,18 @@ type propsType = {
 const OptionsBar = (props: propsType) =>{
     const graph = useContext(GraphContext);
     const exportList = useRef(null)
+
+
+    useEffect(() => {
+        if (props.connectionMode){
+            activeConnectionMode(graph)
+        }
+        else {
+            deactivateConnectionMode(graph)
+        }
+
+    }, [props.connectionMode]);
+
 
     const handleExport = () =>{
         const prevElement = graph.getCell(props.elementSelected);
