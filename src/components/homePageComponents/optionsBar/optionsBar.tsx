@@ -32,6 +32,8 @@ const OptionsBar = (props: propsType) =>{
 
 
     const handleExport = () =>{
+        props.setConnectionMode(false);
+        deactivateConnectionMode(graph);
         const prevElement = graph.getCell(props.elementSelected);
         if (prevElement){
             prevElement.attr('path/stroke','black');

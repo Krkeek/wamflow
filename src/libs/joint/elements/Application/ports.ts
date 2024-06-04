@@ -7,16 +7,16 @@ export const ports = {
         },
 
         {
-            id: 'port4',
+            id: 'port2',
             group: 'rightPort',
         },
 
         {
-            id: 'port7',
+            id: 'port3',
             group: 'topPort',
         },
         {
-            id: 'port10',
+            id: 'port4',
             group: 'bottomPort',
         },
 

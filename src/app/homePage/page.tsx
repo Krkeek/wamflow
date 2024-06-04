@@ -46,7 +46,7 @@ const HomePage = () =>{
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
               <div className={`${styles.TopBar}`}>
-                  <DiagramHeader name={projectInfo.name} setProjectInfo={setProjectInfoFn}  />
+                  <DiagramHeader name={projectInfo.name} setProjectInfo={setProjectInfoFn} setConnectionMode={setConnectionModeFn}  />
                   <OptionsBar name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
               </div>
                 <div className={`${styles.ContentDiv}`}>

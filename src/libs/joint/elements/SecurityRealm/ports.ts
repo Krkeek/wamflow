@@ -1,46 +1,83 @@
 
-export const ports ={
+export const ports = {
+    items: [
+        {
+            id: 'port1',
+            group: 'leftPort',
+        },
+
+        {
+            id: 'port2',
+            group: 'rightPort',
+        },
+
+        {
+            id: 'port3',
+            group: 'topPort',
+        },
+        {
+            id: 'port4',
+            group: 'bottomPort',
+        },
+
+    ],
     groups: {
-        'in': {
+        'leftPort': {
             position: 'left',
             attrs: {
                 circle: {
-                    r: 3,
+                    r: 0,
                     magnet: true,
                     stroke: '#023E8A',
                     strokeWidth: 2,
                     fill: '#023E8A'
                 }
-            },
-            label: {
-                position: 'left',
-                attrs: {
-                    text: {
-                        fill: '#6a6c8a'
-                    }
-                }
+
             }
+
         },
-        'out': {
+        'rightPort': {
             position: 'right',
             attrs: {
                 circle: {
-                    r: 3,
+                    r: 0,
                     magnet: true,
                     stroke: '#023E8A',
                     strokeWidth: 2,
                     fill: '#023E8A'
                 }
-            },
-            label: {
-                position: 'right',
-                attrs: {
-                    text: {
-                        fill: '#6a6c8a'
-                    }
-                }
-            }
-        }
-    }
 
+            }
+
+        },
+        'topPort': {
+            position: 'top',
+            attrs: {
+                circle: {
+                    r: 0,
+                    magnet: true,
+                    stroke: '#023E8A',
+                    strokeWidth: 2,
+                    fill: '#023E8A'
+                }
+
+            }
+
+        },
+        'bottomPort': {
+            position: 'bottom',
+            attrs: {
+                circle: {
+                    r: 0,
+                    magnet: true,
+                    stroke: '#023E8A',
+                    strokeWidth: 2,
+                    fill: '#023E8A'
+                }
+
+            }
+
+        },
+
+    }
 }

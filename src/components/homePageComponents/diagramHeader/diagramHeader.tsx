@@ -8,7 +8,8 @@ import {importRdf} from "@/libs/converterRDF";
 
 type DiagramHeaderProps = {
     name: string,
-    setProjectInfo: (project: {name: string}) => void
+    setProjectInfo: (project: {name: string}) => void,
+    setConnectionMode: (mode: boolean) => void
 }
 const DiagramHeader = (props: DiagramHeaderProps) =>{
     const inputFile = useRef(null);
@@ -21,6 +22,7 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
     }
 
     const handleFileChange = async (files: FileList | null) => {
+        props.setConnectionMode(false);
         if (files && files.length > 0) {
             const file = files[0];
             if (file.type === 'application/json'){

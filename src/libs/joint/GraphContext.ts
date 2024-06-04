@@ -9,7 +9,7 @@ import {ProcessUnit} from "@/libs/joint/elements/ProcessUnit/ProcessUnit";
 import {DatabaseProvider} from "@/libs/joint/elements/DatabaseProvider/DatabaseProvider";
 
 
-const namespace = { shapes, SecurityRealm,  Application, Service, IdentityProvider, ProcessUnit, DatabaseProvider};
+const namespace = {...shapes, SecurityRealm,  Application, Service, IdentityProvider, ProcessUnit, DatabaseProvider };
 export const defaultGraph = new dia.Graph({
     projectTitle: 'Untitled'
 },{cellNamespace: namespace});
