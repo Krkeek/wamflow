@@ -32,6 +32,8 @@ const HomePage = () =>{
     const [connectionMode, setConnectionMode] = useState(false);
     const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
     const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
+    const paperRef = useRef(null);
+
     useEffect(()=>{
         const el = graph.getCell(elementSelected);
         console.log(el)
@@ -45,12 +47,13 @@ const HomePage = () =>{
         return () => ctx.revert()
     })
 
+
     return(
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
               <div className={`${styles.TopBar}`}>
                   <DiagramHeader name={projectInfo.name} setProjectInfo={setProjectInfoFn} setConnectionMode={setConnectionModeFn}  />
-                  <OptionsBar name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
+                  <OptionsBar paperRef={paperRef.current} name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>
@@ -60,8 +63,8 @@ const HomePage = () =>{
                                 : <ElementsContainer setConnectionMode={setConnectionModeFn} />
                         }
                     </div>
-                    <div className={`${styles.Middle}`}>
-                        <PaperView linkSelected={linkSelected} connectionMode={connectionMode} elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
+                    <div  ref={paperRef}  className={`${styles.Middle}`}>
+                            <PaperView linkSelected={linkSelected} connectionMode={connectionMode} elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
                         <ElementDetailContainer  elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />

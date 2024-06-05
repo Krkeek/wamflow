@@ -1,10 +1,11 @@
 'use client'
 import styles from './optionsBar.module.css'
 import Image from "next/image";
-import {useContext, useEffect, useRef} from "react";
+import {MutableRefObject, useContext, useEffect, useRef} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {exportJSON} from "@/libs/converterJSON";
 import {activeConnectionMode, deactivateConnectionMode} from "@/libs/activeConnectionMode";
+import {exportPNG} from "@/libs/converterPNG";
 
 type propsType = {
     connectionMode: boolean,
@@ -12,6 +13,7 @@ type propsType = {
     name: string,
     elementSelected : string | null,
     setElementSelected : (el: any) => void,
+    paperRef: HTMLDivElement | null
 
 }
 
@@ -31,7 +33,7 @@ const OptionsBar = (props: propsType) =>{
     }, [props.connectionMode]);
 
 
-    const handleExport = () =>{
+    const reset = () =>{
         props.setConnectionMode(false);
         deactivateConnectionMode(graph);
         const prevElement = graph.getCell(props.elementSelected);
@@ -42,6 +44,10 @@ const OptionsBar = (props: propsType) =>{
 
         }
         props.setElementSelected(null)
+    }
+
+    const handleExportJSON = () =>{
+        reset();
         exportJSON(graph, props.name);
     }
 
@@ -61,6 +67,11 @@ const OptionsBar = (props: propsType) =>{
 
         }
 
+    }
+
+    const handleExportPNG = () =>{
+        reset();
+        exportPNG(props.paperRef, props.name)
     }
 
     return(
@@ -85,13 +96,13 @@ const OptionsBar = (props: propsType) =>{
                             className={`${styles.ExportButton} ${styles.ExportButtonExtended} ${styles.ActiveExportList}`}>Export
                             as
                         </button>
-                        <button onClick={handleExport}
+                        <button onClick={handleExportJSON}
                                 className={`${styles.ExtendElement}`}>JSON
                         </button>
                         <button
                             className={`${styles.ExtendElement}`}>RDF
                         </button>
-                        <button
+                        <button onClick={handleExportPNG}
                             className={`${styles.ExtendElement}`}>PNG
                         </button>
                     </div>

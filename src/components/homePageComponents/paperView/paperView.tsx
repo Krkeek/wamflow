@@ -22,7 +22,6 @@ const PaperView = (props: propsType) =>{
     useEffect(()=>{
         if (paperRef.current){
             const paper = viewJoint(paperRef.current, graph, props.linkSelected);
-
             //When clicking on an element
             paper.on('element:pointerclick',(cellView)=>{
                 if (props.elementSelected !== null){
@@ -63,13 +62,14 @@ const PaperView = (props: propsType) =>{
             });
 
             }
+
     })
 
 
 
     return(
         <>
-            <div ref={paperRef} className={`${styles.Container}`}></div>
+                <div ref={paperRef} className={`${styles.Container}`}></div>
         </>
     );
 }
