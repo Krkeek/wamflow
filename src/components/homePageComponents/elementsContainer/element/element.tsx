@@ -1,6 +1,6 @@
 'use client'
 import styles from './element.module.css'
-import {ShapeInterface} from "../../../../declarations";
+import {ShapeInterface} from "../../../../../declarations";
 import Image from "next/image";
 type propsType = {
     shape: ShapeInterface,

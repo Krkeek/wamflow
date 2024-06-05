@@ -1,4 +1,6 @@
-import {ShapeInterface} from "./declarations";
+import {LinkInterface, ShapeInterface} from "./declarations";
+
+
 
 
 
@@ -11,7 +13,6 @@ export const ShapesData: ShapeInterface[] = [
         code: `
 <rect x="2.00506" y="1.87939" width="86.6955" height="86.6955" rx="13.4528" fill="white" stroke="black" stroke-width="2.9895"/>
 <path d="M63.2898 1.50571L89.0742 25.048" stroke="black" stroke-width="2.9895"/>
-
         `
     },
     {
@@ -77,4 +78,26 @@ export const ShapesData: ShapeInterface[] = [
 
         `
     },
+]
+
+export const LinksData: LinkInterface[] = [
+    {
+        id: 'invocation',
+        name: "Invocation",
+        SVGUrl: "/assets/links/invocation.svg",
+        code: ``
+    },
+    {
+        id: 'trustRelationship',
+        name: "Trust Relationship",
+        SVGUrl: "/assets/links/trustRelationship.svg",
+        code: ``
+    },
+    {
+        id: 'legacyRelationship',
+        name: "Legacy Relationship",
+        SVGUrl: "/assets/links/legacyRelationship.svg",
+        code: ``
+    },
+
 ]

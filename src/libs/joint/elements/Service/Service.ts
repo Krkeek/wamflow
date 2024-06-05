@@ -12,7 +12,7 @@ export const Service = dia.Element.define("Service", {
         },
         size: { width: 70, height: 65 },
         attrs: {
-            magnet: true,
+            magnet: false,
             path: {
                 refDResetOffset: `M31.7544 8.43415C36.7317 -0.186735 49.1748 -0.186749 54.1521 8.43413L82.1492 56.9266C87.1265 65.5475 80.9049 76.3236 70.9504 76.3236H14.9561C5.0016 76.3236 -1.22 65.5475 3.75727 56.9266L31.7544 8.43415Z`,
                 strokeWidth: 2.2,

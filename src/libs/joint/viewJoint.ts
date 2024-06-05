@@ -1,7 +1,10 @@
 'use client'
 import {dia, shapes} from '@joint/core'
+import {Invocation} from "@/libs/joint/links/Invocation/Invocation";
+import {LegacyRelationship} from "@/libs/joint/links/LegacyRelationship/LegacyRelationship";
+import {TrustRelationship} from "@/libs/joint/links/TrustRelationship/TrustRelationship";
 
-export const viewJoint = (divElement: HTMLDivElement, graph: any) =>{
+export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: string) =>{
 
 
     return  new dia.Paper({
@@ -13,7 +16,15 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any) =>{
         cellViewNamespace: shapes,
          drawGrid: {name: "mesh", args: {color: 'rgba(0, 0, 0, 0.4)'}},
          drawGridSize: 100,
-         defaultLink: () => new shapes.standard.Link(),
+         defaultLink: () => {
+            if (linkSelected === 'invocation')
+                 return new Invocation();
+            else if (linkSelected === 'trustRelationship')
+                return new TrustRelationship();
+            else
+                return new LegacyRelationship();
+
+         },
         linkPinning: false,
         defaultConnectionPoint: { name: "boundary" },
 
@@ -23,7 +34,6 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any) =>{
                     elementMove: false
                 };
             }
-            // otherwise
             return true;
         },
 

@@ -35,7 +35,7 @@ export const ports = {
             attrs: {
                 circle: {
                     r: 0,
-                    magnet: true,
+                    magnet: false,
                     stroke: '#023E8A',
                     strokeWidth: 2,
                     fill: '#023E8A'
@@ -49,7 +49,7 @@ export const ports = {
             attrs: {
                 circle: {
                     r: 0,
-                    magnet: true,
+                    magnet: false,
                     stroke: '#023E8A',
                     strokeWidth: 2,
                     fill: '#023E8A'
@@ -63,7 +63,7 @@ export const ports = {
             attrs: {
                 circle: {
                     r: 0,
-                    magnet: true,
+                    magnet: false,
                     stroke: '#023E8A',
                     strokeWidth: 2,
                     fill: '#023E8A'
@@ -77,7 +77,7 @@ export const ports = {
             attrs: {
                 circle: {
                     r: 0,
-                    magnet: true,
+                    magnet: false,
                     stroke: '#023E8A',
                     strokeWidth: 2,
                     fill: '#023E8A'

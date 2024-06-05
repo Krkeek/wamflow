@@ -81,14 +81,18 @@ const OptionsBar = (props: propsType) =>{
                     <div ref={exportList} className={`${styles.ExtendDiv}`}
 
                     >
-                        <button className={`${styles.ExportButton} ${styles.ExportButtonExtended} ${styles.ActiveExportList}`}>Export
+                        <button
+                            className={`${styles.ExportButton} ${styles.ExportButtonExtended} ${styles.ActiveExportList}`}>Export
                             as
                         </button>
                         <button onClick={handleExport}
                                 className={`${styles.ExtendElement}`}>JSON
                         </button>
                         <button
-                                className={`${styles.ExtendElement}`}>RDF
+                            className={`${styles.ExtendElement}`}>RDF
+                        </button>
+                        <button
+                            className={`${styles.ExtendElement}`}>PNG
                         </button>
                     </div>
 

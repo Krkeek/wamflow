@@ -13,7 +13,7 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
 
         size: { width: 250, height: 250 },
         attrs: {
-            magnet: true,
+            magnet: false,
             path: {
                 refDResetOffset:  `M 10,100
             S 0,100 0,90

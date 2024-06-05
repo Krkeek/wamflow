@@ -1,7 +1,7 @@
 'use client'
 import styles from './elementsContainer.module.css'
 import {ShapesData} from "../../../../dataEntry";
-import Element from "@/components/homePageComponents/element/element";
+import Element from "@/components/homePageComponents/elementsContainer/element/element";
 import {createJointElement} from "@/libs/joint/createJointElement";
 import {useContext, useEffect, useRef} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";

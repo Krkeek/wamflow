@@ -10,6 +10,7 @@ import {HomePageAnimation} from "@/animation/HomePageAnimation";
 import PaperView from "@/components/homePageComponents/paperView/paperView";
 import {useContext, useEffect, useRef, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
+import LinksContainer from "@/components/homePageComponents/linksContainer/linksContainer";
 const HomePage = () =>{
 
     const graph = useContext(GraphContext);
@@ -25,6 +26,8 @@ const HomePage = () =>{
     }, [projectInfo]);
 
     const [elementSelected, setElementSelected] = useState<string | null>(null)
+    const [linkSelected, setLinkSelected] = useState<string>('invocation')
+    const setLinkSelectedFn = (link: string) => setLinkSelected(link)
     const setElementSelectedFn = (newElement: string) => setElementSelected(newElement);
     const [connectionMode, setConnectionMode] = useState(false);
     const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
@@ -51,10 +54,14 @@ const HomePage = () =>{
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>
-                        <ElementsContainer setConnectionMode={setConnectionModeFn} />
+                        {
+                            connectionMode
+                                ? <LinksContainer linkSelected={linkSelected} setLinkSelected={setLinkSelectedFn} />
+                                : <ElementsContainer setConnectionMode={setConnectionModeFn} />
+                        }
                     </div>
                     <div className={`${styles.Middle}`}>
-                        <PaperView connectionMode={connectionMode} elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
+                        <PaperView linkSelected={linkSelected} connectionMode={connectionMode} elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
                         <ElementDetailContainer  elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />

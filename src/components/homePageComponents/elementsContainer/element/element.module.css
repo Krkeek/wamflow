@@ -1,0 +1,48 @@
+.Container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5%;
+    padding-top: 10%;
+
+}
+
+.SVG {
+    cursor: pointer;
+}
+
+@keyframes vibrate {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0, 0); }
+}
+
+.SVG:hover {
+    animation: vibrate 0.5s linear infinite;
+}
+.Id {
+    color: var(--default-text-color);
+    font-size: 0.9rem;
+    margin: 9% 9% 5%;
+    text-align: center;
+
+
+}
+.Line {
+    width: 35%;
+    height: 1px;
+    background-color: var(--default-lineColor);
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1300px){
+    /*Tablet*/
+
+    .Id {
+        font-size: 0.7rem;
+    }
+}
