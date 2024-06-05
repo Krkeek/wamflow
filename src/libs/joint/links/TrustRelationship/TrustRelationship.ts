@@ -5,23 +5,46 @@ export const TrustRelationship = dia.Link.define('TrustRelationship', {
         line: {
             fill: 'none',
             connection: true,
-            stroke: 'red',
+            stroke: 'black',
             strokeWidth: 2,
             strokeLinejoin: 'round',
             targetMarker: {
-                'position': '50 200',
                 'type': 'path',
-                'd': `M 10 0 L 0 5 L 10 10 M 10 5 L 0 5`
+                'd': 'M 10 -5 L 0 0 L 10 5 ',
+                'stroke': 'black',
+                'fill': 'none',
+                'stroke-width': 2
             }
         },
         wrapper: {
             fill: 'none',
-
             connection: true,
             strokeWidth: 10,
             strokeLinejoin: 'round'
+        },
+        label: {
+            text: 'Hello',
+            fill: 'red',
+            fontSize: 11,
+            fontVariant: 'small-caps'
         }
-    }
+    },
+
+    labels: [{
+        position: 0.5,
+        attrs: {
+            text: {
+                fontWeight: 600,
+                text: 'Trusts',
+                fill: 'black',
+                fontSize: 13,
+                'text-anchor': 'middle',
+                'y-alignment': 'middle',
+            }
+        }
+    }]
+
+
 }, {
     markup: [{
         tagName: 'path',
@@ -38,5 +61,6 @@ export const TrustRelationship = dia.Link.define('TrustRelationship', {
             'fill': 'none',
             'pointer-events': 'none'
         }
-    }]
+    }
+    ]
 });

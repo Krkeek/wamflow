@@ -3,6 +3,7 @@ import styles from './paperView.module.css'
 import {useContext, useEffect, useRef} from "react";
 import {viewJoint} from "@/libs/joint/viewJoint";
 import {GraphContext} from "@/libs/joint/GraphContext";
+import {linkViewTools} from "@/libs/joint/linkTools/linkTools";
 
 type propsType = {
     elementSelected: string | null,
@@ -51,6 +52,15 @@ const PaperView = (props: propsType) =>{
                 }
                 props.setElementSelected(null)
             })
+
+            paper.on('link:mouseenter', function(linkView) {
+                props.connectionMode &&
+                linkView.addTools(linkViewTools());
+            });
+
+            paper.on('blank:mouseover', function() {
+                paper.removeTools();
+            });
 
             }
     })
