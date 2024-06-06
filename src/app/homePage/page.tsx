@@ -34,10 +34,20 @@ const HomePage = () =>{
     const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
     const paperRef = useRef(null);
 
-    useEffect(()=>{
-        const el = graph.getCell(elementSelected);
-        console.log(el)
-    },[elementSelected])
+    useEffect(() => {
+        const cells = graph.getCells()
+        console.log(cells)
+    }, [elementSelected]);
+
+    // useEffect(()=>{
+    //     const el = graph.getCell(elementSelected);
+    //     console.log(el)
+    // },[elementSelected])
+    //
+    // useEffect(() => {
+    //     const link = graph.getLinks()
+    //     console.log(link)
+    // }, [linkSelected]);
 
     useGSAP(()=>{
         const ctx = gsap.context(()=>{

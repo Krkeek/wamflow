@@ -1,6 +1,9 @@
             import {dia } from "@joint/core";
 
              export const Invocation = dia.Link.define('Invocation', {
+                 customData: {
+                     action: 'invokes',
+                 },
                  attrs: {
                      line: {
                          connection: true,

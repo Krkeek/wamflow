@@ -13,9 +13,6 @@ export interface LinkInterface {
     code: string
 }
 
-
-
-
 export type ElementForm = {
     name: string,
     uri: string,

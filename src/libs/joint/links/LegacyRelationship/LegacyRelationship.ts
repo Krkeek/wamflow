@@ -1,6 +1,9 @@
 import {dia } from "@joint/core";
 
 export const LegacyRelationship = dia.Link.define('LegacyRelationship', {
+    customData: {
+        action: 'hasLegacyRelationshipTo',
+    },
     attrs: {
         line: {
             connection: true,

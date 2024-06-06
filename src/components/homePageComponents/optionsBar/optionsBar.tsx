@@ -6,6 +6,7 @@ import {GraphContext} from "@/libs/joint/GraphContext";
 import {exportJSON} from "@/libs/converterJSON";
 import {activeConnectionMode, deactivateConnectionMode} from "@/libs/activeConnectionMode";
 import {exportPNG} from "@/libs/converterPNG";
+import {exportRDF} from "@/libs/converterRDF";
 
 type propsType = {
     connectionMode: boolean,
@@ -74,6 +75,12 @@ const OptionsBar = (props: propsType) =>{
         exportPNG(props.paperRef, props.name)
     }
 
+
+    const handleExportRDF = () =>{
+        reset();
+        exportRDF(graph)
+    }
+
     return(
         <>
             <div className={`${styles.Container}`}>
@@ -100,6 +107,7 @@ const OptionsBar = (props: propsType) =>{
                                 className={`${styles.ExtendElement}`}>JSON
                         </button>
                         <button
+                            onClick={handleExportRDF}
                             className={`${styles.ExtendElement}`}>RDF
                         </button>
                         <button onClick={handleExportPNG}

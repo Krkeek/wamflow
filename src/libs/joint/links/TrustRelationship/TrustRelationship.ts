@@ -1,6 +1,9 @@
 import {dia } from "@joint/core";
 
 export const TrustRelationship = dia.Link.define('TrustRelationship', {
+    customData: {
+        action: 'trusts',
+    },
     attrs: {
         line: {
             fill: 'none',
