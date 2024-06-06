@@ -4,7 +4,6 @@ import Image from "next/image";
 import {useContext, useRef} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {importJSON} from "@/libs/converterJSON";
-import {importRdf} from "@/libs/converterRDF";
 
 type DiagramHeaderProps = {
     name: string,
@@ -34,7 +33,7 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
                     titleInput.current.value = ''
             }
             else {
-                importRdf(graph, file);
+                // importRdf(graph, file);
             }
 
         }

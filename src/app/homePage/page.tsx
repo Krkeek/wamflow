@@ -22,7 +22,6 @@ const HomePage = () =>{
 
     useEffect(() => {
         graph.set('projectTitle', projectInfo.name)
-
     }, [projectInfo]);
 
     const [elementSelected, setElementSelected] = useState<string | null>(null)
@@ -34,10 +33,6 @@ const HomePage = () =>{
     const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
     const paperRef = useRef(null);
 
-    useEffect(() => {
-        const cells = graph.getCells()
-        console.log(cells)
-    }, [elementSelected]);
 
     // useEffect(()=>{
     //     const el = graph.getCell(elementSelected);
