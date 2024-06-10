@@ -11,6 +11,12 @@ import PaperView from "@/components/homePageComponents/paperView/paperView";
 import {useContext, useEffect, useRef, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import LinksContainer from "@/components/homePageComponents/linksContainer/linksContainer";
+import {dia} from "@joint/core";
+import Paper = dia.Paper;
+import {viewJoint} from "@/libs/joint/viewJoint";
+import {linkViewTools} from "@/libs/joint/linkTools/linkTools";
+import ID = dia.Cell.ID;
+import {paperEventListener} from "@/libs/joint/paperEventListener";
 const HomePage = () =>{
 
     const graph = useContext(GraphContext);
@@ -21,28 +27,38 @@ const HomePage = () =>{
     })
 
     useEffect(() => {
-        graph.set('projectTitle', projectInfo.name)
+        graph.set('projectTitle', projectInfo.name);
+
     }, [projectInfo]);
 
-    const [elementSelected, setElementSelected] = useState<string | null>(null)
+    const [elementSelected, setElementSelected] = useState<ID | null>(null)
     const [linkSelected, setLinkSelected] = useState<string>('invocation')
     const setLinkSelectedFn = (link: string) => setLinkSelected(link)
     const setElementSelectedFn = (newElement: string) => setElementSelected(newElement);
     const [connectionMode, setConnectionMode] = useState(false);
     const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
     const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
-    const paperRef = useRef(null);
+    const paperRef = useRef<HTMLDivElement>(null);
+    const [paper, setPaper] = useState<Paper | null>(null)
+
+    useEffect(() => {
+        if (paperRef.current){
+            setPaper(viewJoint(paperRef.current, graph, linkSelected))
+        }
+    },[]);
 
 
-    // useEffect(()=>{
-    //     const el = graph.getCell(elementSelected);
-    //     console.log(el)
-    // },[elementSelected])
-    //
-    // useEffect(() => {
-    //     const link = graph.getLinks()
-    //     console.log(link)
-    // }, [linkSelected]);
+    useEffect(() => {
+        if (paper){
+            paperEventListener({
+                elementSelected,
+                setElementSelectedFn,
+                paper,
+                graph,
+                connectionMode
+            })
+        }
+    });
 
     useGSAP(()=>{
         const ctx = gsap.context(()=>{
@@ -52,13 +68,12 @@ const HomePage = () =>{
         return () => ctx.revert()
     })
 
-
     return(
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
               <div className={`${styles.TopBar}`}>
                   <DiagramHeader name={projectInfo.name} setProjectInfo={setProjectInfoFn} setConnectionMode={setConnectionModeFn}  />
-                  <OptionsBar paperRef={paperRef.current} name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
+                  <OptionsBar paper={paper} paperRef={paperRef.current} name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>
@@ -69,7 +84,7 @@ const HomePage = () =>{
                         }
                     </div>
                     <div  ref={paperRef}  className={`${styles.Middle}`}>
-                            <PaperView linkSelected={linkSelected} connectionMode={connectionMode} elementSelected={elementSelected} setElementSelected={setElementSelectedFn}/>
+                            <PaperView pageRef={paperRef}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
                         <ElementDetailContainer  elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />

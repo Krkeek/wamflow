@@ -5,9 +5,11 @@ import {useContext, useEffect, useRef, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {saveElementData} from "@/libs/saveElementData";
 import {resizeElement} from "@/libs/resizeElement";
+import {dia} from "@joint/core";
+import ID = dia.Cell.ID;
 
 type propsType = {
-    elementSelected : string | null,
+    elementSelected : ID | null,
     setElementSelected : (el: any) => void,
 
 }

@@ -7,14 +7,18 @@ import {exportJSON} from "@/libs/converterJSON";
 import {activeConnectionMode, deactivateConnectionMode} from "@/libs/activeConnectionMode";
 import {exportPNG} from "@/libs/converterPNG";
 import {exportRDF} from "@/libs/converterRDF";
+import {dia} from "@joint/core";
+import ID = dia.Cell.ID;
+import Paper = dia.Paper;
 
 type propsType = {
     connectionMode: boolean,
     setConnectionMode: (mode: boolean) => void,
     name: string,
-    elementSelected : string | null,
+    elementSelected : ID | null,
     setElementSelected : (el: any) => void,
-    paperRef: HTMLDivElement | null
+    paperRef: HTMLDivElement | null,
+    paper: Paper | null
 
 }
 
@@ -49,7 +53,8 @@ const OptionsBar = (props: propsType) =>{
 
     const handleExportJSON = () =>{
         reset();
-        exportJSON(graph, props.name);
+
+        exportJSON(graph,props.name);
     }
 
 
@@ -72,7 +77,7 @@ const OptionsBar = (props: propsType) =>{
 
     const handleExportPNG = () =>{
         reset();
-        exportPNG(props.paperRef, props.name)
+        exportPNG(props.paperRef, props.paper, props.name)
     }
 
 
