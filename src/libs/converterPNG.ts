@@ -20,18 +20,18 @@ export const exportPNG = (target: any, paper: Paper | null, name: string) => {
             })
     }
 
-    if (paper)
-    resetPaperSetting(paper)
+    // if (paper)
+    // resetPaperSetting(paper)
 
 }
 
 
 const preparePaper = (paper: Paper) => {
-    paper.setGrid( {name: "mesh", args: {color: 'transparent'}})
+    // paper.setGrid( {name: "mesh", args: {color: 'transparent'}})
     paper.fitToContent({
-        allowNewOrigin: 'any',
+        allowNewOrigin: 'positive',
         allowNegativeBottomRight: true,
-        padding: 10
+        padding: 10,
     })
 }
 

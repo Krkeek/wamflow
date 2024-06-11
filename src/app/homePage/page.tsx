@@ -45,7 +45,7 @@ const HomePage = () =>{
         if (paperRef.current){
             setPaper(viewJoint(paperRef.current, graph, linkSelected))
         }
-    },[]);
+    },[linkSelected]);
 
 
     useEffect(() => {
