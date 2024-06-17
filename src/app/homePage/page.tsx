@@ -14,7 +14,6 @@ import LinksContainer from "@/components/homePageComponents/linksContainer/links
 import {dia} from "@joint/core";
 import Paper = dia.Paper;
 import {viewJoint} from "@/libs/joint/viewJoint";
-import {linkViewTools} from "@/libs/joint/linkTools/linkTools";
 import ID = dia.Cell.ID;
 import {paperEventListener} from "@/libs/joint/paperEventListener";
 import ErrorBox from "@/components/errorBox/errorBox";
