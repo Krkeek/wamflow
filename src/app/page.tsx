@@ -5,7 +5,7 @@ import FeatureSection from "@/components/featureSection/featureSection";
 import { ReactLenis} from '@studio-freight/react-lenis'
 import {useGSAP} from "@gsap/react";
 import {gsap} from "gsap";
-import {LandingPageAnimation} from "@/animation/LandingPage";
+import {LandingPageAnimation} from "@/libs/gsap/LandingPageAnimation";
 import GraphProvider from "@/libs/joint/GraphProvider";
 gsap.registerPlugin(useGSAP);
 import { SpeedInsights } from "@vercel/speed-insights/next"

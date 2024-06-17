@@ -8,6 +8,8 @@
     --input-color: #D9D9D9;
     --placeHolder-color: rgba(0, 0, 0, 0.5);
     --grid-color: rgba(0, 0, 0, 0.3);
+    --errorBox-bg-color: #FFE7E7;
+    --errorBox-color: #FF0F0F
 }
 
 html,body{

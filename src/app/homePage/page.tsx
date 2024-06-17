@@ -6,7 +6,7 @@ import ElementsContainer from "@/components/homePageComponents/elementsContainer
 import ElementDetailContainer from "@/components/homePageComponents/elementDetailContainer/elementDetailContainer";
 import {gsap} from "gsap";
 import {useGSAP} from "@gsap/react";
-import {HomePageAnimation} from "@/animation/HomePageAnimation";
+import {HomePageAnimation} from "@/libs/gsap/HomePageAnimation";
 import PaperView from "@/components/homePageComponents/paperView/paperView";
 import {useContext, useEffect, useRef, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
@@ -17,6 +17,7 @@ import {viewJoint} from "@/libs/joint/viewJoint";
 import {linkViewTools} from "@/libs/joint/linkTools/linkTools";
 import ID = dia.Cell.ID;
 import {paperEventListener} from "@/libs/joint/paperEventListener";
+import ErrorBox from "@/components/errorBox/errorBox";
 const HomePage = () =>{
 
     const graph = useContext(GraphContext);
@@ -40,6 +41,17 @@ const HomePage = () =>{
     const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
     const paperRef = useRef<HTMLDivElement>(null);
     const [paper, setPaper] = useState<Paper | null>(null)
+    const [errorBox, setErrorBox] = useState<{
+        message: string | null,
+        trigger: boolean
+    }>({
+        message: null,
+        trigger: false
+    });
+    const setErrorBoxFn = (error: string | null) => setErrorBox({
+        message: error,
+        trigger: !errorBox.trigger
+    })
 
     useEffect(() => {
         if (paperRef.current){
@@ -87,10 +99,11 @@ const HomePage = () =>{
                             <PaperView pageRef={paperRef}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
-                        <ElementDetailContainer  elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />
+                        <ElementDetailContainer setErrorBox={setErrorBoxFn}  elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />
                     </div>
                 </div>
             </div>
+            <ErrorBox trigger={errorBox.trigger}  setErrorBox={setErrorBoxFn} alert={errorBox.message} />
         </>
     );
 }

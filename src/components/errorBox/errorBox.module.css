@@ -1,0 +1,18 @@
+.Container {
+    position: fixed;
+    left: 50%;
+    top: -20%;
+    transform: translate(-50%,-50%);
+    background-color: var(--errorBox-bg-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    border-radius: 10px;
+
+}
+.Container p {
+    margin-left: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+}

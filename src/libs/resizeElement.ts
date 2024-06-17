@@ -3,11 +3,12 @@ import {ElementForm} from "../../declarations";
 
 
 
-export const resizeElement = (formData: ElementForm, elementCellView: any) =>{
+export const resizeElement = (formData: ElementForm, elementCellView: any, setErrorBox: (error: string | null) => void) =>{
 
 
     if (!isNumber(formData.width) || !isNumber(formData.height) || !isNumber(formData.scale)){
-        alert('Width, height or scale is not a number')
+        setErrorBox('Width, height or scale is not a number');
+
 
     }else {
         let newDimensions: { width: number; height: number };
@@ -29,11 +30,12 @@ export const resizeElement = (formData: ElementForm, elementCellView: any) =>{
 
         const isValid = isValidDimensions(newDimensions);
 
-        isValid.status  ?
+        if (isValid.status){
             elementCellView.resize(newDimensions.width, newDimensions.height)
-            :
-            alert(isValid.reason)
-
+        }
+        else {
+            setErrorBox(isValid.reason)
+        }
 
     }
 

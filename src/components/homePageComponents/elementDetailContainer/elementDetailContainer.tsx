@@ -11,6 +11,7 @@ import ID = dia.Cell.ID;
 type propsType = {
     elementSelected : ID | null,
     setElementSelected : (el: any) => void,
+    setErrorBox: (error: string | null) => void
 
 }
 const ElementDetailContainer = (props: propsType) =>{
@@ -52,7 +53,7 @@ const ElementDetailContainer = (props: propsType) =>{
     const handleSaveData = () =>{
 
         saveElementData(formData, elementCellView);
-        resizeElement(formData, elementCellView)
+        resizeElement(formData, elementCellView, props.setErrorBox)
 
 
         //Deselect the previous element and reset the form
