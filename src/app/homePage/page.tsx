@@ -83,7 +83,7 @@ const HomePage = () =>{
                                 : <ElementsContainer setConnectionMode={setConnectionModeFn} />
                         }
                     </div>
-                    <div  ref={paperRef}  className={`${styles.Middle}`}>
+                    <div className={`${styles.Middle}`}>
                             <PaperView pageRef={paperRef}/>
                     </div>
                     <div className={`${styles.RightSide}`}>

@@ -20,24 +20,25 @@ export const exportPNG = (target: any, paper: Paper | null, name: string) => {
             })
     }
 
-    // if (paper)
-    // resetPaperSetting(paper)
+    if (paper)
+    resetPaperSetting(paper)
 
 }
 
 
 const preparePaper = (paper: Paper) => {
-    // paper.setGrid( {name: "mesh", args: {color: 'transparent'}})
+    paper.setGrid( {name: "mesh", args: {color: 'transparent'}})
     paper.fitToContent({
-        allowNewOrigin: 'positive',
-        allowNegativeBottomRight: true,
-        padding: 10,
+        allowNewOrigin: 'any',
+        allowNegativeBottomRight: false,
+         padding: 5,
     })
+
 }
 
 
 const resetPaperSetting = (paper: Paper) =>{
-    paper.setDimensions("100%",'100%');
+    paper.setDimensions('65vw','100%');
     paper.translate(0, 0);
     paper.setGrid( {name: "mesh", args: {color: 'rgba(0, 0, 0, 0.4)'}})
 

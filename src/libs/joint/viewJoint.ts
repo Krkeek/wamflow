@@ -10,7 +10,7 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: 
     return  new dia.Paper({
         el: divElement,
         model: graph,
-        width: '100%',
+        width: '65vw',
         height: '100%',
         gridSize: 1,
         cellViewNamespace: shapes,
