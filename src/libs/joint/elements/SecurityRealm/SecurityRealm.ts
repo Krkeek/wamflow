@@ -37,8 +37,8 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
                 textAnchor: 'middle',
                 fontSize: 12,
                 fill: '#333333',
-                refX: "50%",
-                refY: -15,
+                refX: "90%",
+                refY: "5%",
 
             },
             label2: {
