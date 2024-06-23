@@ -17,7 +17,16 @@ import {viewJoint} from "@/libs/joint/viewJoint";
 import ID = dia.Cell.ID;
 import {paperEventListener} from "@/libs/joint/paperEventListener";
 import ErrorBox from "@/components/errorBox/errorBox";
+import {useAppContext} from "@/libs/stateManager/StateProvider";
 const HomePage = () =>{
+
+
+    const { state, dispatch } = useAppContext();
+
+    useEffect(() => {
+        console.log(state.connectionMode)
+    }, []);
+
 
 
     const [isMobile, setIsMobile] = useState<boolean>(false)
@@ -112,6 +121,7 @@ const HomePage = () =>{
                 </div>
             </div>
             <ErrorBox trigger={errorBox.trigger}  setErrorBox={setErrorBoxFn} alert={errorBox.message} />
+
         </>
     );
 }
