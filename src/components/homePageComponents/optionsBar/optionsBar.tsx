@@ -10,6 +10,7 @@ import {exportRDF} from "@/libs/converterRDF";
 import {dia} from "@joint/core";
 import ID = dia.Cell.ID;
 import Paper = dia.Paper;
+import ExportWrapper from "@/components/homePageComponents/optionsBar/exportWrapper/exportWrapper";
 
 type propsType = {
     connectionMode: boolean,
@@ -18,13 +19,13 @@ type propsType = {
     elementSelected : ID | null,
     setElementSelected : (el: any) => void,
     paperRef: HTMLDivElement | null,
-    paper: Paper | null
+    paper: Paper | null,
+    isMobileView: boolean
 
 }
 
 const OptionsBar = (props: propsType) =>{
     const graph = useContext(GraphContext);
-    const exportList = useRef(null)
 
 
     useEffect(() => {
@@ -38,54 +39,6 @@ const OptionsBar = (props: propsType) =>{
     }, [props.connectionMode]);
 
 
-    const reset = () =>{
-        props.setConnectionMode(false);
-        deactivateConnectionMode(graph);
-        const prevElement = graph.getCell(props.elementSelected);
-        if (prevElement){
-            prevElement.attr('path/stroke','black');
-            prevElement.attr('body/stroke','black');
-            prevElement.attr('top/stroke','black');
-
-        }
-        props.setElementSelected(null)
-    }
-
-    const handleExportJSON = () =>{
-        reset();
-
-        exportJSON(graph,props.name);
-    }
-
-
-    const handleExtendExport = (status: boolean) =>{
-        if (status){
-            if (exportList){
-                // @ts-ignore
-                exportList.current.classList.add(styles.ActiveExportList)
-            }
-        }
-        else {
-            if (exportList){
-                // @ts-ignore
-                exportList.current.classList.remove(styles.ActiveExportList)
-            }
-
-        }
-
-    }
-
-    const handleExportPNG = () =>{
-        reset();
-        exportPNG(props.paperRef, props.paper, props.name)
-    }
-
-
-    const handleExportRDF = () =>{
-        reset();
-        exportRDF(graph)
-    }
-
     return(
         <>
             <div className={`${styles.Container}`}>
@@ -94,33 +47,16 @@ const OptionsBar = (props: propsType) =>{
                     <button onClick={()=>{props.setConnectionMode(true)}} className={`${styles.ModeButtons} ${props.connectionMode ? styles.ModeButtonActive : ' '}`}>Connections</button>
 
                 </div>
-                <div className={`${styles.RightSide}`}   onMouseLeave={()=> handleExtendExport(false)}>
-                    <button
-                        onMouseEnter={() => handleExtendExport(true)}
-
-
-                        className={`${styles.ExportButton}`}>Export<Image
-                        src={'/assets/export.webp'} alt={'export'} width={15} height={15}/></button>
-                    <div ref={exportList} className={`${styles.ExtendDiv}`}
-
-                    >
-                        <button
-                            className={`${styles.ExportButton} ${styles.ExportButtonExtended} ${styles.ActiveExportList}`}>Export
-                            as
-                        </button>
-                        <button onClick={handleExportJSON}
-                                className={`${styles.ExtendElement}`}>JSON
-                        </button>
-                        <button
-                            onClick={handleExportRDF}
-                            className={`${styles.ExtendElement}`}>RDF
-                        </button>
-                        <button onClick={handleExportPNG}
-                            className={`${styles.ExtendElement}`}>PNG
-                        </button>
-                    </div>
-
-                </div>
+                {
+                    !props.isMobileView ?
+                        <ExportWrapper  elementSelected={props.elementSelected} name={props.name} paper={props.paper} paperRef={props.paperRef} setConnectionMode={props.setConnectionMode} setElementSelected={props.setElementSelected}/>
+:
+                        <div className={`${styles.RightSide}`}>
+                            <button
+                                className={`${styles.MoreButton}`}>Create
+                             </button>
+                        </div>
+                }
             </div>
         </>
     );

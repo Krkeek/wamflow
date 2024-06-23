@@ -4,7 +4,6 @@ const HeroSection = () =>{
     return(
         <>
             <div className={`${styles.Container}`}>
-                {/*<div className={`${styles.BgImage}`} style={{backgroundImage: 'url(\'/assets/hero.webp\')'}}>*/}
                     <div className={`${styles.TopBarContainer}`}>
                         <TopBar/>
                     </div>
@@ -24,8 +23,6 @@ const HeroSection = () =>{
                         <div className={`${styles.RightDiv}`}></div>
                     </div>
                 </div>
-            {/*</div>*/}
-
         </>
     );
 }

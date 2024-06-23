@@ -34,3 +34,19 @@
     cursor: pointer;
 
 }
+
+@media screen and (max-width: 600px) {
+
+    .Button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+    .BrandName {
+        font-size: 1.2rem;
+    }
+    .Logo {
+        width: 2rem;
+        height: auto;
+    }
+
+}

@@ -22,3 +22,13 @@
 }
 
 
+@media screen and (max-width: 600px) {
+
+  .BgImage {
+    background-image: none !important;
+  }
+
+
+}
+
+

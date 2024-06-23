@@ -39,4 +39,26 @@
     justify-content: center;
     align-items: center;
 
+
+
+}
+
+@media screen and (max-width: 600px){
+
+    .TopBar {
+        flex-flow: column;
+        padding: 1rem;
+        height: 15%;
+
+    }
+    .LeftSide {
+        display: none;
+    }
+    .RightSide {
+        display: none;
+    }
+    .Middle {
+        width: 100vw !important;
+    }
+
 }

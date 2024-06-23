@@ -40,6 +40,7 @@
     border: none;
     border-radius: 5px;
     transition: background-color 500ms ease;
+    background: none;
 
 }
 
@@ -52,10 +53,24 @@
     display: none;
 }
 
+.Export {
+    filter: brightness(0);
+}
+
 @media screen and (min-width: 768px) and (max-width: 1300px){
     /*Tablet*/
     .Title {
         font-size: 1rem;
     }
 
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .Container {
+        width: 80%;
+        height: 100%;
+    }
+    
 }

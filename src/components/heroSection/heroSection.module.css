@@ -42,3 +42,33 @@ height: 100vh;
     font-size: 1.1rem;
 }
 
+
+@media screen and (max-width: 600px) {
+
+    .LeftDiv {
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-start;
+    }
+
+    .RightDiv {
+        display: none;
+    }
+    .Title {
+        font-size: 2rem;
+        text-align: center;
+        margin: 10% 0 0;
+    }
+    .Description {
+        width: 80%;
+        font-size: 1.2rem;
+        margin: 10% auto;
+        text-align: center;
+    }
+    .Container {
+        height: fit-content;
+    }
+
+
+}

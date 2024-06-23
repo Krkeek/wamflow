@@ -19,6 +19,16 @@ import {paperEventListener} from "@/libs/joint/paperEventListener";
 import ErrorBox from "@/components/errorBox/errorBox";
 const HomePage = () =>{
 
+
+    const [isMobile, setIsMobile] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setIsMobile(window.innerWidth <= 768)
+
+        }
+    }, []);
+
     const graph = useContext(GraphContext);
     const projectTitle = graph.get('projectTitle');
 
@@ -28,7 +38,6 @@ const HomePage = () =>{
 
     useEffect(() => {
         graph.set('projectTitle', projectInfo.name);
-
     }, [projectInfo]);
 
     const [elementSelected, setElementSelected] = useState<ID | null>(null)
@@ -54,7 +63,7 @@ const HomePage = () =>{
 
     useEffect(() => {
         if (paperRef.current){
-            setPaper(viewJoint(paperRef.current, graph, linkSelected))
+            setPaper(viewJoint(paperRef.current, graph, linkSelected, isMobile))
         }
     },[linkSelected]);
 
@@ -83,8 +92,8 @@ const HomePage = () =>{
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
               <div className={`${styles.TopBar}`}>
-                  <DiagramHeader name={projectInfo.name} setProjectInfo={setProjectInfoFn} setConnectionMode={setConnectionModeFn}  />
-                  <OptionsBar paper={paper} paperRef={paperRef.current} name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
+                  <DiagramHeader isMobileView={isMobile} name={projectInfo.name} setProjectInfo={setProjectInfoFn} setConnectionMode={setConnectionModeFn}  />
+                  <OptionsBar isMobileView={isMobile} paper={paper} paperRef={paperRef.current} name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>

@@ -8,7 +8,8 @@ import {importJSON} from "@/libs/converterJSON";
 type DiagramHeaderProps = {
     name: string,
     setProjectInfo: (project: {name: string}) => void,
-    setConnectionMode: (mode: boolean) => void
+    setConnectionMode: (mode: boolean) => void,
+    isMobileView: boolean
 }
 const DiagramHeader = (props: DiagramHeaderProps) =>{
     const inputFile = useRef(null);
@@ -50,9 +51,16 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
                     <input ref={titleInput} className={`${styles.Title}`} placeholder={props.name}
                            onChange={(e) => props.setProjectInfo({name: e.target.value})}/>
                 </div>
-                <button onClick={handleImport} className={`${styles.Import}`}><Image className={`${styles.Logo}`} src={'/assets/import.webp'}
-                                                              alt={'logo'} width={20} height={20}/></button>
-                <input onChange={(e) => handleFileChange(e.target.files)} ref={inputFile} className={`${styles.InputFile}`} type="file" multiple={false} accept={'.json'}/>
+                <button onClick={handleImport} className={`${styles.Import}`}><Image className={`${styles.Logo}`}
+                                                                                     src={'/assets/import.webp'}
+                                                                                     alt={'logo'} width={20}
+                                                                                     height={20}/></button>
+                <input onChange={(e) => handleFileChange(e.target.files)} ref={inputFile}
+                       className={`${styles.InputFile}`} type="file" multiple={false} accept={'.json'}/>
+                <button style={props.isMobileView ? {display: "block"} : { display: "none"}} onClick={() => {}} className={`${styles.Import}`}><Image className={`${styles.Export}`}
+                                                                                     src={'/assets/export.webp'}
+                                                                                     alt={'logo'} width={20}
+                                                                                     height={20}/></button>
             </div>
 
         </>

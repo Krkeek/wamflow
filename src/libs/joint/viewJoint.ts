@@ -4,13 +4,13 @@ import {Invocation} from "@/libs/joint/links/Invocation/Invocation";
 import {LegacyRelationship} from "@/libs/joint/links/LegacyRelationship/LegacyRelationship";
 import {TrustRelationship} from "@/libs/joint/links/TrustRelationship/TrustRelationship";
 
-export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: string) =>{
+export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: string, isMobileView: boolean) =>{
 
 
     return  new dia.Paper({
         el: divElement,
         model: graph,
-        width: '65vw',
+        width: !isMobileView ? '65vw' : '100vw',
         height: '100%',
         gridSize: 1,
         cellViewNamespace: shapes,

@@ -9,3 +9,20 @@
     font-size: 1.2rem;
     margin-left: 1rem;
 }
+
+@media screen and (max-width: 600px) {
+    .Feature {
+        flex-flow: column;
+    }
+
+    .Feature p {
+        font-weight: 700;
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+
+    .Image {
+        width: 3.5rem;
+        height: auto;
+    }
+}
