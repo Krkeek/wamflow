@@ -7,17 +7,17 @@ import {saveElementData} from "@/libs/saveElementData";
 import {resizeElement} from "@/libs/resizeElement";
 import {dia} from "@joint/core";
 import ID = dia.Cell.ID;
+import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
+import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 
 type propsType = {
-    elementSelected : ID | null,
-    setElementSelected : (el: any) => void,
-    setErrorBox: (error: string | null) => void
 
 }
 const ElementDetailContainer = (props: propsType) =>{
 
     const graph = useContext(GraphContext);
-    const elementSelected = props.elementSelected;
+    const dispatch = useAppDispatch()
+    const elementSelected = useAppSelector(state => state.elementSelected.value);
     const elementCellView = graph.getCell(elementSelected);
 
     const [elementUpdated, setElementUpdated] = useState(false);
@@ -53,18 +53,18 @@ const ElementDetailContainer = (props: propsType) =>{
     const handleSaveData = () =>{
 
         saveElementData(formData, elementCellView);
-        resizeElement(formData, elementCellView, props.setErrorBox)
+        resizeElement(formData, elementCellView, dispatch)
 
 
         //Deselect the previous element and reset the form
-        const prevElement = graph.getCell(props.elementSelected);
+        const prevElement = graph.getCell(elementSelected);
         if (prevElement){
             prevElement.attr('path/stroke','black');
             prevElement.attr('body/stroke','black');
             prevElement.attr('top/stroke','black');
 
         }
-        props.setElementSelected(null)
+        dispatch(setElementSelected(null))
         setFormData({
             name: "",
             uri: "",
@@ -79,7 +79,7 @@ const ElementDetailContainer = (props: propsType) =>{
 
     const handleDeleteElement = () =>{
         elementCellView.remove();
-        props.setElementSelected(null)
+        dispatch(setElementSelected(null))
         setFormData({
             name: "",
             uri: "",

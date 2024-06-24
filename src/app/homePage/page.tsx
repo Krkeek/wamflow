@@ -14,66 +14,49 @@ import LinksContainer from "@/components/homePageComponents/linksContainer/links
 import {dia} from "@joint/core";
 import Paper = dia.Paper;
 import {viewJoint} from "@/libs/joint/viewJoint";
-import ID = dia.Cell.ID;
 import {paperEventListener} from "@/libs/joint/paperEventListener";
 import ErrorBox from "@/components/errorBox/errorBox";
+import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
+import {setMobileView} from "@/libs/redux/features/mobileViewSlice";
+import {setProjectInfo} from "@/libs/redux/features/projectInfoSlice";
+
 const HomePage = () =>{
-
-
-
-    const [isMobile, setIsMobile] = useState<boolean>(false)
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setIsMobile(window.innerWidth <= 768)
-
-        }
-    }, []);
-
     const graph = useContext(GraphContext);
-    const projectTitle = graph.get('projectTitle');
-
-    const [projectInfo, setProjectInfo] = useState({
-        name: projectTitle
-    })
-
-    useEffect(() => {
-        graph.set('projectTitle', projectInfo.name);
-    }, [projectInfo]);
-
-    const [elementSelected, setElementSelected] = useState<ID | null>(null)
-    const [linkSelected, setLinkSelected] = useState<string>('invocation')
-    const setLinkSelectedFn = (link: string) => setLinkSelected(link)
-    const setElementSelectedFn = (newElement: string) => setElementSelected(newElement);
-    const [connectionMode, setConnectionMode] = useState(false);
-    const setConnectionModeFn = (mode: boolean) => setConnectionMode(mode)
-    const setProjectInfoFn = (project: {name: string}) => setProjectInfo(project)
+    const isMobileView = useAppSelector(state => state.mobileView.value)
+    const dispatch = useAppDispatch()
+    const connectionMode = useAppSelector(state => state.connectionMode.value)
+    const projectName = useAppSelector(state => state.projectInfo.name)
+    const elementSelected = useAppSelector(state => state.elementSelected.value)
+    const linkSelected = useAppSelector(state => state.linkSelected.value)
     const paperRef = useRef<HTMLDivElement>(null);
-    const [paper, setPaper] = useState<Paper | null>(null)
-    const [errorBox, setErrorBox] = useState<{
-        message: string | null,
-        trigger: boolean
-    }>({
-        message: null,
-        trigger: false
-    });
-    const setErrorBoxFn = (error: string | null) => setErrorBox({
-        message: error,
-        trigger: !errorBox.trigger
-    })
+    const [paper, setPaper] = useState<Paper | null >(null)
 
     useEffect(() => {
         if (paperRef.current){
-            setPaper(viewJoint(paperRef.current, graph, linkSelected, isMobile))
+            setPaper(viewJoint(paperRef.current, graph, linkSelected, isMobileView ))
         }
     },[linkSelected]);
 
+    useEffect(() => {
+        graph.set('projectTitle', projectName);
+    }, [projectName]);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            dispatch(setMobileView(window.innerWidth <= 768))
+        }
+    }, []);
+
+    useEffect(() => {
+        const projectTitle = graph.get('projectTitle');
+        dispatch(setProjectInfo(projectTitle))
+    }, []);
 
     useEffect(() => {
         if (paper){
             paperEventListener({
                 elementSelected,
-                setElementSelectedFn,
+                dispatch,
                 paper,
                 graph,
                 connectionMode
@@ -93,26 +76,26 @@ const HomePage = () =>{
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
               <div className={`${styles.TopBar}`}>
-                  <DiagramHeader isMobileView={isMobile} name={projectInfo.name} setProjectInfo={setProjectInfoFn} setConnectionMode={setConnectionModeFn}  />
-                  <OptionsBar isMobileView={isMobile} paper={paper} paperRef={paperRef.current} name={projectInfo.name}  connectionMode={connectionMode}  elementSelected={elementSelected} setConnectionMode={setConnectionModeFn} setElementSelected={setElementSelectedFn} />
+                  <DiagramHeader />
+                  <OptionsBar  paper={paper} paperRef={paperRef.current} />
               </div>
                 <div className={`${styles.ContentDiv}`}>
                     <div className={`${styles.LeftSide}`}>
                         {
                             connectionMode
-                                ? <LinksContainer linkSelected={linkSelected} setLinkSelected={setLinkSelectedFn} />
-                                : <ElementsContainer setConnectionMode={setConnectionModeFn} />
+                                ? <LinksContainer />
+                                : <ElementsContainer  />
                         }
                     </div>
                     <div className={`${styles.Middle}`}>
                             <PaperView pageRef={paperRef}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
-                        <ElementDetailContainer setErrorBox={setErrorBoxFn}  elementSelected={elementSelected} setElementSelected={setElementSelectedFn} />
+                        <ElementDetailContainer  />
                     </div>
                 </div>
             </div>
-            <ErrorBox trigger={errorBox.trigger}  setErrorBox={setErrorBoxFn} alert={errorBox.message} />
+            <ErrorBox />
 
         </>
     );

@@ -3,20 +3,19 @@ import Image from "next/image";
 import {exportPNG} from "@/libs/converterPNG";
 import {exportRDF} from "@/libs/converterRDF";
 import {exportJSON} from "@/libs/converterJSON";
-import {useContext, useRef} from "react";
+import {useContext, useEffect, useRef} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {dia} from "@joint/core";
 import Paper = dia.Paper;
 import ID = dia.Cell.ID;
 import {deactivateConnectionMode} from "@/libs/activeConnectionMode";
+import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
+import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
+import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 
 
 
 type PropsType = {
-    setConnectionMode: (mode: boolean) => void,
-    name: string,
-    elementSelected : ID | null,
-    setElementSelected : (el: any) => void,
     paperRef: HTMLDivElement | null,
     paper: Paper | null
 }
@@ -24,7 +23,9 @@ type PropsType = {
 const ExportWrapper = (props: PropsType) =>{
     const graph = useContext(GraphContext);
     const exportList = useRef(null)
-
+    const dispatch = useAppDispatch()
+    const projectName = useAppSelector(state => state.projectInfo.name)
+    const elementSelected = useAppSelector(state => state.elementSelected.value)
 
     const handleExtendExport = (status: boolean) =>{
         if (status){
@@ -45,32 +46,32 @@ const ExportWrapper = (props: PropsType) =>{
 
     const handleExportPNG = () =>{
         reset();
-        exportPNG(props.paperRef, props.paper, props.name)
+        exportPNG(props.paperRef, props.paper, projectName)
     }
 
 
     const handleExportRDF = () =>{
         reset();
-        exportRDF(graph)
+        exportRDF(graph, projectName)
     }
 
     const reset = () =>{
-        props.setConnectionMode(false);
+        //props.setConnectionMode(false);
+        dispatch(setConnectionMode(false))
         deactivateConnectionMode(graph);
-        const prevElement = graph.getCell(props.elementSelected);
+        const prevElement = graph.getCell(elementSelected);
         if (prevElement){
             prevElement.attr('path/stroke','black');
             prevElement.attr('body/stroke','black');
             prevElement.attr('top/stroke','black');
 
         }
-        props.setElementSelected(null)
+        dispatch(setElementSelected(null))
     }
 
     const handleExportJSON = () =>{
         reset();
-
-        exportJSON(graph,props.name);
+        exportJSON(graph,projectName);
     }
 
 

@@ -3,11 +3,9 @@ import Image from "next/image";
 import {useGSAP} from "@gsap/react";
 import {gsap} from "gsap";
 import {ErrorBoxAnimation} from "@/libs/gsap/ErrorBoxAnimation";
+import {useAppSelector} from "@/libs/redux/hooks";
 
 type PropsType = {
-    alert: string | null;
-    setErrorBox: (error: string | null) => void;
-    trigger: boolean
 
 }
 
@@ -16,6 +14,8 @@ type PropsType = {
 //Maximum size allowed is 500px
 const ErrorBox = (props: PropsType) =>{
 
+    const trigger = useAppSelector(state => state.errorBox.trigger)
+    const errorBoxMessage = useAppSelector(state => state.errorBox.message)
 
     useGSAP(()=>{
         const ctx = gsap.context(()=>{
@@ -23,12 +23,12 @@ const ErrorBox = (props: PropsType) =>{
         })
 
         return () => ctx.revert()
-    },[props.alert, props.trigger])
+    },[errorBoxMessage, trigger])
 
 
 
 
-    if (!props.alert){
+    if (!errorBoxMessage){
         return (
             <>
             </>
@@ -39,7 +39,7 @@ const ErrorBox = (props: PropsType) =>{
         <>
             <div className={`${styles.Container} BoxAnimation`}>
                 <Image src={'/assets/errorBox.webp'} alt={'error'} width={30} height={30} />
-                <p>{props.alert}</p>
+                <p>{errorBoxMessage}</p>
             </div>
 
         </>

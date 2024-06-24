@@ -11,45 +11,42 @@ import {dia} from "@joint/core";
 import ID = dia.Cell.ID;
 import Paper = dia.Paper;
 import ExportWrapper from "@/components/homePageComponents/optionsBar/exportWrapper/exportWrapper";
+import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
+import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
 
 type propsType = {
-    connectionMode: boolean,
-    setConnectionMode: (mode: boolean) => void,
-    name: string,
-    elementSelected : ID | null,
-    setElementSelected : (el: any) => void,
     paperRef: HTMLDivElement | null,
     paper: Paper | null,
-    isMobileView: boolean
 
 }
 
 const OptionsBar = (props: propsType) =>{
     const graph = useContext(GraphContext);
-
-
+    const dispatch = useAppDispatch()
+    const connectionMode = useAppSelector(state => state.connectionMode.value)
+    const mobileView = useAppSelector(state => state.mobileView.value)
     useEffect(() => {
-        if (props.connectionMode){
+        if (connectionMode){
             activeConnectionMode(graph)
         }
         else {
             deactivateConnectionMode(graph)
         }
 
-    }, [props.connectionMode]);
+    }, [connectionMode]);
 
 
     return(
         <>
             <div className={`${styles.Container}`}>
                 <div className={`${styles.LeftSide}`}>
-                    <button onClick={()=>{props.setConnectionMode(false)}} className={`${styles.ModeButtons} ${!props.connectionMode ? styles.ModeButtonActive : ' '}`}>Elements</button>
-                    <button onClick={()=>{props.setConnectionMode(true)}} className={`${styles.ModeButtons} ${props.connectionMode ? styles.ModeButtonActive : ' '}`}>Connections</button>
+                    <button onClick={()=>{dispatch(setConnectionMode(false))}} className={`${styles.ModeButtons} ${!connectionMode ? styles.ModeButtonActive : ' '}`}>Elements</button>
+                    <button onClick={()=>{dispatch(setConnectionMode(true))}} className={`${styles.ModeButtons} ${connectionMode ? styles.ModeButtonActive : ' '}`}>Connections</button>
 
                 </div>
                 {
-                    !props.isMobileView ?
-                        <ExportWrapper  elementSelected={props.elementSelected} name={props.name} paper={props.paper} paperRef={props.paperRef} setConnectionMode={props.setConnectionMode} setElementSelected={props.setElementSelected}/>
+                    !mobileView ?
+                        <ExportWrapper  paper={props.paper} paperRef={props.paperRef} />
 :
                         <div className={`${styles.RightSide}`}>
                             <button

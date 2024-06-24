@@ -1,14 +1,14 @@
 import {scaleDimensions} from "@/libs/scaleDimensions";
 import {ElementForm} from "../../declarations";
+import {setErrorBox} from "@/libs/redux/features/errorBoxSlice";
 
 
 
-export const resizeElement = (formData: ElementForm, elementCellView: any, setErrorBox: (error: string | null) => void) =>{
+export const resizeElement = (formData: ElementForm, elementCellView: any, dispatch: any) =>{
 
 
     if (!isNumber(formData.width) || !isNumber(formData.height) || !isNumber(formData.scale)){
-        setErrorBox('Width, height or scale is not a number');
-
+        dispatch(setErrorBox('Width, height or scale is not a number'))
 
     }else {
         let newDimensions: { width: number; height: number };
@@ -34,7 +34,7 @@ export const resizeElement = (formData: ElementForm, elementCellView: any, setEr
             elementCellView.resize(newDimensions.width, newDimensions.height)
         }
         else {
-            setErrorBox(isValid.reason)
+            dispatch(setErrorBox(isValid.reason))
         }
 
     }

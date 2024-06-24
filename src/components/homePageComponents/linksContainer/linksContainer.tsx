@@ -3,8 +3,7 @@ import {LinksData} from "../../../../dataEntry";
 import Link from "@/components/homePageComponents/link/link";
 
 type propsType = {
-    linkSelected: string,
-    setLinkSelected: (link: string) => void
+
 }
 
 const LinksContainer = (props: propsType) =>{
@@ -14,7 +13,7 @@ const LinksContainer = (props: propsType) =>{
             <div className={`${styles.Container}`}>
                 {
                     LinksData.map((link, index)=>(
-                        <Link key={index} link={link} linkSelected={props.linkSelected} setLinkSelected={props.setLinkSelected} />
+                        <Link key={index} link={link} />
                     ))
 
                 }

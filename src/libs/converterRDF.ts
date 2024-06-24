@@ -22,7 +22,7 @@ const createQuad = (subject: nodesType, predicate: string, object: nodesType) =>
 
 }
 
-export const exportRDF = (graph: any) =>{
+export const exportRDF = (graph: any, projectName: string) =>{
 
     const writer = new Writer({ prefixes: { wamflow: 'http://wamflow.vercel.app/'}});
 
@@ -47,7 +47,7 @@ export const exportRDF = (graph: any) =>{
         if (error) {
             console.error(error);
         } else {
-            downloadFile(result, 'output.ttl');
+            downloadFile(result, `${projectName}.ttl`);
         }
     });
 }

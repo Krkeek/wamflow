@@ -2,26 +2,24 @@ import {dia} from "@joint/core";
 import Paper = dia.Paper;
 import {linkViewTools} from "@/libs/joint/linkTools/linkTools";
 import Graph = dia.Graph;
+import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
+import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 
 
 type PropsType = {
-    elementSelected: any,
-    setElementSelectedFn: (el: any) => void
     paper: Paper,
     graph: Graph,
-    connectionMode: boolean
+    connectionMode: boolean,
+    dispatch: any,
+    elementSelected: any
 }
 
 export const paperEventListener     = (props: PropsType) =>{
 
-    const elementSelected = props.elementSelected;
     const paper = props.paper
     const graph = props.graph;
-    const setElementSelected = props.setElementSelectedFn
     const connectionMode = props.connectionMode
-
-
-
+    const elementSelected = props.elementSelected
 
 
     paper.on('element:pointerclick',(cellView)=>{
@@ -34,7 +32,8 @@ export const paperEventListener     = (props: PropsType) =>{
 
             }
         }
-        setElementSelected(cellView.model.id);
+        props.dispatch(setElementSelected(cellView.model.id))
+        // setElementSelected(cellView.model.id);
         cellView.model.attr('path/stroke','#023E8A');
         cellView.model.attr('body/stroke','#023E8A');
         cellView.model.attr('top/stroke','#023E8A');
@@ -50,7 +49,7 @@ export const paperEventListener     = (props: PropsType) =>{
             prevElement.attr('top/stroke','black');
 
         }
-        setElementSelected(null)
+        props.dispatch(setElementSelected(null))
     })
 
     paper.on('link:mouseenter', function(linkView) {
