@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import React from "react";
-import {StateProvider} from "@/libs/stateManager/StateProvider";
-import ClientWrapper from "@/components/clientWrapper/clientWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <ClientWrapper>
           {children}
-      </ClientWrapper>
       </body>
     </html>
 
