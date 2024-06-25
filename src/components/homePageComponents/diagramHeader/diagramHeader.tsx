@@ -1,12 +1,10 @@
 
 import styles from './diagramHeader.module.css'
 import Image from "next/image";
-import {useContext, useEffect, useRef} from "react";
+import {useContext, useRef} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {importJSON} from "@/libs/converterJSON";
-import {useDispatch} from "react-redux";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
-import {display} from "html2canvas/dist/types/css/property-descriptors/display";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
 import {setProjectInfo} from "@/libs/redux/features/projectInfoSlice";
 
@@ -27,7 +25,6 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
     }
 
     const handleFileChange = async (files: FileList | null) => {
-        // props.setConnectionMode(false);
         dispatch((setConnectionMode(false)))
 
 
@@ -35,17 +32,10 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
             const file = files[0];
             if (file.type === 'application/json'){
                 await importJSON(graph, file);
-                // props.setProjectInfo({
-                //     name: graph.get('projectTitle')
-                // });
                 dispatch(setProjectInfo(graph.get('projectTitle')))
                     // @ts-ignore
                     titleInput.current.value = ''
             }
-            else {
-                // importRdf(graph, file);
-            }
-
         }
     }
 

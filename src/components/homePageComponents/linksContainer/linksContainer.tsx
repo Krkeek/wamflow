@@ -2,11 +2,8 @@ import styles from './linksContainer.module.css'
 import {LinksData} from "../../../../dataEntry";
 import Link from "@/components/homePageComponents/link/link";
 
-type propsType = {
 
-}
-
-const LinksContainer = (props: propsType) =>{
+const LinksContainer = () =>{
     return(
         <>
 

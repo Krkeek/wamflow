@@ -5,8 +5,6 @@ import {Service} from "@/libs/joint/elements/Service/Service";
 import {IdentityProvider} from "@/libs/joint/elements/IdentityProvider/IdentityProvider";
 import {ProcessUnit} from "@/libs/joint/elements/ProcessUnit/ProcessUnit";
 import {DatabaseProvider} from "@/libs/joint/elements/DatabaseProvider/DatabaseProvider";
-import {Invocation} from "@/libs/joint/links/Invocation/Invocation";
-import {shapes} from "@joint/core";
 
 export const createJointElement = (elementId: string, graph: any) =>{
     let element;

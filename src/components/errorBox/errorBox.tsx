@@ -5,14 +5,9 @@ import {gsap} from "gsap";
 import {ErrorBoxAnimation} from "@/libs/gsap/ErrorBoxAnimation";
 import {useAppSelector} from "@/libs/redux/hooks";
 
-type PropsType = {
-
-}
 
 
-
-//Maximum size allowed is 500px
-const ErrorBox = (props: PropsType) =>{
+const ErrorBox = () =>{
 
     const trigger = useAppSelector(state => state.errorBox.trigger)
     const errorBoxMessage = useAppSelector(state => state.errorBox.message)
@@ -24,8 +19,6 @@ const ErrorBox = (props: PropsType) =>{
 
         return () => ctx.revert()
     },[errorBoxMessage, trigger])
-
-
 
 
     if (!errorBoxMessage){

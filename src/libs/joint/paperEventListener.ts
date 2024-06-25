@@ -2,7 +2,6 @@ import {dia} from "@joint/core";
 import Paper = dia.Paper;
 import {linkViewTools} from "@/libs/joint/linkTools/linkTools";
 import Graph = dia.Graph;
-import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 
 
@@ -33,7 +32,6 @@ export const paperEventListener     = (props: PropsType) =>{
             }
         }
         props.dispatch(setElementSelected(cellView.model.id))
-        // setElementSelected(cellView.model.id);
         cellView.model.attr('path/stroke','#023E8A');
         cellView.model.attr('body/stroke','#023E8A');
         cellView.model.attr('top/stroke','#023E8A');

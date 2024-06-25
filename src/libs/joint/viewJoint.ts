@@ -45,13 +45,13 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: 
         },
         highlighting: {
             'default': {
-                name: 'stroke', // `joint.highlighters.stroke`
+                name: 'stroke',
                 options: {
                     padding: 2
                 }
             },
             'connecting': {
-                name: 'addClass',  // `joint.highlighters.addClass`
+                name: 'addClass',
                 options: {
                     className: 'highlight-connecting'
                 }

@@ -1,19 +1,15 @@
 'use client'
 import styles from './elementDetailContainer.module.css'
 import Image from "next/image";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {saveElementData} from "@/libs/saveElementData";
 import {resizeElement} from "@/libs/resizeElement";
-import {dia} from "@joint/core";
-import ID = dia.Cell.ID;
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 
-type propsType = {
 
-}
-const ElementDetailContainer = (props: propsType) =>{
+const ElementDetailContainer = () =>{
 
     const graph = useContext(GraphContext);
     const dispatch = useAppDispatch()

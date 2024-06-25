@@ -2,7 +2,7 @@
 
 export const exportJSON = (graph: any, name: string) =>{
     const jsonObject = graph.toJSON();
-    const jsonString = JSON.stringify(jsonObject, null, 2); // Convert JSON object to string with pretty print
+    const jsonString = JSON.stringify(jsonObject, null, 2);
     const blob = new Blob([jsonString], { type: "application/json" });
     const link = document.createElement("a");
     link.download = `${name}.json`;

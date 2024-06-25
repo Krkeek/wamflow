@@ -10,7 +10,7 @@ type nodesType = {
 
 const createQuad = (subject: nodesType, predicate: string, object: nodesType) =>{
     const { DataFactory } = N3;
-    const { namedNode, literal, defaultGraph, quad } = DataFactory;
+    const { namedNode, defaultGraph, quad } = DataFactory;
 
     return quad(
         namedNode(subject.defaultId), // Subject
@@ -26,15 +26,7 @@ export const exportRDF = (graph: any, projectName: string) =>{
 
     const writer = new Writer({ prefixes: { wamflow: 'http://wamflow.vercel.app/'}});
 
-    const {elements, relationships} = getElementsAndRelationships(graph);
-    console.log(elements)
-
-    // elements.map((element: any)=>{
-    //     const wamQuad = createQuad({defaultId: element.defaultId, uri: " ", name: " "}, " ", {defaultId: "",name: "", uri: ""})
-    //     writer.addQuad(wamQuad)
-    //
-    // })
-    //
+    const {relationships} = getElementsAndRelationships(graph);
 
     relationships.map((relation: any)=>{
 

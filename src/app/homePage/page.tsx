@@ -45,14 +45,10 @@ const HomePage = () =>{
         if (typeof window !== 'undefined') {
             dispatch(setMobileView(window.innerWidth <= 768))
         }
-    }, []);
 
-    useEffect(() => {
         const projectTitle = graph.get('projectTitle');
         dispatch(setProjectInfo(projectTitle))
-    }, []);
 
-    useEffect(() => {
         if (paper){
             paperEventListener({
                 elementSelected,
@@ -62,7 +58,8 @@ const HomePage = () =>{
                 connectionMode
             })
         }
-    });
+
+    }, []);
 
     useGSAP(()=>{
         const ctx = gsap.context(()=>{
