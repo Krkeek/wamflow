@@ -59,7 +59,7 @@ const HomePage = () =>{
             })
         }
 
-    }, []);
+    });
 
     useGSAP(()=>{
         const ctx = gsap.context(()=>{
