@@ -1,5 +1,5 @@
 
-export const activeConnectionMode = (graph: any) => {
+export const activeConnectionMode = (graph: any, mobileView: boolean) => {
 
     const elements = graph.getCells();
     elements.forEach((element: any)=>{
@@ -9,8 +9,12 @@ export const activeConnectionMode = (graph: any) => {
             ports.forEach((port: any) => {
                 const portGroup = element.portProp(port.id, 'group');
                 if (portGroup) {
-                    element.portProp(port.id, 'attrs/circle/r', 3);
-                    element.portProp(port.id, 'attrs/circle/r', 3);
+                    element.portProp(port.id, 'attrs/circle/r', mobileView ? 15 : 3);
+                    element.portProp(port.id, 'attrs/circle/r', mobileView ? 15 : 3);
+                    if (mobileView){
+                        element.portProp(port.id, 'attrs/circle/fill', 'transparent');
+                        element.portProp(port.id, 'attrs/circle/fill', 'transparent');
+                    }
                 }
             })
         }

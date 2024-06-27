@@ -12,6 +12,7 @@ import {deactivateConnectionMode} from "@/libs/activeConnectionMode";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
+import MobileExportList from "@/components/mobileExportList/mobileExportList";
 
 
 
@@ -21,12 +22,7 @@ type PropsType = {
 }
 
 const ExportWrapper = (props: PropsType) =>{
-    const graph = useContext(GraphContext);
     const exportList = useRef(null)
-    const dispatch = useAppDispatch()
-    const projectName = useAppSelector(state => state.projectInfo.name)
-    const elementSelected = useAppSelector(state => state.elementSelected.value)
-
     const handleExtendExport = (status: boolean) =>{
         if (status){
             if (exportList){
@@ -41,40 +37,7 @@ const ExportWrapper = (props: PropsType) =>{
             }
 
         }
-
     }
-
-    const handleExportPNG = () =>{
-        reset();
-        exportPNG(props.paperRef, props.paper, projectName)
-    }
-
-
-    const handleExportRDF = () =>{
-        reset();
-        exportRDF(graph, projectName)
-    }
-
-    const reset = () =>{
-        //props.setConnectionMode(false);
-        dispatch(setConnectionMode(false))
-        deactivateConnectionMode(graph);
-        const prevElement = graph.getCell(elementSelected);
-        if (prevElement){
-            prevElement.attr('path/stroke','black');
-            prevElement.attr('body/stroke','black');
-            prevElement.attr('top/stroke','black');
-
-        }
-        dispatch(setElementSelected(null))
-    }
-
-    const handleExportJSON = () =>{
-        reset();
-        exportJSON(graph,projectName);
-    }
-
-
 
     return(
         <>
@@ -92,18 +55,20 @@ const ExportWrapper = (props: PropsType) =>{
                         className={`${styles.ExportButton} ${styles.ExportButtonExtended} ${styles.ActiveExportList}`}>Export
                         as
                     </button>
-                    <button onClick={handleExportJSON}
-                            className={`${styles.ExtendElement}`}>JSON
-                    </button>
-                    <button
-                        onClick={handleExportRDF}
-                        className={`${styles.ExtendElement}`}>RDF
-                    </button>
-                    <button onClick={handleExportPNG}
-                            className={`${styles.ExtendElement}`}>PNG
-                    </button>
+                    <MobileExportList paperRef={props.paperRef} paper={props.paper}/>
+                    {/*<button onClick={handleExportJSON}*/}
+                    {/*        className={`${styles.ExtendElement}`}>JSON*/}
+                    {/*</button>*/}
+                    {/*<button*/}
+                    {/*    onClick={handleExportRDF}*/}
+                    {/*    className={`${styles.ExtendElement}`}>RDF*/}
+                    {/*</button>*/}
+                    {/*<button onClick={handleExportPNG}*/}
+                    {/*        className={`${styles.ExtendElement}`}>PNG*/}
+                    {/*</button>*/}
                 </div>
             </div>
+
         </>
     );
 }

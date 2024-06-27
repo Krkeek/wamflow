@@ -22,6 +22,7 @@ import { HomePageAnimation } from "@/libs/gsap/HomePageAnimation";
 import Paper = dia.Paper;
 import styles from './homePage.module.css';
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
+import MobileExportList from "@/components/mobileExportList/mobileExportList";
 
 const HomePage = () =>{
     const graph = useContext(GraphContext);
@@ -85,7 +86,7 @@ const HomePage = () =>{
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
               <div className={`${styles.TopBar} ${toggleContainer && isMobileView && styles.ContainerBlur}` } onClick={handleCloseContainer}>
-                  <DiagramHeader />
+                  <DiagramHeader paper={paper} paperRef={paperRef.current} />
                   <OptionsBar  paper={paper} paperRef={paperRef.current}/>
               </div>
                 <div className={`${styles.ContentDiv}`}>
@@ -105,6 +106,9 @@ const HomePage = () =>{
                 </div>
             </div>
             <ErrorBox />
+
+
+
         </>
     );
 }

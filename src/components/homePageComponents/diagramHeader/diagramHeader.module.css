@@ -57,6 +57,22 @@
     filter: brightness(0);
 }
 
+.MobileExportListDiv {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 10%;
+    width: 30%;
+    z-index: 10;
+    display: none;
+}
+
+.ActiveExportList {
+
+    display: block !important;
+}
+
 @media screen and (min-width: 768px) and (max-width: 1300px){
     /*Tablet*/
     .Title {

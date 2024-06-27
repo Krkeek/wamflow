@@ -1,24 +1,30 @@
 
 import styles from './diagramHeader.module.css'
 import Image from "next/image";
-import {useContext, useRef} from "react";
+import {useContext, useRef, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {importJSON} from "@/libs/converterJSON";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
 import {setProjectInfo} from "@/libs/redux/features/projectInfoSlice";
+import MobileExportList from "@/components/mobileExportList/mobileExportList";
+import {dia} from "@joint/core";
+import Paper = dia.Paper;
 
 type DiagramHeaderProps = {
+    paperRef: HTMLDivElement | null,
+    paper: Paper | null
 }
 const DiagramHeader = (props: DiagramHeaderProps) =>{
 
     const dispatch = useAppDispatch();
     const projectName = useAppSelector(state => state.projectInfo.name)
-
+    const exportList = useRef(null)
     const inputFile = useRef(null);
     const graph = useContext(GraphContext);
     const titleInput = useRef(null)
-
+    const isMobileView = useAppSelector(state => state.mobileView.value)
+    const [extendList, setExtendList] = useState(false);
     const handleImport = () =>{
         // @ts-ignore
         inputFile.current.click();
@@ -41,6 +47,8 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
 
 
 
+
+
     return(
         <>
             <div className={`${styles.Container}`}>
@@ -55,12 +63,17 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
                                                                                      height={20}/></button>
                 <input onChange={(e) => handleFileChange(e.target.files)} ref={inputFile}
                        className={`${styles.InputFile}`} type="file" multiple={false} accept={'.json'}/>
-                <button style={useAppSelector(state => state.mobileView.value) ? {display: "block"} : { display: "none"}} onClick={() => {}} className={`${styles.Import}`}><Image className={`${styles.Export}`}
+                <button style={useAppSelector(state => state.mobileView.value) ? {display: "block"} : { display: "none"}} onClick={() => setExtendList(prevState => !prevState)} className={`${styles.Import}`}><Image className={`${styles.Export}`}
                                                                                      src={'/assets/export.webp'}
                                                                                      alt={'logo'} width={20}
                                                                                      height={20}/></button>
             </div>
-
+            {
+                isMobileView &&
+                <div ref={exportList} className={`${styles.MobileExportListDiv} ${extendList ? styles.ActiveExportList : " " }`}>
+                    <MobileExportList paperRef={props.paperRef} paper={props.paper}/>
+                </div>
+            }
         </>
     );
 }

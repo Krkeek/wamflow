@@ -23,7 +23,7 @@ const OptionsBar = (props: propsType) =>{
     const mobileView = useAppSelector(state => state.mobileView.value)
     useEffect(() => {
         if (connectionMode){
-            activeConnectionMode(graph)
+            activeConnectionMode(graph, mobileView)
         }
         else {
             deactivateConnectionMode(graph)
