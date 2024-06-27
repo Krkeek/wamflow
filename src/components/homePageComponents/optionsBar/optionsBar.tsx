@@ -8,6 +8,7 @@ import Paper = dia.Paper;
 import ExportWrapper from "@/components/homePageComponents/optionsBar/exportWrapper/exportWrapper";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
+import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
 
 type propsType = {
     paperRef: HTMLDivElement | null,
@@ -31,6 +32,10 @@ const OptionsBar = (props: propsType) =>{
     }, [connectionMode]);
 
 
+    const handleButton = () => {
+            dispatch(setToggleContainer(true))
+    }
+
     return(
         <>
             <div className={`${styles.Container}`}>
@@ -44,8 +49,13 @@ const OptionsBar = (props: propsType) =>{
                         <ExportWrapper  paper={props.paper} paperRef={props.paperRef} />
 :
                         <div className={`${styles.RightSide}`}>
-                            <button
-                                className={`${styles.MoreButton}`}>Create
+                            <button onClick={handleButton} className={`${styles.MoreButton}`}>
+                                {
+                                    !connectionMode
+                                        ? "Create"
+                                        : "Choose"
+
+                                }
                              </button>
                         </div>
                 }

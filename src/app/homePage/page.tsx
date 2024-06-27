@@ -1,24 +1,27 @@
 'use client'
+import { useContext, useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/libs/redux/hooks";
+import { setMobileView } from "@/libs/redux/features/mobileViewSlice";
+import { setProjectInfo } from "@/libs/redux/features/projectInfoSlice";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import {dia} from "@joint/core";
 import DiagramHeader from "@/components/homePageComponents/diagramHeader/diagramHeader";
-import styles from './homePage.module.css'
 import OptionsBar from "@/components/homePageComponents/optionsBar/optionsBar";
 import ElementsContainer from "@/components/homePageComponents/elementsContainer/elementsContainer";
 import ElementDetailContainer from "@/components/homePageComponents/elementDetailContainer/elementDetailContainer";
-import {gsap} from "gsap";
-import {useGSAP} from "@gsap/react";
-import {HomePageAnimation} from "@/libs/gsap/HomePageAnimation";
 import PaperView from "@/components/homePageComponents/paperView/paperView";
-import {useContext, useEffect, useRef, useState} from "react";
-import {GraphContext} from "@/libs/joint/GraphContext";
 import LinksContainer from "@/components/homePageComponents/linksContainer/linksContainer";
-import {dia} from "@joint/core";
-import Paper = dia.Paper;
-import {viewJoint} from "@/libs/joint/viewJoint";
-import {paperEventListener} from "@/libs/joint/paperEventListener";
 import ErrorBox from "@/components/errorBox/errorBox";
-import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
-import {setMobileView} from "@/libs/redux/features/mobileViewSlice";
-import {setProjectInfo} from "@/libs/redux/features/projectInfoSlice";
+
+import { GraphContext } from "@/libs/joint/GraphContext";
+import { viewJoint } from "@/libs/joint/viewJoint";
+import { paperEventListener } from "@/libs/joint/paperEventListener";
+import { HomePageAnimation } from "@/libs/gsap/HomePageAnimation";
+
+import Paper = dia.Paper;
+import styles from './homePage.module.css';
+import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
 
 const HomePage = () =>{
     const graph = useContext(GraphContext);
@@ -28,6 +31,7 @@ const HomePage = () =>{
     const projectName = useAppSelector(state => state.projectInfo.name)
     const elementSelected = useAppSelector(state => state.elementSelected.value)
     const linkSelected = useAppSelector(state => state.linkSelected.value)
+    const toggleContainer = useAppSelector(state => state.toggleContainer.value)
     const paperRef = useRef<HTMLDivElement>(null);
     const [paper, setPaper] = useState<Paper | null >(null)
 
@@ -55,7 +59,9 @@ const HomePage = () =>{
                 dispatch,
                 paper,
                 graph,
-                connectionMode
+                connectionMode,
+                isMobileView,
+                toggleContainer
             })
         }
 
@@ -65,26 +71,32 @@ const HomePage = () =>{
         const ctx = gsap.context(()=>{
             HomePageAnimation()
         })
-
         return () => ctx.revert()
     })
+
+    const handleCloseContainer = () =>{
+        if (toggleContainer && isMobileView){
+            dispatch(setToggleContainer(false))
+
+        }
+    }
 
     return(
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
-              <div className={`${styles.TopBar}`}>
+              <div className={`${styles.TopBar} ${toggleContainer && isMobileView && styles.ContainerBlur}` } onClick={handleCloseContainer}>
                   <DiagramHeader />
-                  <OptionsBar  paper={paper} paperRef={paperRef.current} />
+                  <OptionsBar  paper={paper} paperRef={paperRef.current}/>
               </div>
                 <div className={`${styles.ContentDiv}`}>
-                    <div className={`${styles.LeftSide}`}>
+                    <div className={`${!isMobileView ? styles.LeftSide : styles.MobileContainers}` } style={toggleContainer && isMobileView ? {display: 'flex'} : {display: "none"} }>
                         {
                             connectionMode
                                 ? <LinksContainer />
                                 : <ElementsContainer  />
                         }
                     </div>
-                    <div className={`${styles.Middle}`}>
+                    <div className={`${styles.Middle} ${toggleContainer && isMobileView && styles.ContainerBlur}`}   onClick={handleCloseContainer}>
                             <PaperView pageRef={paperRef}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
@@ -93,7 +105,6 @@ const HomePage = () =>{
                 </div>
             </div>
             <ErrorBox />
-
         </>
     );
 }

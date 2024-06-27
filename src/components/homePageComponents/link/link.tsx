@@ -3,6 +3,7 @@ import {LinkInterface} from "../../../../declarations";
 import Image from "next/image";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setLinkSelected} from "@/libs/redux/features/linkSelectedSlice";
+import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
 
 type propsType = {
     link: LinkInterface,
@@ -15,6 +16,7 @@ const Link = (props: propsType) =>{
     const linkSelected = useAppSelector(state => state.linkSelected.value)
 
     const handleSelectLink = () =>{
+        dispatch(setToggleContainer(false))
         dispatch(setLinkSelected(link.id))
     }
 

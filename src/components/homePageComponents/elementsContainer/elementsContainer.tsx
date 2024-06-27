@@ -7,6 +7,7 @@ import {useContext} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {useAppDispatch} from "@/libs/redux/hooks";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
+import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
 
 
 const ElementsContainer = () =>{
@@ -16,6 +17,7 @@ const ElementsContainer = () =>{
 
     const graph = useContext(GraphContext);
         const handleCreateElement = (elementId: string) =>{
+                dispatch(setToggleContainer(false))
                 dispatch(setConnectionMode(false))
                createJointElement(elementId, graph)
         }

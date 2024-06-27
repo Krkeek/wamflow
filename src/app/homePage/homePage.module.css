@@ -2,6 +2,13 @@
     height: 100vh;
     width: 100vw;
     opacity: 0;
+    position: relative;
+
+}
+
+
+.ContainerBlur {
+    filter: blur(6px);
 }
 
 
@@ -21,7 +28,7 @@
 .LeftSide {
     width: 10vw;
     height: 100%;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
 
@@ -39,7 +46,21 @@
     justify-content: center;
     align-items: center;
 
+}
 
+.MobileContainers {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-50%);
+    z-index: 100;
+    height: 85%;
+    padding: 1%;
+    overflow-y: scroll;
+    width: 50%;
 
 }
 
