@@ -22,7 +22,6 @@ export const exportPNG = (target: any, paper: Paper | null, name: string) => {
 
     if (paper)
     resetPaperSetting(paper)
-
 }
 
 

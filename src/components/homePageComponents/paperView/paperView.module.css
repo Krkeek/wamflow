@@ -1,6 +1,6 @@
 .Container {
     height: 100%;
-    width: 100% !important;
+    width: 100%;
     border: 1px solid var(--grid-color);
     border-top: none;
     border-left: none;

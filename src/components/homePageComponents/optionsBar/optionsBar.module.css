@@ -15,6 +15,7 @@
 }
 
 .ModeButtons {
+    font-size: 1rem;
     height: 80%;
     border-radius: 10px;
     border: none;
