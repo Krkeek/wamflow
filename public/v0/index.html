@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <!--<script src="style.css"></script>-->
+       
+        <script src="wam-editor.js"> </script>
+        <link rel="stylesheet" href="style1.css">
+        <link rel="stylesheet" href="fontcustom.css">
+    </head>
+    <body>
+
+        <div id="wamEditor"></div>
+        <script type="text/javascript">
+
+            function initWamEditor() {
+
+                var wamEditor = new WAMEditor($("#wamEditor"), false);
+
+                wamEditor.loadFromRDF(dummydata);
+
+
+                wamEditor.saveCallback = function () {
+                    console.dir(wamEditor.getDataAsRDF(identityUrl + '#'));
+                }
+            }
+
+            initWamEditor();
+        </script>
+    </body>
+</html>
+
+
+	
+
+
+
+  
