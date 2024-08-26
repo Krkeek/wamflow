@@ -25,7 +25,7 @@ export const paperEventListener     = (props: PropsType) =>{
     const elementSelected = props.elementSelected
 
 
-    paper.on('element:pointerclick',(cellView)=>{
+    paper.on('element:pointerdown',(cellView)=>{
         if (elementSelected !== null){
             const prevElement = graph.getCell(elementSelected);
             if (prevElement){
