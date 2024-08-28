@@ -5,3 +5,10 @@
     border-top: none;
     border-left: none;
 }
+
+
+@media screen and (max-width: 768px) {
+    .Container {
+        min-width: 100vw;
+    }
+}
