@@ -11,20 +11,11 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
             showUri: false,
         },
 
-        size: { width: 250, height: 250 },
+        size: { width: 700, height: 400 },
         attrs: {
             magnet: false,
             path: {
-                refDResetOffset:  `M 10,100
-            S 0,100 0,90
-            L 0,10
-            S 0,0 10,0
-            L 90,0
-            S 100,0 100,10
-            L 100,90
-            S 100,100 90,100
-            Z M 75,0
-            L 100,25`,
+                refDResetOffset:  `M7.2 121S0 121 0 114.95L0 6.05S0 0 7.2 0L280.8 0S288 0 289.44 6.05L288 114.95S288 121 280.8 121ZM259.2 0 289.44 24.2`,
                 strokeWidth: 2.2,
                 stroke: 'black',
                 fill: 'white',
@@ -37,7 +28,7 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
                 textAnchor: 'middle',
                 fontSize: 12,
                 fill: '#333333',
-                refX: "90%",
+                refX: "96%",
                 refY: "5%",
 
             },

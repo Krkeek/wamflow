@@ -14,7 +14,7 @@ export const linkViewTools = () => {
 
     return new dia.ToolsView({
         tools: [
-            // verticesTool,
+            verticesTool,
             segmentsTool,
             sourceArrowheadTool, targetArrowheadTool,
             sourceAnchorTool, targetAnchorTool,

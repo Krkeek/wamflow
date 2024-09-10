@@ -20,7 +20,22 @@
                          strokeWidth: 10,
                          strokeLinejoin: 'round'
                      }
-                 }
+                 },
+
+                 labels: [{
+                     position: 0.5,
+                     attrs: {
+                         text: {
+                             fontWeight: 600,
+                             text: '',
+                             fill: 'black',
+                             fontSize: 13,
+                             'text-anchor': 'middle',
+                             'y-alignment': 'middle',
+                         }
+                     }
+                 }]
+
              }, {
                  markup: [{
                      tagName: 'path',

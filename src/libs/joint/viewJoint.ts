@@ -28,10 +28,14 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: 
         linkPinning: false,
         defaultConnectionPoint: { name: "boundary" },
 
+
+
         interactive: function(cellView) {
             if (cellView.model.prop('locked')) {
                 return {
-                    elementMove: false
+                    elementMove: false,
+                    linkMove: false,
+                    labelMove: true,
                 };
             }
             return true;

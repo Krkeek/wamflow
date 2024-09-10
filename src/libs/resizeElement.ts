@@ -1,6 +1,7 @@
 import {scaleDimensions} from "@/libs/scaleDimensions";
 import {ElementForm} from "../../declarations";
 import {setErrorBox} from "@/libs/redux/features/errorBoxSlice";
+import {ShapesData} from "../../dataEntry";
 
 
 
@@ -28,7 +29,7 @@ export const resizeElement = (formData: ElementForm, elementCellView: any, dispa
             newDimensions = scaleDimensions(formData.width, formData.height, formData.scale);
         }
 
-        const isValid = isValidDimensions(newDimensions);
+        const isValid = isValidDimensions(elementCellView, newDimensions);
 
         if (isValid.status){
             elementCellView.resize(newDimensions.width, newDimensions.height)
@@ -42,7 +43,17 @@ export const resizeElement = (formData: ElementForm, elementCellView: any, dispa
 
 }
 
-const isValidDimensions = (dimensions: {width: number, height: number}) =>{
+const isValidDimensions = (elementCellView: any, dimensions: {width: number, height: number}) =>{
+
+    console.log(elementCellView.attributes.type)
+
+
+    if (elementCellView.attributes.type === 'SecurityRealm'){
+        return {
+            status: true,
+            reason: ''
+        }
+    }
 
     if((dimensions.width < 50 && dimensions.height > 500) || (dimensions.width > 500 && dimensions.height < 50)){
         return {

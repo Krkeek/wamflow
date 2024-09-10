@@ -4,6 +4,8 @@ import {linkViewTools} from "@/libs/joint/linkTools/linkTools";
 import Graph = dia.Graph;
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
+import {useEffect} from "react";
+import {useAppSelector} from "@/libs/redux/hooks";
 
 
 type PropsType = {
@@ -23,7 +25,6 @@ export const paperEventListener     = (props: PropsType) =>{
     const graph = props.graph;
     const connectionMode = props.connectionMode
     const elementSelected = props.elementSelected
-
 
     paper.on('element:pointerdown',(cellView)=>{
         if (elementSelected !== null){

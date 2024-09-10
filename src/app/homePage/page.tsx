@@ -36,6 +36,8 @@ const HomePage = () =>{
     const paperRef = useRef<HTMLDivElement>(null);
     const [paper, setPaper] = useState<Paper | null >(null)
 
+
+
     useEffect(() => {
         if (paperRef.current){
             setPaper(viewJoint(paperRef.current, graph, linkSelected, isMobileView ))
@@ -65,6 +67,17 @@ const HomePage = () =>{
                 toggleContainer
             })
         }
+
+
+        return () => {
+            // I clean up event listeners on unmount or before rerunning useEffect
+            if (paper){
+                paper.off('element:pointerdown');
+                paper.off('blank:pointerclick');
+                paper.off('link:mouseenter');
+                paper.off('blank:mouseover');
+            }
+        };
 
     });
 
