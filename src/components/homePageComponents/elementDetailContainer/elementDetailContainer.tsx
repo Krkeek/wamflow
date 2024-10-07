@@ -27,6 +27,18 @@ const ElementDetailContainer = () =>{
 
     })
 
+    useEffect(() => {
+        if (elementCellView){
+            setFormData({
+                name: elementCellView.prop('customData/name') || '',
+                uri: elementCellView.prop('customData/uri') || '',
+                height: elementCellView.size().height || 0,
+                width: elementCellView.size().width || 0,
+                scale: 1,
+            });
+        }
+    }, [elementCellView]);
+
 
     useEffect(() => {
         if (elementCellView){
@@ -108,6 +120,7 @@ const ElementDetailContainer = () =>{
                         <div className={`${styles.UriDiv}`}>
                             <input className={`${styles.Input}`}
                                    placeholder={`Name: ${elementCellView.prop('customData/name')}`}
+                                   value={formData.name} // Set the value from formData
                                    onChange={e => {
                                        setFormData(prevState => ({
                                            ...prevState,
@@ -123,6 +136,7 @@ const ElementDetailContainer = () =>{
                         <div className={`${styles.UriDiv}`}>
                             <input className={`${styles.Input}`}
                                    placeholder={`Uri: ${elementCellView.prop('customData/uri')}`}
+                                   value={formData.uri}
                                    onChange={e => {
                                        setFormData(prevState => ({
                                            ...prevState,
