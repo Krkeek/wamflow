@@ -1,4 +1,4 @@
-import {dia} from "@joint/core";
+import {dia, util} from "@joint/core";
 import {ports} from "@/libs/joint/elements/Service/ports";
 
 export const Service = dia.Element.define("Service", {
@@ -7,7 +7,7 @@ export const Service = dia.Element.define("Service", {
             title: 'Service',
             name: '',
             uri: '',
-            showName: false,
+            showName: true,
             showUri: false,
         },
         size: { width: 70, height: 65 },
@@ -61,14 +61,22 @@ export const Service = dia.Element.define("Service", {
         initialize: function() {
             // @ts-ignore
             dia.Element.prototype.initialize.apply(this, arguments);
-            this.attr('label/text', this.prop('customData/name'));
-            this.attr('label2/text', this.prop('customData/uri'));
+            this.updateLabel();
 
-            this.on('change:attrs', () => {
-                this.attr('label/text', this.prop('customData/name'));
-                this.attr('label2/text', this.prop('customData/uri'));
+            this.on('change:customData/name', this.updateLabel.bind(this));
+            this.on('change:attrs', this.updateLabel.bind(this));
 
-            });
         },
+        updateLabel: function() {
+            const name = this.prop('customData/name');
+            const labelWidth = this.size().width - 10; // Adjust the width based on element size
+
+            // Break the text to fit inside the element
+            const wrappedText = util.breakText(name, { width: labelWidth });
+
+            // Apply the wrapped text to the label
+            this.attr('label/text', wrappedText);
+            this.attr('label2/text', this.prop('customData/uri'));
+        }
     })
 
