@@ -28,7 +28,7 @@
     color: var(--default-textButton-color);
     font-weight: 500;
     background-color: var(--secondary-color);
-    border-radius: 12px;
+    border-radius: 5px;
     border: none;
     padding: 0.7rem 1.3rem;
     cursor: pointer;

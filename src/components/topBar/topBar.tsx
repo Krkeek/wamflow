@@ -1,9 +1,10 @@
 import styles from './topBar.module.css'
 import Image from "next/image";
-import Link from "next/link";
+import RegisterDialog from "@/components/registerDialog/registerDialog";
+import {useState} from "react";
 
 const TopBar = () =>{
-
+    const [isOpen, setIsOpen] = useState(false)
 
     return(
         <>
@@ -12,7 +13,8 @@ const TopBar = () =>{
                     <Image className={`logoAnimation ${styles.Logo}`} src={'/assets/logo.webp'} alt={'logo'} width={40} height={40} />
                     <p className={`brandNameAnimation ${styles.BrandName}`}>Wam<span className={`${styles.BrandNameSpan}`}>flow</span></p>
                 </div>
-                <Link href={'/homePage'} className={`${styles.Button}`}>Get Started</Link>
+                <button onClick={() => setIsOpen(true)}  className={`${styles.Button}`}>Editor</button>
+                <RegisterDialog isOpen={isOpen} setIsOpen={setIsOpen} />
 
             </div>
         </>
