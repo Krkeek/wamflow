@@ -9,10 +9,14 @@ interface RegisterDialogProps {
 
 export const registerDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
 
-    const [isRegister, setIsRegister] = useState(true);
+    const [isRegister, setIsRegister] = useState(false);
+
+    const closeDialog = () => {
+        setIsOpen(false);
+        setIsRegister(false)
+    }
 
     if (!isOpen) return null;
-
 
     return (
     <>
@@ -20,7 +24,7 @@ export const registerDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
         {isOpen && (
             <div className={`${styles.Container}`}>
                 <div className={`${styles.ContentContainer}`}>
-                    <Image onClick={() => setIsOpen(false)} src={'/assets/close.webp'} width={20} height={20} className={`${styles.CloseButton}`} alt={'close'} />
+                    <Image onClick={closeDialog} src={'/assets/close.webp'} width={20} height={20} className={`${styles.CloseButton}`} alt={'close'} />
                     <div className={`${styles.Title}`}>   {isRegister ? "Let's get started" : "Welcome back!"}</div>
                     {isRegister && (
                         <>
