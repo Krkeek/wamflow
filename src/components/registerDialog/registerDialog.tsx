@@ -11,7 +11,7 @@ interface RegisterDialogProps {
     setIsOpen: (isOpen: boolean) => void;
 }
 
-export const registerDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
+export const RegisterDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
 
     const dispatch = useAppDispatch()
     const [isRegister, setIsRegister] = useState(false);
@@ -126,4 +126,4 @@ export const registerDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
     )
 }
 
-export default registerDialog
+export default RegisterDialog
