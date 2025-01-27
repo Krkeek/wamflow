@@ -29,7 +29,7 @@ export async function POST (req: NextRequest){
     if (result.status && typeof result.message !== 'string'){
         const accessToken = await result.message.getIdToken(true);
 
-        const cookiesStore = cookies();
+        const cookiesStore = await cookies();
         cookiesStore.set('JWT',accessToken,{
             sameSite:'none',
             secure: true

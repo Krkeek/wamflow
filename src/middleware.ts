@@ -6,7 +6,7 @@ import {getFirebasePublicKeys} from "@/server/utils/getFirebasePublicKey";
 
 export async function middleware(request: NextRequest){
 
-    const JWT = cookies().get('JWT')?.value;
+    const JWT = (await cookies()).get('JWT')?.value;
 
     if (JWT !== undefined){
         const result = await getFirebasePublicKeys();

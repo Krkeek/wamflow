@@ -9,7 +9,6 @@ import {LandingPageAnimation} from "@/libs/gsap/LandingPageAnimation";
 import GraphProvider from "@/libs/joint/GraphProvider";
 gsap.registerPlugin(useGSAP);
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import ErrorBox from "@/components/errorBox/errorBox";
 
 export default function Home() {
 
@@ -23,6 +22,7 @@ export default function Home() {
     return (
     <>
         <GraphProvider>
+            {/* @ts-ignore */ }
             <ReactLenis root>
                 <div className={`${styles.GridContainer}`}>
                     <div className={`${styles.BgImage} bgAnimation`}

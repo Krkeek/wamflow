@@ -3,7 +3,7 @@ import styles from './paperView.module.css'
 import {RefObject} from "react";
 
 type propsType = {
-    pageRef: RefObject<HTMLDivElement>
+    pageRef: RefObject<HTMLDivElement | null>,
 }
 
 const PaperView = (props: propsType) =>{

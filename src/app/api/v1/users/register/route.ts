@@ -51,7 +51,7 @@ export async function POST (req: NextRequest) {
 
         }
         else {
-            const cookiesStore = cookies();
+            const cookiesStore = await cookies();
             cookiesStore.set('JWT', result.message, {
                 sameSite: 'none',
                 secure: true
