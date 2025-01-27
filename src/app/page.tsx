@@ -2,7 +2,6 @@
 import styles from "./page.module.css";
 import HeroSection from "@/components/heroSection/heroSection";
 import FeatureSection from "@/components/featureSection/featureSection";
-import { ReactLenis} from '@studio-freight/react-lenis'
 import {useGSAP} from "@gsap/react";
 import {gsap} from "gsap";
 import {LandingPageAnimation} from "@/libs/gsap/LandingPageAnimation";
@@ -22,8 +21,6 @@ export default function Home() {
     return (
     <>
         <GraphProvider>
-            {/* @ts-ignore */ }
-            <ReactLenis root>
                 <div className={`${styles.GridContainer}`}>
                     <div className={`${styles.BgImage} bgAnimation`}
                          style={{backgroundImage: 'url(\'/assets/diagram.png\')'}}>
@@ -31,7 +28,6 @@ export default function Home() {
                         <FeatureSection/>
                     </div>
                 </div>
-            </ReactLenis>
         </GraphProvider>
         <SpeedInsights />
     </>

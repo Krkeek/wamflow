@@ -1,9 +1,7 @@
 import {signInWithEmailAndPassword} from "firebase/auth";
-import {User} from "@firebase/auth";
 import {auth} from "@/firebase";
 
-
-export default async function signInFirebaseUser(email: string, password: string):Promise<{status: boolean, message: User | string}> {
+export default async function signInFirebaseUser(email: string, password: string):Promise<{status: boolean, message: any }> {
 
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
