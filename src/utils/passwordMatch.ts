@@ -1,4 +1,4 @@
 
-export const passwordMatch= (password: string, confirmPassword: string): boolean => {
+export const passwordMatch= (password: FormDataEntryValue | null, confirmPassword: FormDataEntryValue | null): boolean => {
     return password === confirmPassword;
 }

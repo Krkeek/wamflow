@@ -1,28 +1,33 @@
+"use client"
 import styles from './registerDialog.module.css'
 import Image from "next/image";
-import {useState} from "react";
+import {FormEvent, useState} from "react";
 import {redirect} from "next/navigation";
 import {setErrorBox} from "@/libs/redux/features/errorBoxSlice";
 import {useAppDispatch} from "@/libs/redux/hooks";
 import {passwordMatch} from "@/utils/passwordMatch";
+import {signInWithGoogle} from "@/server/utils/signInWithGoogle";
 
 interface RegisterDialogProps {
     isOpen: boolean;
-    setIsOpen: (isOpen: boolean) => void;
+    setIsOpenAction: (isOpen: boolean) => void;
 }
 
-export const RegisterDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
+export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) => {
 
     const dispatch = useAppDispatch()
     const [isRegister, setIsRegister] = useState(false);
     const closeDialog = () => {
-        setIsOpen(false);
+        setIsOpenAction(false);
         setIsRegister(false)
     }
 
-    const handleSubmit = async (event: any) =>{
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) =>{
+
+        event.preventDefault()
+        const formData = new FormData(event.currentTarget)
         if (isRegister) {
-            if (passwordMatch(event.get('password'), event.get('confirmPassword'))){
+            if (passwordMatch(formData.get('password'), formData.get('confirmPassword'))){
                 const response = await fetch('/api/v1/users/register',{
                     method: "POST",
                     headers:{
@@ -30,9 +35,9 @@ export const RegisterDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
                         "Access-Control-Allow-Origin" : "*"
                     },
                     body: JSON.stringify({
-                        email: event.get('email'),
-                        password: event.get('password'),
-                        name: event.get('name'),
+                        email: formData.get('email'),
+                        password: formData.get('password'),
+                        name: formData.get('name'),
                     })
 
                 });
@@ -60,8 +65,8 @@ export const RegisterDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
                     "Access-Control-Allow-Origin" : "*"
                 },
                 body: JSON.stringify({
-                    email: event.get('email'),
-                    password: event.get('password')
+                    email: formData.get('email'),
+                    password: formData.get('password')
                 })
             });
             const responseBody = await response.json();
@@ -78,16 +83,31 @@ export const RegisterDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
         }
     }
 
+    const googleSubmit = async () => {
+        const googleSignInResult = await signInWithGoogle();
+        if (googleSignInResult.status){
+            const response = await fetch('/api/v1/users/login/google',{
+                method: "POST",
+                headers:{
+                    "Content-Type" : "application/json",
+                    "Access-Control-Allow-Origin" : "*"
+                },
+                body: JSON.stringify({
+                    googleSignInResult: googleSignInResult,
 
-
-
+                })
+            });
+            const responseBody = await response.json()
+            console.log(responseBody);
+        }
+    }
 
     if (!isOpen) return null;
 
     return (
         <>
         {isOpen && (
-            <form action={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className={`${styles.Container}`}>
                     <div className={`${styles.ContentContainer}`}>
                         <Image onClick={closeDialog} src={'/assets/close.webp'} width={20} height={20}
@@ -97,7 +117,8 @@ export const RegisterDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
                         {isRegister && (
                             <>
                                 <label className={`${styles.Label}`}>Name</label>
-                                <input required autoComplete="given-name" className={`${styles.Input}`} placeholder={'Matze Lippmann'} type="text" name={'name'}/>
+                                <input required autoComplete="given-name" className={`${styles.Input}`}
+                                       placeholder={'Matze Lippmann'} type="text" name={'name'}/>
                             </>
                         )}
                         <label className={`${styles.Label}`}>Email</label>
@@ -111,16 +132,29 @@ export const RegisterDialog = ({isOpen, setIsOpen}: RegisterDialogProps) => {
                                 <input required className={`${styles.Input}`} type="password" name={'confirmPassword'}/>
                             </>
                         )}
-                        <button className={`${styles.Button}`}>{isRegister ? "Register" : "Sign in"}</button>
+                        <button type={"submit"}
+                                className={`${styles.Button}`}>{isRegister ? "Register" : "Sign in"}</button>
                         <div
                             className={`${styles.LoginSentence}`}>{isRegister ? "Already have an account? " : "Create a new account? "}<span
                             onClick={() => setIsRegister(!isRegister)}> {isRegister ? "Sign in" : "Register"}</span>
                         </div>
+                        <button type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
+                            <Image
+                                className={`${styles.OtherButtonImage}`} width={15} height={15}
+                                src={'/google.webp'} alt={'google'}/>
+                            Sign in with Google
+                        </button>
+                        <button type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
+                            <Image
+                                className={`${styles.OtherButtonImage}`} width={15} height={15}
+                                src={'/github.webp'} alt={'github'}/>
+                            Sign in with Github
+                        </button>
 
                     </div>
                 </div>
             </form>
-            )
+        )
         }
         </>
     )

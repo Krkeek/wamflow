@@ -80,3 +80,19 @@
      text-decoration: underline;
      cursor: pointer;
  }
+
+ .ProviderButton {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     gap: 1rem;
+     background-color: var(--providerButtons-bg-color);
+     color: var(--text-color-two);
+     font-weight: bold;
+
+ }
+
+ .OtherButtonImage {
+     width: 1.5rem;
+     height: auto;
+ }

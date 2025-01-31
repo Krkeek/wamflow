@@ -14,7 +14,7 @@ const TopBar = () =>{
                     <p className={`brandNameAnimation ${styles.BrandName}`}>Wam<span className={`${styles.BrandNameSpan}`}>flow</span></p>
                 </div>
                 <button onClick={() => setIsOpen(true)}  className={`${styles.Button}`}>Editor</button>
-                <RegisterDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+                <RegisterDialog isOpen={isOpen} setIsOpenAction={setIsOpen}/>
 
             </div>
         </>
