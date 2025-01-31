@@ -1,0 +1,27 @@
+.Circle {
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.Content {
+    color: var(--secondary-color-two);
+}
+
+.ArrowDownCircle{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: var(--secondary-color-two);
+    border-radius: 100%;
+    width: 1rem;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}

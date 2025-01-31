@@ -1,0 +1,33 @@
+.Container {
+    background-color: var(--secondary-color-two);
+    width: 15vw;
+    height: fit-content;
+    border-radius: 5px;
+    -webkit-box-shadow: -1px 0 17px -2px rgba(0,0,0,0.10);
+    box-shadow: -1px 0 17px -2px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 2rem;
+    box-sizing: border-box;
+    max-height: 40vh;
+
+}
+
+.UserInfo {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--input-color);
+    height: fit-content;
+    padding: 0.5rem 0;
+
+}
+
+.UserName {
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+
+.MenuContent {
+    overflow: scroll;
+}

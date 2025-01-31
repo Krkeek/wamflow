@@ -1,0 +1,10 @@
+.Container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 1rem;
+    cursor: pointer;
+}
+.Title {
+    margin-left: 0.5rem;
+}
