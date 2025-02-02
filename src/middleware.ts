@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest){
         }
     }
 }
-async function verifyToken(token: string, publicKey: string) {
+export async function verifyToken(token: string, publicKey: string) {
     try {
         const alg = 'RS256';
         const ecPublicKey = await jose.importX509(publicKey, alg);

@@ -2,36 +2,24 @@ import {NextRequest, NextResponse} from "next/server";
 import {validPassword} from "@/server/utils/validPassword";
 import createFirebaseUser from "@/server/utils/createFirebaseUser";
 import {cookies} from "next/headers";
-import {buildUserObject} from "@/server/utils/buildUserObject";
+import {buildUserObject} from "@/server/utils/ObjectBuilder";
 import {deleteFirebaseUser} from "@/server/utils/deleteFirebaseUser";
-import {db} from "@/server/utils/mongoConnect";
-
-
-type RequestBody = {
-    name: string,
-    email: string,
-    password: string
-}
-
-type ResponseBody = {
-    status: boolean,
-    message: string,
-    additionalInformation: any
-}
+import {db} from "@/server/utils/mongoDB";
+import {POSTRequestDataSchema, POSTResponseData} from "@/app/api/v1/users/register/types";
 
 
 export async function POST (req: NextRequest) {
 
-    const { name, email, password}: RequestBody = await req.json();
+    const body = await req.json();
+    const validatedData = POSTRequestDataSchema.parse(body);
 
-    //Validate Password
-    const { hasUpperCase, hasNumber ,validLength} = validPassword(password);
+    const { hasUpperCase, hasNumber ,validLength} = validPassword(validatedData.password);
 
     if (!hasUpperCase || !hasNumber || !validLength){
-        return NextResponse.json<ResponseBody>({
-            status: false,
+        return NextResponse.json<POSTResponseData>({
+            success: false,
             message: `Invalid password`,
-            additionalInformation: [`${!hasUpperCase ? "Minimum one uppercase, ": ""}${!hasNumber ? "Minimum one number, " : ""}${!validLength ? "Between 8 and 25 character": ""}`]
+            data: [`${!hasUpperCase ? "Minimum one uppercase, ": ""}${!hasNumber ? "Minimum one number, " : ""}${!validLength ? "Between 8 and 25 character": ""}`]
 
         },{
             status: 400
@@ -39,12 +27,11 @@ export async function POST (req: NextRequest) {
     }
     else {
         //create firebase user
-        const result = await createFirebaseUser(email,password);
-        if (!result.status){
-            return NextResponse.json<ResponseBody>({
-                status: false,
+        const result: POSTResponseData  = await createFirebaseUser(validatedData.email,validatedData.password);
+        if (!result.success){
+            return NextResponse.json<POSTResponseData>({
+                success: false,
                 message: result.message,
-                additionalInformation: null
             },{
                 status: 400
             })
@@ -52,16 +39,17 @@ export async function POST (req: NextRequest) {
         }
         else {
             const cookiesStore = await cookies();
-            cookiesStore.set('JWT', result.message, {
+            cookiesStore.set('JWT', result.data.JWT, {
                 sameSite: 'none',
                 secure: true
             });
 
+            const userUID = result.data.decodedJWT.user_id;
             //Create User (model)
             const userData = {
-                uid: result.message,
-                name: name,
-                email: email
+                uid: userUID,
+                name: validatedData.name,
+                email: validatedData.email
             }
 
             const user = buildUserObject(userData);
@@ -71,24 +59,23 @@ export async function POST (req: NextRequest) {
             try {
                 const collection = db.collection('users');
                 const result = await collection.insertOne(user);
-                console.log(result);
-                const responseBody: ResponseBody = {
-                    status: true,
+                const responseBody: POSTResponseData = {
+                    success: true,
                     message: "User created.",
-                    additionalInformation: result.insertedId
+                    data: result.insertedId
                 }
-                return NextResponse.json<ResponseBody>(responseBody, {
+                return NextResponse.json<POSTResponseData>(responseBody, {
                     status: 200
                 })
 
             } catch (error) {
                 await deleteFirebaseUser()
-                const responseBody: ResponseBody = {
-                    status: false,
+                const responseBody: POSTResponseData = {
+                    success: false,
                     message: "Adding User Failed in MongoDB.",
-                    additionalInformation: [error]
+                    data: [error]
                 }
-                return NextResponse.json<ResponseBody>(responseBody, {
+                return NextResponse.json<POSTResponseData>(responseBody, {
                     status: 500
                 })
             }

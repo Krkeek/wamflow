@@ -1,6 +1,16 @@
-import {redirect} from "next/navigation";
+import { redirect } from "next/navigation";
 
-export const logoutUser = () => {
-    document.cookie = "JWT=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-    redirect('/');
-}
+export const logoutUser = async () => {
+
+    const response = await fetch('/api/v1/auth/blacklist',{
+        method: "POST",
+        headers:{
+            "Content-Type" : "application/json",
+            "Access-Control-Allow-Origin" : "*"
+        }
+    });
+    const responseBody = await response.json()
+    if(responseBody.success) {
+        redirect('/');
+    }
+};
