@@ -7,13 +7,14 @@
     box-shadow: -1px 0 17px -2px rgba(0,0,0,0.10);
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 2rem 2rem;
     box-sizing: border-box;
     max-height: 40vh;
 
+
 }
 
-.UserInfo {
+.TitleDiv {
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--input-color);
@@ -22,12 +23,11 @@
 
 }
 
-.UserName {
+
+.Title{
     font-weight: bold;
     margin-left: 0.5rem;
 }
-
-
 .MenuContent {
     overflow-y: scroll;
     scrollbar-width: none;

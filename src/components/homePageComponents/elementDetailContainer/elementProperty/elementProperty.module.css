@@ -1,0 +1,40 @@
+
+.Label {
+    color: var(--text-color-two);
+    font-size: 0.9rem;
+
+}
+
+.EyeButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.UriDiv {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+}
+.UriDiv input {
+    margin: 0;
+}
+
+.Input {
+    border: none;
+    border-radius: 3px;
+    height: 2rem;
+    width: 100%;
+    padding-left: 2%;
+    outline: none;
+}
+
+.Input::placeholder {
+    color: var(--placeHolder-color);
+
+
+}

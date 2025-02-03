@@ -7,6 +7,8 @@ import {saveElementData} from "@/libs/saveElementData";
 import {resizeElement} from "@/libs/resizeElement";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
+import ElementProperty from "@/components/homePageComponents/elementDetailContainer/elementProperty/elementProperty";
+import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
 
 
 const ElementDetailContainer = () =>{
@@ -15,6 +17,8 @@ const ElementDetailContainer = () =>{
     const dispatch = useAppDispatch()
     const elementSelected = useAppSelector(state => state.elementSelected.value);
     const elementCellView = graph.getCell(elementSelected);
+
+    const [elementMenuOpened, setElementMenuOpened] = useState(false);
 
     const [elementUpdated, setElementUpdated] = useState(false);
 
@@ -97,6 +101,10 @@ const ElementDetailContainer = () =>{
         })
     }
 
+    const handleMenuExpand = () => {
+        setElementMenuOpened(!elementMenuOpened);
+
+    }
 
     return(
         <>
@@ -108,69 +116,106 @@ const ElementDetailContainer = () =>{
                         <div className={`${styles.Top}`}>
                             <div className={`${styles.LeftSide}`}>{elementCellView.prop('customData/title')}</div>
                             <div className={`${styles.RightSide}`}>
-                                <button onClick={handleDeleteElement} className={`${styles.TopButtons}`}><Image src={'/assets/trash.webp'}
-                                                                                  alt={'trash'}
-                                                                                  width={25} height={25}/></button>
-                                <button onClick={handleSaveData} className={`${styles.TopButtons}`}><Image src={'/assets/tick.webp'}
-                                                                                  alt={'trash'}
-                                                                                  width={25} height={25}/></button>
+                                    <button onClick={handleDeleteElement} className={`${styles.TopButtons}`}><Image
+                                        src={'/assets/trash.webp'}
+                                        alt={'trash'}
+                                        width={25} height={25}/></button>
 
+                                    <button onClick={handleMenuExpand} className={`${styles.TopButtons}`}><Image
+                                        src={'/assets/menuBurger.webp'}
+                                        alt={'menu'}
+                                        width={25} height={25}/></button>
+
+                                    {elementMenuOpened && (
+                                        <div className={styles.MenuDiv}>
+                                            <ModalDialog />
+                                        </div>
+                                    )}
                             </div>
                         </div>
-                        <div className={`${styles.UriDiv}`}>
-                            <input className={`${styles.Input}`}
-                                   placeholder={`Name: ${elementCellView.prop('customData/name')}`}
-                                   value={formData.name} // Set the value from formData
-                                   onChange={e => {
-                                       setFormData(prevState => ({
-                                           ...prevState,
-                                           name: e.target.value
-                                       }))
-                                   }}
-                            />
-                            <button className={`${styles.EyeButton}`}><Image onClick={handleShowName}
-                                                                             src={!elementCellView.prop('customData/showName') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
-                                                                             alt={'trash'}
-                                                                             width={25} height={25}/></button>
+                        <div className={`${styles.PropertiesWrapper}`}>
+                            <label className={`${styles.Label}`}>Name</label>
+                            <div className={`${styles.UriDiv}`}>
+                                <input className={`${styles.Input}`}
+                                       placeholder={`${elementCellView.prop('customData/name')}`}
+                                       value={formData.name} // Set the value from formData
+                                       onChange={e => {
+                                           setFormData(prevState => ({
+                                               ...prevState,
+                                               name: e.target.value
+                                           }))
+                                       }}
+                                />
+                                <button className={`${styles.EyeButton}`}><Image onClick={handleShowName}
+                                                                                 src={!elementCellView.prop('customData/showName') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
+                                                                                 alt={'trash'}
+                                                                                 width={25} height={25}/></button>
+                            </div>
+
+                            <label className={`${styles.Label}`}>Uri</label>
+                            <div className={`${styles.UriDiv}`}>
+                                <input className={`${styles.Input}`}
+                                       placeholder={`${elementCellView.prop('customData/uri')}`}
+                                       value={formData.uri}
+                                       onChange={e => {
+                                           setFormData(prevState => ({
+                                               ...prevState,
+                                               uri: e.target.value
+                                           }))
+                                       }}
+                                />
+                                <button className={`${styles.EyeButton}`}><Image onClick={handleShowUri}
+                                                                                 src={!elementCellView.prop('customData/showUri') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
+                                                                                 alt={'trash'}
+                                                                                 width={25} height={25}/></button>
+                            </div>
+
+
+                            <ElementProperty elementCellView={elementCellView} elementUpdated={elementUpdated}
+                                             setElementUpdated={setElementUpdated} setFormData={setFormData}
+                                             formData={formData}/>
+
+                            <ElementProperty elementCellView={elementCellView} elementUpdated={elementUpdated}
+                                             setElementUpdated={setElementUpdated} setFormData={setFormData}
+                                             formData={formData}/>
+
+                            <ElementProperty elementCellView={elementCellView} elementUpdated={elementUpdated}
+                                             setElementUpdated={setElementUpdated} setFormData={setFormData}
+                                             formData={formData}/>
+
+                            <ElementProperty elementCellView={elementCellView} elementUpdated={elementUpdated}
+                                             setElementUpdated={setElementUpdated} setFormData={setFormData}
+                                             formData={formData}/>
+
                         </div>
-                        <div className={`${styles.UriDiv}`}>
-                            <input className={`${styles.Input}`}
-                                   placeholder={`Uri: ${elementCellView.prop('customData/uri')}`}
-                                   value={formData.uri}
-                                   onChange={e => {
-                                       setFormData(prevState => ({
-                                           ...prevState,
-                                           uri: e.target.value
-                                       }))
-                                   }}
-                            />
-                            <button className={`${styles.EyeButton}`}><Image onClick={handleShowUri}
-                                                                             src={!elementCellView.prop('customData/showUri') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
-                                                                             alt={'trash'}
-                                                                             width={25} height={25}/></button>
-                        </div>
+
+
                         <div className={`${styles.DimensionsDiv}`}>
                             <div className={`${styles.InputView}`}>
                                 <p>W</p>
-                                <input type={'text'} className={`${styles.WidthInput}`} placeholder={elementCellView.size().width}
+                                <input type={'text'} className={`${styles.WidthInput}`}
+                                       placeholder={elementCellView.size().width}
 
                                        onChange={e => {
                                            const value = parseFloat(e.target.value);
-                                           setFormData(prevState => ({...prevState,
+                                           setFormData(prevState => ({
+                                               ...prevState,
                                                width: value
                                            }))
                                        }}
 
                                 />
                                 <p>H</p>
-                                <input type={'text'} className={`${styles.WidthInput}`} placeholder={elementCellView.size().height}
+                                <input type={'text'} className={`${styles.WidthInput}`}
+                                       placeholder={elementCellView.size().height}
 
                                        onChange={e => {
 
                                            const value = parseFloat(e.target.value);
-                                               setFormData(prevState => ({...prevState,
-                                                   height: value
-                                               }))
+                                           setFormData(prevState => ({
+                                               ...prevState,
+                                               height: value
+                                           }))
                                        }}
                                 />
                             </div>
@@ -182,10 +227,11 @@ const ElementDetailContainer = () =>{
                                 <input type={'text'} className={`${styles.WidthInput}`}
                                        placeholder={'x1'}
                                        onChange={e => {
-                                               const value = parseFloat(e.target.value);
-                                               setFormData(prevState => ({...prevState,
-                                                   scale: value
-                                               }))
+                                           const value = parseFloat(e.target.value);
+                                           setFormData(prevState => ({
+                                               ...prevState,
+                                               scale: value
+                                           }))
 
                                        }}
 
@@ -209,6 +255,12 @@ const ElementDetailContainer = () =>{
                                 <div className={`${styles.Indicator}  ${styles.IndicatorActive} `}></div>
                             </button>
                         </div>
+                        <button onClick={handleSaveData}
+                                className={`${styles.SaveButton}`}>Save Changes
+                        </button>
+                        <button style={{backgroundColor: "#d9534f"}}
+                                className={`${styles.SaveButton}`}>Discard
+                        </button>
 
                     </div>
                 ) :
