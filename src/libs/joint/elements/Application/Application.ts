@@ -12,29 +12,53 @@ export const Application = dia.Element.define("Application", {
         },
         properties: [
             {
-                name: "Property1",
-                value: "Value1",
+                name: "Theme",
+                value: "dark",
                 type: "string",
-                active: "boolean",
+                active: true,  // Changed to boolean
             },
             {
-                name: "Property2",
-                value: "Value2",
-                type: "string",
-                active: "boolean",
+                name: "MaxUsers",
+                value: 1000,
+                type: "number",
+                active: true,
             },
             {
-                name: "Property3",
-                value: "Value3",
-                type: "string",
-                active: "boolean",
+                name: "EnableLogging",
+                value: true,
+                type: "boolean",
+                active: true,
             },
             {
-                name: "Property4",
-                value: "Value4",
-                type: "string",
-                active: "boolean",
+                name: "Timeout",
+                value: 30,
+                type: "number",
+                active: false,
             },
+            {
+                name: "API_URL",
+                value: "//api.example.com",
+                type: "string",
+                active: true,
+            },
+            {
+                name: "DebugMode",
+                value: false,
+                type: "boolean",
+                active: false,
+            },
+            {
+                name: "DatabaseHost",
+                value: "db.example.com",
+                type: "string",
+                active: true,
+            },
+            {
+                name: "CacheEnabled",
+                value: true,
+                type: "boolean",
+                active: true,
+            }
         ],
         attrs: {
             path: {

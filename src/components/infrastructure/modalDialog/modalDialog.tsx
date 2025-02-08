@@ -5,6 +5,7 @@ import MenuElement from "@/components/infrastructure/menuElement/menuElement";
 
 interface IProps  {
     title?: string,
+    titleStyle?: {},
     children?: ReactNode;
     confirmDialog?: {
         enabled: boolean;
@@ -57,7 +58,7 @@ const ModalDialog = (props: IProps) => {
                 <div className={styles.Container} ref={modalRef}>
                     {
                         props.title !== undefined && (
-                            <div className={styles.TitleDiv}>
+                            <div className={`${styles.TitleDiv}`} style={props.titleStyle}>
                                 {props.titleIcon != undefined && props.titleIcon.enabled && (
                                     <RoundButton extended={props.titleIcon.extended}
                                                  backgroundColor={props.titleIcon.backgroundColor}

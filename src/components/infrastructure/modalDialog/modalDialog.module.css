@@ -4,7 +4,6 @@
     background-color: var(--secondary-color-two);
     min-width: 15vw;
     width: fit-content;
-    height: fit-content;
     border-radius: 5px;
     -webkit-box-shadow: -1px 0 17px -2px rgba(0,0,0,0.10);
     box-shadow: -1px 0 17px -2px rgba(0,0,0,0.10);
@@ -12,7 +11,6 @@
     flex-direction: column;
     padding: 0.5rem 2rem;
     box-sizing: border-box;
-    max-height: 40vh;
 
 }
 
@@ -39,4 +37,8 @@
 
 .MenuContent::-webkit-scrollbar {
     display: none;
+}
+
+.Content {
+    height: fit-content;
 }

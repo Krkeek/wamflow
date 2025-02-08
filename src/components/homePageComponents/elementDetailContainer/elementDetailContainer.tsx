@@ -11,6 +11,7 @@ import ElementProperty from "@/components/homePageComponents/elementDetailContai
 import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
 import {setConfirmDialog} from "@/libs/redux/features/confirmDialogSlice";
 import {IElementProperty} from "../../../../declarations";
+import ManagePropertiesDialog from "@/components/managePropertiesDialog/managePropertiesDialog";
 
 
 const ElementDetailContainer = () =>{
@@ -21,6 +22,7 @@ const ElementDetailContainer = () =>{
     const elementCellView = graph.getCell(elementSelected);
 
     const [elementMenuOpened, setElementMenuOpened] = useState(false);
+    const [managePropertiesDialog, setManagePropertiesDialog] = useState(false);
 
     const [elementUpdated, setElementUpdated] = useState(false);
 
@@ -119,6 +121,12 @@ const ElementDetailContainer = () =>{
         })
     }
 
+    const handleManageProperties = () =>{
+        setElementMenuOpened(false);
+        setManagePropertiesDialog(true);
+    }
+
+
     return(
         <>
 
@@ -144,7 +152,8 @@ const ElementDetailContainer = () =>{
                                             title={'Element Settings'}
                                             menuElement={[
                                                 {
-                                                    title: "Add Properties",
+                                                    title: "Manage Properties",
+                                                    onClickEvent: handleManageProperties
 
                                                 },
                                                 {
@@ -288,6 +297,10 @@ const ElementDetailContainer = () =>{
                         No component selected
                         </div>
                     )
+            }
+            {
+                managePropertiesDialog && <ManagePropertiesDialog elementCellView={elementCellView} close={() => setManagePropertiesDialog(false)} />
+
             }
 
         </>
