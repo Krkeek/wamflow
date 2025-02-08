@@ -5,7 +5,6 @@
     padding: 8% 5%;
     box-sizing: border-box;
     border-radius: 5px;
-
 }
 .Top {
     display: flex;
@@ -29,6 +28,7 @@
 }
 
 .LeftSide {
+
 }
 
 .Input {
@@ -197,6 +197,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+
 
 }
 @media screen and (min-width: 768px) and (max-width: 1300px){

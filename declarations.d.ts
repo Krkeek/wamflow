@@ -19,4 +19,13 @@ export type ElementForm = {
     height: number,
     width: number,
     scale: number,
+    properties: IElementProperty[]
+}
+
+
+export type IElementProperty = {
+    name: string,
+    value: string,
+    type: string,
+    active: boolean,
 }

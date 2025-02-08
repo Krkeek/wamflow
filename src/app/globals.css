@@ -11,6 +11,7 @@
     --errorBox-bg-color: #FFE7E7;
     --errorBox-color: #FF0F0F;
     --providerButtons-bg-color: rgba(255, 255, 255, 0.5);
+    --danger-color: #d9534f
 }
 
 html,body{

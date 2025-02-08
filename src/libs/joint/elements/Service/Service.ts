@@ -10,6 +10,8 @@ export const Service = dia.Element.define("Service", {
             showName: true,
             showUri: false,
         },
+        properties: [],
+
         size: { width: 70, height: 65 },
         attrs: {
             magnet: false,

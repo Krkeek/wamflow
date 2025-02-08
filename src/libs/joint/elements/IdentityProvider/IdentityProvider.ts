@@ -9,6 +9,8 @@ export const IdentityProvider = dia.Element.define("IdentityProvider", {
             showName: true,
             showUri: false,
         },
+        properties: [],
+
 
         size: { width: 70, height: 70 },
         attrs: {

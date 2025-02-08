@@ -5,17 +5,21 @@ import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
 
 const AccountSetting = () => {
 
-    const [accountMenuOpened, setAccountMenuOpened] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
 
-    const openAccountMenu = () =>  {
-        setAccountMenuOpened(!accountMenuOpened);
-    }
+    const toggleDialog = (state?: boolean) => {
+        if (state !== undefined) {
+            setOpenDialog(state);
+        } else {
+            setOpenDialog(prevState => !prevState);
+        }
+    };
 
     return(
         <>
-            <div onClick={openAccountMenu} className={styles.Container}>
+            <div onClick={() => toggleDialog()} className={styles.Container}>
                 <RoundButton extended={true} backgroundColor={'var(--secondary-color)'} content={'AH'} width={'3.2rem'} />
-                {accountMenuOpened && (
+                {openDialog && (
                     <div className={styles.AccountMenuDiv}>
                         <ModalDialog title={'Ahmad Hijazi'} menuElement={[
                             {
@@ -46,7 +50,7 @@ const AccountSetting = () => {
                                          width: '2.7rem',
                                          fontSize: '0.9rem',
                                      }}
-                        />
+                         closeDialog={() => toggleDialog(false)}/>
                     </div>
                 )}
             </div>

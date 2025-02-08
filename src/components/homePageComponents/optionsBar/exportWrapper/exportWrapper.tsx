@@ -43,7 +43,7 @@ const ExportWrapper = (props: PropsType) =>{
         <>
             <div className={`${styles.RightSide}`} onMouseLeave={() => handleExtendExport(false)}>
                 <button
-                    onMouseEnter={() => handleExtendExport(true)}
+                    onClick={() => handleExtendExport(true)}
 
 
                     className={`${styles.ExportButton}`}>Export<Image
@@ -56,16 +56,7 @@ const ExportWrapper = (props: PropsType) =>{
                         as
                     </button>
                     <MobileExportList paperRef={props.paperRef} paper={props.paper}/>
-                    {/*<button onClick={handleExportJSON}*/}
-                    {/*        className={`${styles.ExtendElement}`}>JSON*/}
-                    {/*</button>*/}
-                    {/*<button*/}
-                    {/*    onClick={handleExportRDF}*/}
-                    {/*    className={`${styles.ExtendElement}`}>RDF*/}
-                    {/*</button>*/}
-                    {/*<button onClick={handleExportPNG}*/}
-                    {/*        className={`${styles.ExtendElement}`}>PNG*/}
-                    {/*</button>*/}
+
                 </div>
             </div>
 

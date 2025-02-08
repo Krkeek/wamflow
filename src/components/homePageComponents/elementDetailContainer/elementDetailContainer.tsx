@@ -9,6 +9,8 @@ import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 import ElementProperty from "@/components/homePageComponents/elementDetailContainer/elementProperty/elementProperty";
 import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
+import {setConfirmDialog} from "@/libs/redux/features/confirmDialogSlice";
+import {IElementProperty} from "../../../../declarations";
 
 
 const ElementDetailContainer = () =>{
@@ -22,12 +24,20 @@ const ElementDetailContainer = () =>{
 
     const [elementUpdated, setElementUpdated] = useState(false);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<{
+        name: string;
+        uri: string;
+        height: number;
+        width: number;
+        scale: number;
+        properties: IElementProperty[];
+    }>({
         name: "",
         uri: "",
         height: 0,
         width: 0,
         scale: 1,
+        properties:[]
 
     })
 
@@ -39,6 +49,7 @@ const ElementDetailContainer = () =>{
                 height: elementCellView.size().height || 0,
                 width: elementCellView.size().width || 0,
                 scale: 1,
+                properties: elementCellView.prop('properties') || ''
             });
         }
     }, [elementCellView]);
@@ -76,21 +87,26 @@ const ElementDetailContainer = () =>{
             prevElement.attr('top/stroke','black');
 
         }
-        dispatch(setElementSelected(null))
-        setFormData({
-            name: "",
-            uri: "",
-            height: 0,
-            width: 0,
-            scale: 1,
-
-        })
+        handleDiscardChanges()
 
     }
-
 
     const handleDeleteElement = () =>{
+
+        dispatch(setConfirmDialog('Are you sure you want to delete this element?'))
+        handleDiscardChanges();
+
         elementCellView.remove();
+
+    }
+
+    const toggleMenu = () => {
+        setElementMenuOpened(prevValue => !prevValue);
+    }
+
+    const handleDiscardChanges = () => {
+
+        setElementMenuOpened(false);
         dispatch(setElementSelected(null))
         setFormData({
             name: "",
@@ -98,12 +114,9 @@ const ElementDetailContainer = () =>{
             height: 0,
             width: 0,
             scale: 1,
+            properties: []
+
         })
-    }
-
-    const handleMenuExpand = () => {
-        setElementMenuOpened(!elementMenuOpened);
-
     }
 
     return(
@@ -121,16 +134,34 @@ const ElementDetailContainer = () =>{
                                         alt={'trash'}
                                         width={25} height={25}/></button>
 
-                                    <button onClick={handleMenuExpand} className={`${styles.TopButtons}`}><Image
+                                    <button onClick={toggleMenu} className={`${styles.TopButtons}`}><Image
                                         src={'/assets/menuBurger.webp'}
                                         alt={'menu'}
                                         width={25} height={25}/></button>
+                                {elementMenuOpened && (
+                                    <div className={styles.MenuDiv}>
+                                        <ModalDialog
+                                            title={'Element Settings'}
+                                            menuElement={[
+                                                {
+                                                    title: "Add Properties",
 
-                                    {elementMenuOpened && (
-                                        <div className={styles.MenuDiv}>
-                                            <ModalDialog />
-                                        </div>
-                                    )}
+                                                },
+                                                {
+                                                    title: "Save as Draft",
+
+                                                },
+                                                {
+                                                    title: "Duplicate",
+
+                                                },
+                                                {
+                                                    title: "Reset",
+                                                },
+
+                                            ]} closeDialog={toggleMenu}/>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className={`${styles.PropertiesWrapper}`}>
@@ -171,21 +202,10 @@ const ElementDetailContainer = () =>{
                             </div>
 
 
-                            <ElementProperty elementCellView={elementCellView} elementUpdated={elementUpdated}
-                                             setElementUpdated={setElementUpdated} setFormData={setFormData}
-                                             formData={formData}/>
+                            {formData.properties.map((property, index) => (
+                                <ElementProperty property={property} key={index} setFormData={setFormData} formData={formData}/>
+                            ))}
 
-                            <ElementProperty elementCellView={elementCellView} elementUpdated={elementUpdated}
-                                             setElementUpdated={setElementUpdated} setFormData={setFormData}
-                                             formData={formData}/>
-
-                            <ElementProperty elementCellView={elementCellView} elementUpdated={elementUpdated}
-                                             setElementUpdated={setElementUpdated} setFormData={setFormData}
-                                             formData={formData}/>
-
-                            <ElementProperty elementCellView={elementCellView} elementUpdated={elementUpdated}
-                                             setElementUpdated={setElementUpdated} setFormData={setFormData}
-                                             formData={formData}/>
 
                         </div>
 
@@ -256,12 +276,11 @@ const ElementDetailContainer = () =>{
                             </button>
                         </div>
                         <button onClick={handleSaveData}
-                                className={`${styles.SaveButton}`}>Save Changes
+                                className={`${styles.SaveButton}`}>Save
                         </button>
-                        <button style={{backgroundColor: "#d9534f"}}
-                                className={`${styles.SaveButton}`}>Discard
+                        <button onClick={handleDiscardChanges} style={{backgroundColor: "var(--danger-color)"}}
+                                className={`${styles.SaveButton}`}>Discard Changes
                         </button>
-
                     </div>
                 ) :
                     (

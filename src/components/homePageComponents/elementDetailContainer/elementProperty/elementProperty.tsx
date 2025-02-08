@@ -1,47 +1,42 @@
 import styles from './elementProperty.module.css'
-import Image from "next/image";
 import {Dispatch, SetStateAction} from "react";
+import {IElementProperty} from "../../../../../declarations";
 
 interface IProps {
-  elementCellView: any,
+    property: IElementProperty,
     formData: {
         name: string,
         uri: string,
         height: number,
         width: number,
         scale: number,
+        properties: IElementProperty[]
     },
     setFormData:  Dispatch<SetStateAction<{
       name: string,
         uri: string,
         height: number,
         width: number ,
-        scale: number
+        scale: number,
+        properties: IElementProperty[]
   }>>
-    ,
-    elementUpdated: boolean,
-    setElementUpdated: any,
+
 }
 
 const ElementProperty = (props: IProps) => {
 
-    const handleShowName = () =>{
-        props.elementCellView.prop('customData/showName', !props.elementCellView.prop('customData/showName'))
-        props.setElementUpdated(!props.elementUpdated)
-    }
-
 
     return (
         <>
-            <label className={`${styles.Label}`}>Property</label>
+            <label className={`${styles.Label}`}>{props.property.name}</label>
             <div className={`${styles.UriDiv}`}>
                 <input className={`${styles.Input}`}
-                       placeholder={`${props.elementCellView.prop('customData/name')}`}
-                       value={props.formData.name} // Set the value from formData
+                       placeholder={`${props.property.value}`}
+                       value={props.property.value}
                        onChange={e => {
                            props.setFormData(prevState => ({
                                ...prevState,
-                               name: e.target.value
+                               properties: prevState.properties.map(prop=> prop.value === props.property.value && prop.name === props.property.name ? {...prop, value: e.target.value} : prop)
                            }))
                        }}
                 />

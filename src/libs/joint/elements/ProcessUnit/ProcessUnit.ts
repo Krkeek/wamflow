@@ -10,6 +10,8 @@ export const ProcessUnit = shapes.standard.Circle.extend({
                 showName: true,
                 showUri: false,
             },
+            properties: [],
+
 
             size: { width: 70, height: 70 },
             type: 'ProcessUnit',

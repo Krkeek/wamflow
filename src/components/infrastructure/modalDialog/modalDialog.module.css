@@ -1,18 +1,21 @@
+
+
 .Container {
     background-color: var(--secondary-color-two);
-    width: 15vw;
+    min-width: 15vw;
+    width: fit-content;
     height: fit-content;
     border-radius: 5px;
     -webkit-box-shadow: -1px 0 17px -2px rgba(0,0,0,0.10);
     box-shadow: -1px 0 17px -2px rgba(0,0,0,0.10);
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 2rem 2rem;
+    padding: 0.5rem 2rem;
     box-sizing: border-box;
     max-height: 40vh;
 
-
 }
+
 
 .TitleDiv {
     display: flex;

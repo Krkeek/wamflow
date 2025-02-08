@@ -10,7 +10,7 @@ export const DatabaseProvider = shapes.standard.Cylinder.extend({
                 showName: true,
                 showUri: false,
             },
-
+            properties: [],
             size: { width: 60, height: 70 },
             type: 'DatabaseProvider',
             attrs: {

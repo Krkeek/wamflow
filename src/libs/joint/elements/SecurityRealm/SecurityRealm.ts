@@ -10,6 +10,8 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
             showName: true,
             showUri: false,
         },
+        properties: [],
+
 
         size: { width: 700, height: 400 },
         attrs: {

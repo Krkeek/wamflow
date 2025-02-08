@@ -2,9 +2,22 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 1rem;
     cursor: pointer;
+    padding: 0.5rem 0;
+    background-color: unset;
+    transition: background-color 0.2s ease;
 }
 .Title {
     margin-left: 0.5rem;
+}
+
+.ContainerNoIcon {
+    padding: 0.5rem 0;
+}
+
+.Container:hover {
+    background-color: var(--input-color);
+    transition: background-color 0.2s ease;
+
+
 }

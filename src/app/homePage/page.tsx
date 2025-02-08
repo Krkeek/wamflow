@@ -23,6 +23,8 @@ import Paper = dia.Paper;
 import styles from './homePage.module.css';
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
 import AccountSetting from "@/components/homePageComponents/accountSetting/acountSetting";
+import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
+import ConfirmDialog from "@/components/infrastructure/confirmDialog/confirmDialog";
 
 const HomePage = () =>{
     const graph = useContext(GraphContext);
@@ -121,6 +123,7 @@ const HomePage = () =>{
                 </div>
             </div>
             <ErrorBox />
+            <ConfirmDialog />
 
 
 
