@@ -26,6 +26,7 @@
     height: fit-content;
     padding: 1rem 0;
     justify-content: space-between;
+    margin-bottom: 5vh;
 
 }
 
@@ -39,40 +40,72 @@
     margin-left: 0.5rem;
 }
 
-.Table {
-    margin-top: 5vh;
-    height: 100%;
 
-}
-.TableContent {
-    overflow: scroll;
-    max-height: 50vh;
-}
-
-.Row {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--input-color);
-
-}
-.MainRow {
-    padding-top: 0;
-    padding-bottom: 0.2rem;
-}
 
 .Col {
     min-width: 10vw;
 }
 
+.PropertyTable {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+.PropertyTableContainer {
+    max-height: 55vh;
+    overflow: auto;
+
+}
+
+
+.PropertyTableContainer {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.PropertyTableContainer::-webkit-scrollbar {
+    display: none;
+}
+
+
+.PropertyTable thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+
+.PropertyTable th, .PropertyTable td {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.PropertyTable th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
 .AddPropRow {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--input-color);
     padding: 0.1rem 0;
+    transition: background-color 0.2s ease;
+    background-color: var(--providerButtons-bg-color);
+    border: 1px solid var(--input-color);
+    border-top: none;
+    cursor: pointer;
+
 }
+
+.AddPropRow:hover {
+    transition: background-color 0.2s ease;
+    background-color: var(--input-color);
+
+}
+
 
 .ButtonRow {
     display: flex;
@@ -92,5 +125,57 @@
     border-radius: 3px;
     cursor: pointer;
     width: 100%;
+
+}
+
+.TextInput{
+    border: 1px solid var(--input-color);
+    background-color: transparent;
+    outline: none;
+    font-size: 0.9rem;
+    border-radius: 3px;
+
+}
+
+.SelectInput {
+    background-color: transparent;
+    border: 1px solid var(--input-color);
+    border-radius: 3px;
+
+
+}
+
+
+.CheckBoxInput {
+    cursor: pointer;
+    accent-color: var(--secondary-color);  /* Changes the checkbox tick color */
+    border: none !important;
+}
+
+.CheckBoxCol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: unset;
+    width: 2vw;
+}
+
+.ActionCol {
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+
+}
+
+.ActionColMain{
+    background-color: var(--secondary-color-two) !important;
+    border-color: transparent !important;
+    border-bottom: 1px solid var(--input-color) !important;
+    min-width: unset;
+
+}
+
+.ActionCol:hover {
+    transition: background-color 0.4s ease;
+    background-color: var(--input-color);
 
 }

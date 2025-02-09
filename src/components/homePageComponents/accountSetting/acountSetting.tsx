@@ -2,6 +2,7 @@ import styles from './accountSetting.module.css'
 import RoundButton from "@/components/infrastructure/roundButton/roundButton";
 import {useState} from "react";
 import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
+import {logoutUser} from "@/utils/logoutUser";
 
 const AccountSetting = () => {
 
@@ -37,7 +38,8 @@ const AccountSetting = () => {
                             },
                             {
                                 title: "Logout",
-                                url:'/assets/settingsMenu/logout.webp'
+                                url:'/assets/settingsMenu/logout.webp',
+                                onClickEvent: logoutUser
                             },
 
 
