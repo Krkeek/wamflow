@@ -25,7 +25,7 @@ export type ElementForm = {
 
 export type IElementProperty = {
     name: string,
-    value: string,
+    value: string | boolean | number,
     type: string,
     active: boolean,
 }

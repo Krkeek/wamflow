@@ -12,7 +12,6 @@ export async function GET (req: NextRequest) {
             return isAuthenticated;
         }
 
-        console.log(isAuthenticated.decodedJWT.user_id)
         const userUID = isAuthenticated.decodedJWT.user_id;
 
         if (!userUID) {

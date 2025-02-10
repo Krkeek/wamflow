@@ -42,13 +42,11 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
 
                 });
                 const responseBody = await response.json()
-                console.log(responseBody);
                 if (!responseBody.status){
                     dispatch(setErrorBox(responseBody.message + ": "+responseBody.additionalInformation));
                 }
                 else {
                     //Task success
-                    console.log("Logged in!");
                     dispatch(setErrorBox('logged in Successfully'));
                     redirect("/homePage");
                 }
@@ -70,7 +68,6 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                 })
             });
             const responseBody = await response.json();
-            console.log(responseBody)
             if (!responseBody.status){
                 dispatch(setErrorBox(responseBody.message));
             }
@@ -98,7 +95,6 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                 })
             });
             const responseBody = await response.json()
-            console.log(responseBody);
         }
     }
 

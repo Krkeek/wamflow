@@ -15,7 +15,7 @@ export const Application = dia.Element.define("Application", {
                 name: "Theme",
                 value: "dark",
                 type: "string",
-                active: true,  // Changed to boolean
+                active: true,
             },
             {
                 name: "MaxUsers",
@@ -25,7 +25,7 @@ export const Application = dia.Element.define("Application", {
             },
             {
                 name: "EnableLogging",
-                value: true,
+                value: false,
                 type: "boolean",
                 active: true,
             },
@@ -33,7 +33,7 @@ export const Application = dia.Element.define("Application", {
                 name: "Timeout",
                 value: 30,
                 type: "number",
-                active: false,
+                active: true,
             },
             {
                 name: "API_URL",
@@ -45,7 +45,7 @@ export const Application = dia.Element.define("Application", {
                 name: "DebugMode",
                 value: false,
                 type: "boolean",
-                active: false,
+                active: true,
             },
             {
                 name: "DatabaseHost",
@@ -75,7 +75,7 @@ export const Application = dia.Element.define("Application", {
                 name: "MaxConnections",
                 value: 500,
                 type: "number",
-                active: false,
+                active: true,
             },
             {
                 name: "UseSSL",
@@ -105,7 +105,7 @@ export const Application = dia.Element.define("Application", {
                 name: "EnableCompression",
                 value: false,
                 type: "boolean",
-                active: false,
+                active: true,
             },
             {
                 name: "RetentionPeriod",
@@ -117,7 +117,7 @@ export const Application = dia.Element.define("Application", {
                 name: "ProxyEnabled",
                 value: false,
                 type: "boolean",
-                active: false,
+                active: true,
             },
             {
                 name: "BackupEnabled",
@@ -129,7 +129,7 @@ export const Application = dia.Element.define("Application", {
                 name: "MaintenanceMode",
                 value: false,
                 type: "boolean",
-                active: false,
+                active: true,
             },
             {
                 name: "RegionAvailability",

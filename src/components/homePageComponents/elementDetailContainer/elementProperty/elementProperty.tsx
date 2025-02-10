@@ -1,5 +1,5 @@
 import styles from './elementProperty.module.css'
-import {Dispatch, SetStateAction} from "react";
+import React, {Dispatch, SetStateAction, useEffect} from "react";
 import {IElementProperty} from "../../../../../declarations";
 
 interface IProps {
@@ -25,23 +25,48 @@ interface IProps {
 
 const ElementProperty = (props: IProps) => {
 
-
     return (
-        <>
-            <label className={`${styles.Label}`}>{props.property.name}</label>
-            <div className={`${styles.UriDiv}`}>
-                <input className={`${styles.Input}`}
-                       placeholder={`${props.property.value}`}
-                       value={props.property.value}
-                       onChange={e => {
-                           props.setFormData(prevState => ({
-                               ...prevState,
-                               properties: prevState.properties.map(prop=> prop.value === props.property.value && prop.name === props.property.name ? {...prop, value: e.target.value} : prop)
-                           }))
-                       }}
-                />
-            </div>
-        </>
+            <>
+                <label className={`${styles.Label}`}>{props.property.name}</label>
+                <div className={`${styles.UriDiv}`}>
+                    {props.property.type === 'boolean' ? (
+                        <input
+                            className={`${styles.InputRadio}`}
+                            type="checkbox"
+                            checked={props.property.value === true}
+                            onChange={e => {
+                                props.setFormData(prevState => ({
+                                    ...prevState,
+                                    properties: prevState.properties.map(prop=> prop.value === props.property.value && prop.name === props.property.name ? {...prop, value: e.target.checked} : prop)
+                                }))
+                            }}                        />
+                    ) : props.property.type === 'number' ? (
+                        <input
+                            className={`${styles.Input}`}
+                            placeholder={`${props.property.value}`}
+                            type="number"
+                            value={props.property.value.toString()}
+                            onChange={e => {
+                                props.setFormData(prevState => ({
+                                    ...prevState,
+                                    properties: prevState.properties.map(prop=> prop.value === props.property.value && prop.name === props.property.name ? {...prop, value: e.target.value} : prop)
+                                }))
+                            }}                        />
+                    ) : (
+                        <input
+                            className={`${styles.Input}`}
+                            placeholder={`${props.property.value}`}
+                            type="text"
+                            value={props.property.value.toString()}
+                            onChange={e => {
+                                props.setFormData(prevState => ({
+                                    ...prevState,
+                                    properties: prevState.properties.map(prop=> prop.value === props.property.value && prop.name === props.property.name ? {...prop, value: e.target.value} : prop)
+                                }))
+                            }}                        />
+                    )}
+                </div>
+            </>
     )
 }
 

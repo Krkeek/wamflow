@@ -12,8 +12,6 @@ export async function middleware(request: NextRequest){
         const result = await getFirebasePublicKeys();
         let isVerified = false;
         for(const publicKey in result){
-            console.log("Now we are verifying:")
-            console.log(publicKey)
             isVerified = await verifyToken(JWT, result[publicKey]);
             if (isVerified){
                 break
@@ -30,7 +28,6 @@ export async function middleware(request: NextRequest){
         }
 
     }else {
-        console.log('JWT is undefined');
         if (request.nextUrl.pathname.startsWith('/homePage')) {
             return (NextResponse.redirect(new URL('/',request.url)));
         }
@@ -41,7 +38,6 @@ export async function verifyToken(token: string, publicKey: string) {
         const alg = 'RS256';
         const ecPublicKey = await jose.importX509(publicKey, alg);
         const decoded = await jose.jwtVerify(token, ecPublicKey);
-        console.log('JWT token is verified');
         return true
         // You can return or do something else with the decoded token
     } catch (error: any) {

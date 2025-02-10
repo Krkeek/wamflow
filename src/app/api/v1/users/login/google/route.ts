@@ -23,9 +23,6 @@ type ResponseBody = {
 
 export async function POST (req: NextRequest) {
 
-    const googleSignInResult : SuccessData | FailData = await req.json();
-    console.log(googleSignInResult.status);
-
 
     return NextResponse.json<ResponseBody>({
         status: true,

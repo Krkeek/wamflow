@@ -45,7 +45,6 @@ export const resizeElement = (formData: ElementForm, elementCellView: any, dispa
 
 const isValidDimensions = (elementCellView: any, dimensions: {width: number, height: number}) =>{
 
-    console.log(elementCellView.attributes.type)
 
 
     if (elementCellView.attributes.type === 'SecurityRealm'){

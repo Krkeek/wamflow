@@ -168,7 +168,7 @@
 }
 
 .PropertiesWrapper{
-    max-height: 20vh;
+    max-height: 40vh;
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;

@@ -33,6 +33,12 @@
     outline: none;
 }
 
+.InputRadio{
+    border-radius: 3px;
+    height: 1.3rem;
+    width: 1.3rem;
+}
+
 .Input::placeholder {
     color: var(--placeHolder-color);
 

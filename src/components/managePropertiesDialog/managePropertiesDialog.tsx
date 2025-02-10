@@ -24,13 +24,18 @@ const ManagePropertiesDialog = (props: IProps) => {
     const saveProperties = (event: React.FormEvent) => {
         event.preventDefault();
 
-        const updatedProperties = properties.map((property) => ({
-            ...property,
-            name: inputRefs.current[`name-${property.name}`]?.value || property.name,
-            type: inputRefs.current[`type-${property.name}`]?.value || property.type,
-            value: inputRefs.current[`value-${property.name}`]?.value || property.value,
-            active: inputRefs.current[`active-${property.name}`]?.checked ?? property.active,
-        }));
+        const updatedProperties = properties.map((property) => {
+            const propertyValue = inputRefs.current[`value-${property.name}`]?.value;
+
+            return {
+                ...property,
+                name: inputRefs.current[`name-${property.name}`]?.value || property.name,
+                type: inputRefs.current[`type-${property.name}`]?.value || property.type,
+                value: propertyValue === 'true' ? true : propertyValue === 'false' ? false : propertyValue,
+                active: inputRefs.current[`active-${property.name}`]?.checked ?? property.active,
+            };
+        });
+
 
         props.elementCellView.prop('properties', updatedProperties, { rewrite: true });
         props.onPropertiesUpdated(updatedProperties);
@@ -139,7 +144,15 @@ const ManagePropertiesDialog = (props: IProps) => {
                                             {property.type === "boolean" ? (
                                                 <select
                                                     value={property.value.toString()}
-                                                    onChange={(e) => handlePropertyChange(property.name, "value", e.target.value === "true")}                                                    ref={(el) => {
+                                                    onChange={
+                                                    (e) =>{
+                                                        const newValue: boolean = e.target.value === 'true';
+                                                        handlePropertyChange(property.name, "value", newValue)
+                                                    }
+                                                }
+
+
+                                                    ref={(el) => {
                                                         if (el) inputRefs.current[`value-${property.name}`] = el;
                                                     }}
                                                     className={styles.SelectInput}

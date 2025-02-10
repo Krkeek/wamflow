@@ -136,6 +136,7 @@ const ElementDetailContainer = () =>{
 
 
 
+
     return(
         <>
 
@@ -221,7 +222,7 @@ const ElementDetailContainer = () =>{
 
 
                             {formData.properties.map((property, index) => (
-                                <ElementProperty property={property} key={index} setFormData={setFormData} formData={formData}/>
+                                property.active && <ElementProperty property={property} key={index} setFormData={setFormData} formData={formData}/>
                             ))}
 
 
