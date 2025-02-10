@@ -22,9 +22,13 @@ import { HomePageAnimation } from "@/libs/gsap/HomePageAnimation";
 import Paper = dia.Paper;
 import styles from './homePage.module.css';
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
-import AccountSetting from "@/components/homePageComponents/accountSetting/acountSetting";
-import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
+import AccountSetting from "@/components/homePageComponents/accountSetting/accountSetting";
 import ConfirmDialog from "@/components/infrastructure/confirmDialog/confirmDialog";
+import {getUserStatus} from "@/utils/getUserStatus";
+import RegisterDialog from "@/components/registerDialog/registerDialog";
+import {IGetUserStatus} from "../../../declarations";
+import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
+
 
 const HomePage = () =>{
     const graph = useContext(GraphContext);
@@ -37,8 +41,14 @@ const HomePage = () =>{
     const toggleContainer = useAppSelector(state => state.toggleContainer.value)
     const paperRef = useRef<HTMLDivElement>(null);
     const [paper, setPaper] = useState<Paper | null >(null)
+    const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
 
 
+    useEffect(() => {
+        const userStatus:IGetUserStatus = getUserStatus();
+        dispatch(setUserStatus(userStatus));
+
+    }, []);
 
     useEffect(() => {
         if (paperRef.current){
@@ -103,7 +113,7 @@ const HomePage = () =>{
                 <div className={`${styles.TopBar} ${toggleContainer && isMobileView && styles.ContainerBlur}` } onClick={handleCloseContainer}>
                   <DiagramHeader paper={paper} paperRef={paperRef.current} />
                   <OptionsBar  paper={paper} paperRef={paperRef.current}/>
-                  <AccountSetting />
+                  <AccountSetting setOpenRegisterDialog={setOpenRegisterDialog} />
 
               </div>
                 <div className={`${styles.ContentDiv}`}>
@@ -124,10 +134,7 @@ const HomePage = () =>{
             </div>
             <ErrorBox />
             <ConfirmDialog />
-
-
-
-
+            <RegisterDialog isOpen={openRegisterDialog} setIsOpenAction={setOpenRegisterDialog}/>
 
 
         </>

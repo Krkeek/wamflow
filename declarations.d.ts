@@ -29,3 +29,18 @@ export type IElementProperty = {
     type: string,
     active: boolean,
 }
+
+export interface IGetUserStatus {
+    isLoggedIn: boolean,
+    userInfo:{
+        accountDetails: {
+            name: string
+            email: string,
+        }
+        accountCreated: string,
+        active: boolean,
+        accountPreferences: {
+            darkMode: boolean
+        }
+    } | null
+}

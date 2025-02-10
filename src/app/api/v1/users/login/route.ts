@@ -1,8 +1,9 @@
 import {NextRequest, NextResponse} from "next/server";
-
-
 import {cookies} from "next/headers";
 import signInFirebaseUser from "@/server/utils/signInFirebaseUser";
+import {BasicResponseData} from "@/app/api/type";
+import * as jose from "jose";
+import {getUserInfo} from "@/server/utils/getUserInfo";
 
 
 type RequestData = {
@@ -11,12 +12,8 @@ type RequestData = {
 }
 
 type SuccessResponseData = {
-    status: boolean,
-    accessToken: string,
-}
-type FailResponseData = {
-    status: boolean,
-    message: string
+    success: boolean,
+    userInfo: any
 }
 
 export async function POST (req: NextRequest){
@@ -36,16 +33,38 @@ export async function POST (req: NextRequest){
         });
 
 
-        return NextResponse.json<SuccessResponseData>({
-            status: result.status,
-            accessToken: accessToken,
-        },{
-            status: 200
-        })
 
+        const decodedJWT = jose.decodeJwt(accessToken);
+        const userUID = decodedJWT.user_id;
+
+        if (!userUID) {
+            return NextResponse.json<BasicResponseData>({
+                success: false,
+                message: "UID not found in the token.",
+            }, { status: 400 });
+        }else {
+
+            const userInfo = await getUserInfo(userUID);
+
+            cookiesStore.set("userInfo", JSON.stringify(userInfo), {
+                sameSite: "none",
+                secure: true,
+                httpOnly: false,
+
+            });
+
+
+            return NextResponse.json<SuccessResponseData>({
+                success: result.status,
+                userInfo: userInfo
+            },{
+                status: 200
+            })
+
+        }
     }else if (!result.status && typeof result.message === 'string') {
-        return NextResponse.json<FailResponseData>({
-            status: result.status,
+        return NextResponse.json<BasicResponseData>({
+            success: result.status,
             message: result.message
         },{
             status: 401

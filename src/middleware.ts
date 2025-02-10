@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest){
 
     const JWT = (await cookies()).get('JWT')?.value;
 
-    if (JWT !== undefined){
+/*    if (JWT !== undefined){
         const result = await getFirebasePublicKeys();
         let isVerified = false;
         for(const publicKey in result){
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest){
         if (request.nextUrl.pathname.startsWith('/homePage')) {
             return (NextResponse.redirect(new URL('/',request.url)));
         }
-    }
+    }*/
 }
 export async function verifyToken(token: string, publicKey: string) {
     try {

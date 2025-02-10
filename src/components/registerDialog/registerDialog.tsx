@@ -7,6 +7,9 @@ import {setErrorBox} from "@/libs/redux/features/errorBoxSlice";
 import {useAppDispatch} from "@/libs/redux/hooks";
 import {passwordMatch} from "@/utils/passwordMatch";
 import {signInWithGoogle} from "@/server/utils/signInWithGoogle";
+import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
+import {getUserInfo} from "@/server/utils/getUserInfo";
+import {getUserStatus} from "@/utils/getUserStatus";
 
 interface RegisterDialogProps {
     isOpen: boolean;
@@ -42,13 +45,16 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
 
                 });
                 const responseBody = await response.json()
-                if (!responseBody.status){
+                if (!responseBody.success){
+                    console.log(responseBody.success)
                     dispatch(setErrorBox(responseBody.message + ": "+responseBody.additionalInformation));
                 }
                 else {
                     //Task success
                     dispatch(setErrorBox('logged in Successfully'));
-                    redirect("/homePage");
+                    dispatch(setUserStatus(getUserStatus()));
+
+                    closeDialog();
                 }
             }
             else {
@@ -68,13 +74,14 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                 })
             });
             const responseBody = await response.json();
-            if (!responseBody.status){
+            if (!responseBody.success){
                 dispatch(setErrorBox(responseBody.message));
             }
             else {
                 //Task success
                 dispatch(setErrorBox('logged in Successfully'));
-                redirect('/homePage')
+                dispatch(setUserStatus(getUserStatus()));
+                closeDialog();
             }
 
         }

@@ -7,6 +7,7 @@ import {linkSelectedSlice} from "@/libs/redux/features/linkSelectedSlice";
 import {errorBoxSlice} from "@/libs/redux/features/errorBoxSlice";
 import {mobileToggleContainerSlice} from "@/libs/redux/features/mobileToggleContainerSlice";
 import {confirmDialogSlice} from "@/libs/redux/features/confirmDialogSlice";
+import {userStatusSlice} from "@/libs/redux/features/userStatusSlice";
 
 export const makeStore = () => {
     return configureStore({
@@ -19,6 +20,7 @@ export const makeStore = () => {
             errorBox: errorBoxSlice.reducer,
             toggleContainer: mobileToggleContainerSlice.reducer,
             confirmDialog: confirmDialogSlice.reducer,
+            userStatus: userStatusSlice.reducer,
         }
     })
 }

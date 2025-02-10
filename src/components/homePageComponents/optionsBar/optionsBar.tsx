@@ -9,7 +9,7 @@ import ExportWrapper from "@/components/homePageComponents/optionsBar/exportWrap
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
-import AccountSetting from "@/components/homePageComponents/accountSetting/acountSetting";
+import AccountSetting from "@/components/homePageComponents/accountSetting/accountSetting";
 
 type propsType = {
     paperRef: HTMLDivElement | null,
