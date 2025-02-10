@@ -127,6 +127,15 @@ const ElementDetailContainer = () =>{
     }
 
 
+    const handlePropertiesUpdate = (updatedProperties: IElementProperty[]) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            properties: updatedProperties
+        }));
+    };
+
+
+
     return(
         <>
 
@@ -299,7 +308,7 @@ const ElementDetailContainer = () =>{
                     )
             }
             {
-                managePropertiesDialog && <ManagePropertiesDialog elementCellView={elementCellView} close={() => setManagePropertiesDialog(false)} />
+                managePropertiesDialog && <ManagePropertiesDialog onPropertiesUpdated={handlePropertiesUpdate}  elementCellView={elementCellView} close={() => setManagePropertiesDialog(false)} />
 
             }
 

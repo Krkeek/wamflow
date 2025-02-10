@@ -7,6 +7,9 @@ import Image from "next/image";
 interface IProps {
     elementCellView: any;
     close: () => void;
+    onPropertiesUpdated: (updatedProperties: IElementProperty[]) => void; // Add the callback type
+
+
 }
 
 const ManagePropertiesDialog = (props: IProps) => {
@@ -29,7 +32,8 @@ const ManagePropertiesDialog = (props: IProps) => {
             active: inputRefs.current[`active-${property.name}`]?.checked ?? property.active,
         }));
 
-        props.elementCellView.prop("properties", updatedProperties);
+        props.elementCellView.prop('properties', updatedProperties, { rewrite: true });
+        props.onPropertiesUpdated(updatedProperties);
         props.close();
     };
 
@@ -41,6 +45,34 @@ const ManagePropertiesDialog = (props: IProps) => {
                     : prop
             )
         );
+    };
+
+
+    const handleDeleteProperty = (property: IElementProperty) => {
+        const updatedProperties = properties.filter((prop) => prop.name !== property.name);
+        setProperties(updatedProperties);
+
+    };
+
+    const handlePropertyChange = (propertyName: string, key: keyof IElementProperty, value: any) => {
+        setProperties((prevProperties) =>
+            prevProperties.map((prop) =>
+                prop.name === propertyName ? { ...prop, [key]: value } : prop
+            )
+        );
+    };
+
+    const AddProperty = () => {
+        const newPropertyName = `Property-${properties.length + 1}`;
+
+        const newProperty: IElementProperty = {
+            name: newPropertyName,
+            type: "string",
+            value: "",
+            active: true
+        };
+
+        setProperties((prevProperties) => [...prevProperties, newProperty]);
     };
 
     return (
@@ -67,7 +99,10 @@ const ManagePropertiesDialog = (props: IProps) => {
                                     <th className={`${styles.Col}`}>Type</th>
                                     <th className={`${styles.Col}`}>Value</th>
                                     <th className={`${styles.Col}`}>Active</th>
-                                    <th className={`${styles.Col} ${styles.ActionColMain}`}></th>
+                                    {
+                                        properties.length > 0 &&
+                                        <th className={`${styles.Col} ${styles.ActionColMain}`}></th>
+                                    }
 
                                 </tr>
                                 </thead>
@@ -77,7 +112,9 @@ const ManagePropertiesDialog = (props: IProps) => {
                                         <td>
                                             <input
                                                 type="text"
-                                                defaultValue={property.name}
+                                                value={property.name}
+                                                onChange={(e) => handlePropertyChange(property.name, "name", e.target.value)}
+
                                                 ref={(el) => {
                                                     if (el) inputRefs.current[`name-${property.name}`] = el;
                                                 }}
@@ -86,7 +123,7 @@ const ManagePropertiesDialog = (props: IProps) => {
                                         </td>
                                         <td>
                                             <select
-                                                defaultValue={property.type}
+                                                value={property.type}
                                                 onChange={(e) => handleTypeChange(property, e.target.value)}
                                                 ref={(el) => {
                                                     if (el) inputRefs.current[`type-${property.name}`] = el;
@@ -101,8 +138,8 @@ const ManagePropertiesDialog = (props: IProps) => {
                                         <td>
                                             {property.type === "boolean" ? (
                                                 <select
-                                                    defaultValue={property.value.toString()}
-                                                    ref={(el) => {
+                                                    value={property.value.toString()}
+                                                    onChange={(e) => handlePropertyChange(property.name, "value", e.target.value === "true")}                                                    ref={(el) => {
                                                         if (el) inputRefs.current[`value-${property.name}`] = el;
                                                     }}
                                                     className={styles.SelectInput}
@@ -113,8 +150,8 @@ const ManagePropertiesDialog = (props: IProps) => {
                                             ) : (
                                                 <input
                                                     type={property.type === "number" ? "number" : "text"}
-                                                    defaultValue={property.value.toString()}
-                                                    ref={(el) => {
+                                                    value={property.value.toString()}
+                                                    onChange={(e) => handlePropertyChange(property.name, "value", e.target.value)}                                                    ref={(el) => {
                                                         if (el) inputRefs.current[`value-${property.name}`] = el;
                                                     }}
                                                     className={styles.TextInput}
@@ -131,7 +168,7 @@ const ManagePropertiesDialog = (props: IProps) => {
                                                 className={styles.CheckBoxInput}
                                             />
                                         </td>
-                                        <td className={`${styles.ActionCol}`}>
+                                        <td onClick={() => handleDeleteProperty(property)} className={`${styles.ActionCol}`}>
                                             <Image src={"/assets/trash.webp"} alt={'trash'} width={20} height={20}/>
                                         </td>
                                     </tr>
@@ -140,7 +177,7 @@ const ManagePropertiesDialog = (props: IProps) => {
                             </table>
 
                         </div>
-                        <div className={`${styles.Row} ${styles.AddPropRow}`}>+</div>
+                        <div onClick={AddProperty} className={`${styles.Row} ${styles.AddPropRow}`}>+</div>
 
                         <div className={styles.ButtonRow}>
                             <button type="submit" className={styles.SaveButton}>Save</button>
