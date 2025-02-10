@@ -24,19 +24,20 @@ const ErrorBox = () =>{
     if (!errorBoxMessage){
         return (
             <>
-            </>
-        )
-    }
-    return(
+                <div className={`BoxAnimation`}></div>
+                </>
+                )
+                }
+                return(
 
-        <>
-            <div className={`${styles.Container} BoxAnimation`}>
-                <Image src={'/assets/errorBox.webp'} alt={'error'} width={30} height={30} />
-                <p>{errorBoxMessage}</p>
-            </div>
+                <>
+                    <div className={`${styles.Container} BoxAnimation`}>
+                        <Image src={'/assets/errorBox.webp'} alt={'error'} width={30} height={30}/>
+                        <p>{errorBoxMessage}</p>
+                    </div>
 
-        </>
-    );
+                </>
+                );
 
-}
-export default ErrorBox
+                }
+                export default ErrorBox

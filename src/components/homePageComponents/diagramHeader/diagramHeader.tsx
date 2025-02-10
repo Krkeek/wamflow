@@ -53,7 +53,7 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
         <>
             <div className={`${styles.Container}`}>
                 <div className={`${styles.LeftDiv}`}>
-                    <Image className={`${styles.Logo}`} src={'/assets/logo.webp'} alt={'logo'} width={35} height={35}/>
+                    <Image className={`${styles.Logo}`} src={'/assets/logo.webp'} alt={'logo'} width={35} height={35} priority/>
                     <input ref={titleInput} className={`${styles.Title}`} placeholder={projectName}
                            onChange={(e) => dispatch(setProjectInfo(e.target.value))}/>
                 </div>
