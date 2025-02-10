@@ -1,10 +1,13 @@
 import styles from './accountSetting.module.css'
 import RoundButton from "@/components/infrastructure/roundButton/roundButton";
-import {use, useState} from "react";
+import {use, useEffect, useState} from "react";
 import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
 import {logoutUser} from "@/utils/logoutUser";
 import {getUserStatus} from "@/utils/getUserStatus";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
+import {getInitials} from "@/utils/getInitials";
+import {useDispatch} from "react-redux";
+import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
 
 interface IProps {
     setOpenRegisterDialog: (state: boolean) => void;
@@ -13,8 +16,18 @@ interface IProps {
 const AccountSetting = (props: IProps) => {
 
     const [openDialog, setOpenDialog] = useState(false);
+    const dispatch = useAppDispatch()
 
     const userStatus = useAppSelector(state => state.userStatus)
+    const [initials, setInitials] = useState<string>();
+
+
+    useEffect(() => {
+        if (userStatus.userInfo){
+          const initials = getInitials(userStatus.userInfo.accountDetails.name);
+            setInitials(initials)
+        }
+    },[userStatus])
 
     const toggleDialog = (state?: boolean) => {
         if (state !== undefined) {
@@ -24,6 +37,13 @@ const AccountSetting = (props: IProps) => {
         }
     };
 
+
+    const handleLogout = async () => {
+        const result: boolean =  await logoutUser();
+        if (result) {
+            dispatch(setUserStatus(getUserStatus()));
+        }
+    }
 
     return(
         <>
@@ -42,11 +62,11 @@ const AccountSetting = (props: IProps) => {
                         ): (
                         <>
                             <div onClick={() => toggleDialog()} className={styles.Container}>
-                                <RoundButton extended={true} backgroundColor={'var(--secondary-color)'} content={'AH'}
+                                <RoundButton extended={true} backgroundColor={'var(--secondary-color)'} content={initials}
                                              width={'3.2rem'}/>
                                 {openDialog && (
                                     <div className={styles.AccountMenuDiv}>
-                                        <ModalDialog title={'Ahmad Hijazi'} menuElement={[
+                                        <ModalDialog title={userStatus.userInfo ? userStatus.userInfo.accountDetails.name : "null"} menuElement={[
                                             {
                                                 title: "Create Element",
                                                 url: '/assets/settingsMenu/createElements.webp'
@@ -63,7 +83,7 @@ const AccountSetting = (props: IProps) => {
                                             {
                                                 title: "Logout",
                                                 url: '/assets/settingsMenu/logout.webp',
-                                                onClickEvent: logoutUser
+                                                onClickEvent: handleLogout
                                             },
 
 

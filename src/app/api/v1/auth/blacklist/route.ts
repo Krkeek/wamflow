@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
 
         await redis?.set(`blacklist:${JWT}`, 'blacklisted', 'EX', 3600 * 24 * 7); // Expires in 1 week
         cookieStore.set('JWT', '', { expires: new Date(0) })
+        cookieStore.delete('userInfo')
 
         return NextResponse.json<POSTResponseData>({
             success: true,

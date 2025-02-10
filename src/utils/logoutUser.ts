@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
 
 export const logoutUser = async () => {
+
 
     const response = await fetch('/api/v1/auth/blacklist',{
         method: "POST",
@@ -9,8 +9,7 @@ export const logoutUser = async () => {
             "Access-Control-Allow-Origin" : "*"
         }
     });
-    const responseBody = await response.json()
-    if(responseBody.success) {
-        redirect('/');
-    }
+    const result = await response.json();
+    return result.success;
+
 };
