@@ -144,13 +144,13 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                         <button type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
                             <Image
                                 className={`${styles.OtherButtonImage}`} width={15} height={15}
-                                src={'/google.webp'} alt={'google'}/>
+                                src={'/assets/google.webp'} alt={'google'}/>
                             Sign in with Google
                         </button>
                         <button type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
                             <Image
                                 className={`${styles.OtherButtonImage}`} width={15} height={15}
-                                src={'/github.webp'} alt={'github'}/>
+                                src={'/assets/github.webp'} alt={'github'}/>
                             Sign in with Github
                         </button>
 
