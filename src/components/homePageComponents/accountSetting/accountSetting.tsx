@@ -8,6 +8,7 @@ import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {getInitials} from "@/utils/getInitials";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
 import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
+import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 
 interface IProps {
     setOpenRegisterDialog: (state: boolean) => void;
@@ -39,11 +40,14 @@ const AccountSetting = (props: IProps) => {
 
 
     const handleLogout = async () => {
+        dispatch(setIsLoading(true))
         const result: boolean =  await logoutUser();
         if (result) {
             dispatch(setUserStatus(getUserStatus()));
             dispatch(setNotificationBox({message:`You have been logged out`}));
         }
+        dispatch(setIsLoading(false))
+
     }
 
     return(

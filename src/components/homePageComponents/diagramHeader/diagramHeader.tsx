@@ -10,6 +10,7 @@ import {setProjectInfo} from "@/libs/redux/features/projectInfoSlice";
 import MobileExportList from "@/components/mobileExportList/mobileExportList";
 import {dia} from "@joint/core";
 import Paper = dia.Paper;
+import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 
 type DiagramHeaderProps = {
     paperRef: HTMLDivElement | null,
@@ -26,8 +27,11 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
     const isMobileView = useAppSelector(state => state.mobileView.value)
     const [extendList, setExtendList] = useState(false);
     const handleImport = () =>{
+        dispatch(setIsLoading(true));
         // @ts-ignore
         inputFile.current.click();
+        dispatch(setIsLoading(false));
+
     }
 
     const handleFileChange = async (files: FileList | null) => {

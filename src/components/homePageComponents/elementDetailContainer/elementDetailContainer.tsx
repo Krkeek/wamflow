@@ -13,6 +13,7 @@ import {setConfirmDialog} from "@/libs/redux/features/confirmDialogSlice";
 import {IElementProperty} from "../../../../declarations";
 import ManagePropertiesDialog from "@/components/managePropertiesDialog/managePropertiesDialog";
 import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
+import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 
 
 const ElementDetailContainer = () =>{
@@ -77,7 +78,7 @@ const ElementDetailContainer = () =>{
     }
 
     const handleSaveData = () =>{
-
+        dispatch(setIsLoading(true))
         saveElementData(formData, elementCellView);
         resizeElement(formData, elementCellView, dispatch)
 
@@ -91,17 +92,18 @@ const ElementDetailContainer = () =>{
 
         }
         handleDiscardChanges()
+        dispatch(setIsLoading(false))
         dispatch(setNotificationBox({message:`Your changes have been saved`}));
 
     }
 
     const handleDeleteElement = () =>{
+        dispatch(setIsLoading(true))
         handleDiscardChanges();
 
         elementCellView.remove();
+        dispatch(setIsLoading(false))
         dispatch(setNotificationBox({message: elementCellView.prop('customData/title')+ ` has been deleted`}));
-
-
     }
 
     const toggleMenu = () => {

@@ -2,13 +2,13 @@
 import styles from './registerDialog.module.css'
 import Image from "next/image";
 import {FormEvent, useState} from "react";
-import {redirect} from "next/navigation";
 import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 import {useAppDispatch} from "@/libs/redux/hooks";
 import {passwordMatch} from "@/utils/passwordMatch";
 import {signInWithGoogle} from "@/server/utils/signInWithGoogle";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
 import {getUserStatus} from "@/utils/getUserStatus";
+import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 
 interface RegisterDialogProps {
     isOpen: boolean;
@@ -26,6 +26,7 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) =>{
 
+        dispatch(setIsLoading(true))
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
         if (isRegister) {
@@ -86,6 +87,7 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
             }
 
         }
+        dispatch(setIsLoading(false))
     }
 
     const googleSubmit = async () => {

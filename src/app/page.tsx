@@ -8,6 +8,7 @@ import {LandingPageAnimation} from "@/libs/gsap/LandingPageAnimation";
 import GraphProvider from "@/libs/joint/GraphProvider";
 gsap.registerPlugin(useGSAP);
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import LoadingDialog from "@/components/infrastructure/loadingDialog/loadingDialog";
 
 export default function Home() {
 

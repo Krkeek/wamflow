@@ -28,6 +28,7 @@ import {getUserStatus} from "@/utils/getUserStatus";
 import RegisterDialog from "@/components/registerDialog/registerDialog";
 import {IGetUserStatus} from "../../../declarations";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
+import LoadingDialog from "@/components/infrastructure/loadingDialog/loadingDialog";
 
 
 const HomePage = () =>{
@@ -135,7 +136,7 @@ const HomePage = () =>{
             <NotificationBox />
             <ConfirmDialog />
             <RegisterDialog isOpen={openRegisterDialog} setIsOpenAction={setOpenRegisterDialog}/>
-
+            <LoadingDialog />
 
         </>
     );

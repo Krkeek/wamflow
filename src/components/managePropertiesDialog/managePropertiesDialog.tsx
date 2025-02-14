@@ -3,6 +3,8 @@ import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
 import React, { useEffect, useRef, useState } from "react";
 import { IElementProperty } from "../../../declarations";
 import Image from "next/image";
+import {useDispatch} from "react-redux";
+import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 
 interface IProps {
     elementCellView: any;
@@ -16,12 +18,14 @@ const ManagePropertiesDialog = (props: IProps) => {
 
     const [properties, setProperties] = useState<IElementProperty[]>([]);
     const inputRefs = useRef<any>({});
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setProperties(props.elementCellView.prop("properties") || []);
     }, []);
 
     const saveProperties = (event: React.FormEvent) => {
+        dispatch(setIsLoading(true));
         event.preventDefault();
 
         const updatedProperties = properties.map((property) => {
@@ -40,9 +44,11 @@ const ManagePropertiesDialog = (props: IProps) => {
         props.elementCellView.prop('properties', updatedProperties, { rewrite: true });
         props.onPropertiesUpdated(updatedProperties);
         props.close();
+        dispatch(setIsLoading(false));
     };
 
     const handleTypeChange = (property: IElementProperty, newType: string) => {
+        dispatch(setIsLoading(true));
         setProperties((prevProperties) =>
             prevProperties.map((prop) =>
                 prop.name === property.name
@@ -50,24 +56,30 @@ const ManagePropertiesDialog = (props: IProps) => {
                     : prop
             )
         );
+        dispatch(setIsLoading(false));
     };
 
 
     const handleDeleteProperty = (property: IElementProperty) => {
+        dispatch(setIsLoading(true));
         const updatedProperties = properties.filter((prop) => prop.name !== property.name);
         setProperties(updatedProperties);
+        dispatch(setIsLoading(false));
 
     };
 
     const handlePropertyChange = (propertyName: string, key: keyof IElementProperty, value: any) => {
+        dispatch(setIsLoading(true));
         setProperties((prevProperties) =>
             prevProperties.map((prop) =>
                 prop.name === propertyName ? { ...prop, [key]: value } : prop
             )
         );
+        dispatch(setIsLoading(false));
     };
 
     const AddProperty = () => {
+        dispatch(setIsLoading(true));
         const newPropertyName = `Property-${properties.length + 1}`;
 
         const newProperty: IElementProperty = {
@@ -78,6 +90,7 @@ const ManagePropertiesDialog = (props: IProps) => {
         };
 
         setProperties((prevProperties) => [...prevProperties, newProperty]);
+        dispatch(setIsLoading(false));
     };
 
     return (

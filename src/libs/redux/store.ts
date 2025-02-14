@@ -8,6 +8,7 @@ import {notificationBoxSlice} from "@/libs/redux/features/notificationBoxSlice";
 import {mobileToggleContainerSlice} from "@/libs/redux/features/mobileToggleContainerSlice";
 import {confirmDialogSlice} from "@/libs/redux/features/confirmDialogSlice";
 import {userStatusSlice} from "@/libs/redux/features/userStatusSlice";
+import {loadingSlice} from "@/libs/redux/features/loadingSlice";
 
 export const makeStore = () => {
     return configureStore({
@@ -21,6 +22,7 @@ export const makeStore = () => {
             toggleContainer: mobileToggleContainerSlice.reducer,
             confirmDialog: confirmDialogSlice.reducer,
             userStatus: userStatusSlice.reducer,
+            loading: loadingSlice.reducer,
         }
     })
 }
