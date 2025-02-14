@@ -12,6 +12,7 @@ import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
 import {setConfirmDialog} from "@/libs/redux/features/confirmDialogSlice";
 import {IElementProperty} from "../../../../declarations";
 import ManagePropertiesDialog from "@/components/managePropertiesDialog/managePropertiesDialog";
+import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 
 
 const ElementDetailContainer = () =>{
@@ -90,15 +91,16 @@ const ElementDetailContainer = () =>{
 
         }
         handleDiscardChanges()
+        dispatch(setNotificationBox({message:`Your changes have been saved`}));
 
     }
 
     const handleDeleteElement = () =>{
-
-        dispatch(setConfirmDialog('Are you sure you want to delete this element?'))
         handleDiscardChanges();
 
         elementCellView.remove();
+        dispatch(setNotificationBox({message: elementCellView.prop('customData/title')+ ` has been deleted`}));
+
 
     }
 

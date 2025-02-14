@@ -3,12 +3,11 @@ import styles from './registerDialog.module.css'
 import Image from "next/image";
 import {FormEvent, useState} from "react";
 import {redirect} from "next/navigation";
-import {setErrorBox} from "@/libs/redux/features/errorBoxSlice";
+import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 import {useAppDispatch} from "@/libs/redux/hooks";
 import {passwordMatch} from "@/utils/passwordMatch";
 import {signInWithGoogle} from "@/server/utils/signInWithGoogle";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
-import {getUserInfo} from "@/server/utils/getUserInfo";
 import {getUserStatus} from "@/utils/getUserStatus";
 
 interface RegisterDialogProps {
@@ -47,18 +46,19 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                 const responseBody = await response.json()
                 if (!responseBody.success){
                     console.log(responseBody.success)
-                    dispatch(setErrorBox(responseBody.message + ": "+responseBody.additionalInformation));
+                    dispatch(setNotificationBox({message: responseBody.message + ": "+responseBody.additionalInformation, isWarning: true}))
+
                 }
                 else {
                     //Task success
-                    dispatch(setErrorBox('logged in Successfully'));
+                    const username = getUserStatus().userInfo?.accountDetails.name;
+                    dispatch(setNotificationBox({message:`Logged in as ${username}`}));
                     dispatch(setUserStatus(getUserStatus()));
-
                     closeDialog();
                 }
             }
             else {
-                dispatch(setErrorBox("Passwords don't match"));
+                dispatch(setNotificationBox({message: "Passwords don't match", isWarning: true}))
             }
         }
         else {
@@ -75,11 +75,12 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
             });
             const responseBody = await response.json();
             if (!responseBody.success){
-                dispatch(setErrorBox(responseBody.message));
+                dispatch(setNotificationBox({message: responseBody.message, isWarning: true}));
             }
             else {
                 //Task success
-                dispatch(setErrorBox('logged in Successfully'));
+                const username = getUserStatus().userInfo?.accountDetails.name;
+                dispatch(setNotificationBox({message:`Logged in as ${username}`}));
                 dispatch(setUserStatus(getUserStatus()));
                 closeDialog();
             }

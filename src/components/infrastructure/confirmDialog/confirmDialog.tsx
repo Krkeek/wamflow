@@ -2,7 +2,7 @@ import styles from './confirmDialog.module.css'
 import {useAppSelector} from "@/libs/redux/hooks";
 import {useGSAP} from "@gsap/react";
 import {gsap} from "gsap";
-import {ErrorBoxAnimation} from "@/libs/gsap/ErrorBoxAnimation";
+import {NotificationBoxAnimation} from "@/libs/gsap/NotificationBoxAnimation";
 
 const ConfirmDialog = () => {
 
@@ -11,7 +11,7 @@ const ConfirmDialog = () => {
 
     useGSAP(()=>{
         const ctx = gsap.context(()=>{
-            ErrorBoxAnimation();
+            NotificationBoxAnimation();
         })
 
         return () => ctx.revert()

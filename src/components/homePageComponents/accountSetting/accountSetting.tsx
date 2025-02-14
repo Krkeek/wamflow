@@ -1,13 +1,13 @@
 import styles from './accountSetting.module.css'
 import RoundButton from "@/components/infrastructure/roundButton/roundButton";
-import {use, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
 import {logoutUser} from "@/utils/logoutUser";
 import {getUserStatus} from "@/utils/getUserStatus";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {getInitials} from "@/utils/getInitials";
-import {useDispatch} from "react-redux";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
+import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 
 interface IProps {
     setOpenRegisterDialog: (state: boolean) => void;
@@ -42,6 +42,7 @@ const AccountSetting = (props: IProps) => {
         const result: boolean =  await logoutUser();
         if (result) {
             dispatch(setUserStatus(getUserStatus()));
+            dispatch(setNotificationBox({message:`You have been logged out`}));
         }
     }
 

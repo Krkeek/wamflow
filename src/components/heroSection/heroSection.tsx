@@ -1,6 +1,6 @@
 import styles from './heroSection.module.css'
 import TopBar from "@/components/topBar/topBar";
-import ErrorBox from "@/components/errorBox/errorBox";
+import NotificationBox from "@/components/infrastructure/notificationBox/notificationBox";
 const HeroSection = () =>{
     return(
         <>
@@ -24,7 +24,7 @@ const HeroSection = () =>{
                         <div className={`${styles.RightDiv}`}></div>
                     </div>
                 </div>
-            <ErrorBox />
+            <NotificationBox />
 
         </>
     );

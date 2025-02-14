@@ -4,7 +4,7 @@ import {mobileViewSlice} from "@/libs/redux/features/mobileViewSlice";
 import {projectInfoSlice} from "@/libs/redux/features/projectInfoSlice";
 import {elementSelectedSlice} from "@/libs/redux/features/elementSelectedSlice";
 import {linkSelectedSlice} from "@/libs/redux/features/linkSelectedSlice";
-import {errorBoxSlice} from "@/libs/redux/features/errorBoxSlice";
+import {notificationBoxSlice} from "@/libs/redux/features/notificationBoxSlice";
 import {mobileToggleContainerSlice} from "@/libs/redux/features/mobileToggleContainerSlice";
 import {confirmDialogSlice} from "@/libs/redux/features/confirmDialogSlice";
 import {userStatusSlice} from "@/libs/redux/features/userStatusSlice";
@@ -17,7 +17,7 @@ export const makeStore = () => {
             projectInfo: projectInfoSlice.reducer,
             elementSelected: elementSelectedSlice.reducer,
             linkSelected: linkSelectedSlice.reducer,
-            errorBox: errorBoxSlice.reducer,
+            notificationBox: notificationBoxSlice.reducer,
             toggleContainer: mobileToggleContainerSlice.reducer,
             confirmDialog: confirmDialogSlice.reducer,
             userStatus: userStatusSlice.reducer,

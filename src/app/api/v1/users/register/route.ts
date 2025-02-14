@@ -6,6 +6,7 @@ import {buildUserObject} from "@/server/utils/ObjectBuilder";
 import {deleteFirebaseUser} from "@/server/utils/deleteFirebaseUser";
 import {db} from "@/server/utils/mongoDB";
 import {POSTRequestDataSchema, POSTResponseData} from "@/app/api/v1/users/register/types";
+import {getUserInfo} from "@/server/utils/getUserInfo";
 
 
 export async function POST (req: NextRequest) {
@@ -45,6 +46,7 @@ export async function POST (req: NextRequest) {
             });
 
             const userUID = result.data.decodedJWT.user_id;
+
             //Create User (model)
             const userData = {
                 uid: userUID,
@@ -59,6 +61,15 @@ export async function POST (req: NextRequest) {
             try {
                 const collection = db.collection('users');
                 const result = await collection.insertOne(user);
+
+                const userInfo = await getUserInfo(userUID);
+                cookiesStore.set("userInfo", JSON.stringify(userInfo), {
+                    sameSite: "none",
+                    secure: true,
+                    httpOnly: false,
+
+                });
+
                 const responseBody: POSTResponseData = {
                     success: true,
                     message: "User created.",

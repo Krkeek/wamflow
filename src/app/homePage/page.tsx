@@ -12,7 +12,7 @@ import ElementsContainer from "@/components/homePageComponents/elementsContainer
 import ElementDetailContainer from "@/components/homePageComponents/elementDetailContainer/elementDetailContainer";
 import PaperView from "@/components/homePageComponents/paperView/paperView";
 import LinksContainer from "@/components/homePageComponents/linksContainer/linksContainer";
-import ErrorBox from "@/components/errorBox/errorBox";
+import NotificationBox from "@/components/infrastructure/notificationBox/notificationBox";
 
 import { GraphContext } from "@/libs/joint/GraphContext";
 import { viewJoint } from "@/libs/joint/viewJoint";
@@ -132,7 +132,7 @@ const HomePage = () =>{
                     </div>
                 </div>
             </div>
-            <ErrorBox />
+            <NotificationBox />
             <ConfirmDialog />
             <RegisterDialog isOpen={openRegisterDialog} setIsOpenAction={setOpenRegisterDialog}/>
 

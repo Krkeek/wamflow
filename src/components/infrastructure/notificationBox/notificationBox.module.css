@@ -3,7 +3,7 @@
     left: 50%;
     top: -20%;
     transform: translate(-50%,-50%);
-    background-color: var(--errorBox-bg-color);
+    background-color: #DFF0D8;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,10 +11,13 @@
     border-radius: 10px;
     z-index: 100;
 
-
 }
 .Container p {
     margin-left: 0.5rem;
     font-weight: 500;
     font-size: 0.9rem;
+}
+
+.isWarning {
+    background-color: var(--errorBox-bg-color);
 }
