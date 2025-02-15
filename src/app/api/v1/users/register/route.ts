@@ -6,7 +6,7 @@ import { deleteFirebaseUser } from "@/server/utils/deleteFirebaseUser";
 import { db } from "@/server/utils/mongoDB";
 import { POSTRequestDataSchema } from "@/app/api/v1/users/register/types";
 import { BasicResponseData } from "@/app/api/type";
-import { POSTRequestDataGoogleSchema } from "@/app/api/v1/users/login/types";
+import { POSTRequestDataGoogleSchema } from "@/app/api/v1/users/register/types";
 import {setUserCookies} from "@/server/utils/apiHelpers";
 import {getUserInfo} from "@/server/utils/getUserInfo";
 

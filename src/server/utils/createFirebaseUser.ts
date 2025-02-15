@@ -1,7 +1,7 @@
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "@/firebase";
-import {POSTResponseData} from "@/app/api/v1/users/register/types";
 import * as jose from "jose";
+import {BasicResponseData} from "@/app/api/type";
 
 
 export default async function createFirebaseUser(email: string, password: string) {
@@ -12,7 +12,7 @@ export default async function createFirebaseUser(email: string, password: string
         const decodedJWT = jose.decodeJwt(JWT);
 
 
-        const responseData: POSTResponseData = {
+        const responseData: BasicResponseData = {
             success: true,
             message: 'Firebase user created.',
             data: {

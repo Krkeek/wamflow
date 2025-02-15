@@ -142,6 +142,10 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
         }
     }
 
+    const githubSubmit = async () => {
+
+    }
+
     if (!isOpen) return null;
 
     return (
@@ -184,7 +188,7 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                                 src={'/assets/google.webp'} alt={'google'}/>
                             Sign in with Google
                         </button>
-                        <button type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
+                        <button onClick={githubSubmit} type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
                             <Image
                                 className={`${styles.OtherButtonImage}`} width={15} height={15}
                                 src={'/assets/github.webp'} alt={'github'}/>
