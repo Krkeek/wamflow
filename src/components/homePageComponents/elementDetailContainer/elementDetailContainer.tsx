@@ -123,6 +123,7 @@ const ElementDetailContainer = () =>{
             properties: []
 
         })
+        dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
     }
 
     const handleManageProperties = () =>{
@@ -139,7 +140,27 @@ const ElementDetailContainer = () =>{
     };
 
 
+    const handleResetElement = () => {
+        dispatch(setIsLoading(true));
+        setElementMenuOpened(false)
+        elementCellView.prop('properties', [], { rewrite: true });
+        setFormData({...formData, properties: []})
+        setElementUpdated(!elementUpdated)
+        dispatch(setIsLoading(false));
 
+    }
+
+    const handleDuplicateElements = () =>{
+        dispatch(setIsLoading(true));
+        setElementMenuOpened(false);
+        const duplicatedElements = elementCellView.clone({deep: true});
+        duplicatedElements.forEach((element: any) => {
+            element.translate(100, 0);
+        })
+        graph.addCell(duplicatedElements);
+        dispatch(setIsLoading(false));
+
+    }
 
     return(
         <>
@@ -176,10 +197,12 @@ const ElementDetailContainer = () =>{
                                                 },
                                                 {
                                                     title: "Duplicate",
+                                                    onClickEvent: handleDuplicateElements
 
                                                 },
                                                 {
                                                     title: "Reset",
+                                                    onClickEvent: handleResetElement
                                                 },
 
                                             ]} closeDialog={toggleMenu}/>

@@ -5,6 +5,7 @@ import { IElementProperty } from "../../../declarations";
 import Image from "next/image";
 import {useDispatch} from "react-redux";
 import {setIsLoading} from "@/libs/redux/features/loadingSlice";
+import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 
 interface IProps {
     elementCellView: any;
@@ -45,6 +46,7 @@ const ManagePropertiesDialog = (props: IProps) => {
         props.onPropertiesUpdated(updatedProperties);
         props.close();
         dispatch(setIsLoading(false));
+        dispatch(setNotificationBox({message:`Your changes have been saved`}));
     };
 
     const handleTypeChange = (property: IElementProperty, newType: string) => {
@@ -77,6 +79,12 @@ const ManagePropertiesDialog = (props: IProps) => {
         );
         dispatch(setIsLoading(false));
     };
+
+    const handleDiscardChanges = () => {
+        props.close();
+        dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
+
+    }
 
     const AddProperty = () => {
         dispatch(setIsLoading(true));
@@ -209,7 +217,7 @@ const ManagePropertiesDialog = (props: IProps) => {
                             <button type="submit" className={styles.SaveButton}>Save</button>
                             <button
                                 type="button"
-                                onClick={props.close}
+                                onClick={handleDiscardChanges}
                                 style={{backgroundColor: "var(--danger-color)"}}
                                 className={styles.SaveButton}
                             >
