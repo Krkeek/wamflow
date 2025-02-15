@@ -92,19 +92,53 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
 
     const googleSubmit = async () => {
         const googleSignInResult = await signInWithGoogle();
-        if (googleSignInResult.status){
-            const response = await fetch('/api/v1/users/login/google',{
-                method: "POST",
-                headers:{
-                    "Content-Type" : "application/json",
-                    "Access-Control-Allow-Origin" : "*"
-                },
-                body: JSON.stringify({
-                    googleSignInResult: googleSignInResult,
+        if (googleSignInResult.success){
+            let response;
+            if (googleSignInResult.isNewUser){
+                 response = await fetch('/api/v1/users/register/google',{
+                    method: "POST",
+                    headers:{
+                        "Content-Type" : "application/json",
+                        "Authorization": `Bearer ${googleSignInResult.accessToken}`,
+                        "Access-Control-Allow-Origin" : "*"
+                    },
+                    body: JSON.stringify({
+                        userInfo: googleSignInResult.userInfo,
+                        isNewUser: googleSignInResult.isNewUser,
+                    })
+                });
 
-                })
-            });
+            } else {
+                response = await fetch('/api/v1/users/login/google',{
+                    method: "POST",
+                    headers:{
+                        "Content-Type" : "application/json",
+                        "Authorization": `Bearer ${googleSignInResult.accessToken}`,
+                        "Access-Control-Allow-Origin" : "*"
+                    },
+                    body: JSON.stringify({
+                        userInfo: googleSignInResult.userInfo,
+                        isNewUser: googleSignInResult.isNewUser,
+                    })
+                });
+            }
+
             const responseBody = await response.json()
+            if (!responseBody.success){
+                dispatch(setNotificationBox({message: responseBody.message, isWarning: true}));
+            }
+            else {
+                //Task success
+                const username = getUserStatus().userInfo?.accountDetails.name;
+                dispatch(setNotificationBox({message:`Logged in as ${username}`}));
+                dispatch(setUserStatus(getUserStatus()));
+                closeDialog();
+            }
+
+        }
+        else {
+            dispatch(setNotificationBox({message: "Error while signing in with Google", isWarning: true}));
+
         }
     }
 
@@ -144,7 +178,7 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                             className={`${styles.LoginSentence}`}>{isRegister ? "Already have an account? " : "Create a new account? "}<span
                             onClick={() => setIsRegister(!isRegister)}> {isRegister ? "Sign in" : "Register"}</span>
                         </div>
-                        <button type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
+                        <button onClick={googleSubmit} type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
                             <Image
                                 className={`${styles.OtherButtonImage}`} width={15} height={15}
                                 src={'/assets/google.webp'} alt={'google'}/>
