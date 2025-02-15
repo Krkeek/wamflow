@@ -126,7 +126,7 @@ const HomePage = () =>{
                         }
                     </div>
                     <div className={`${styles.Middle} ${toggleContainer && isMobileView && styles.ContainerBlur}`}   onClick={handleCloseContainer}>
-                            <PaperView pageRef={paperRef}/>
+                            <PaperView paper={paper} pageRef={paperRef}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
                         <ElementDetailContainer  />

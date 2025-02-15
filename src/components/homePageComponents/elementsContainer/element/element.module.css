@@ -9,7 +9,7 @@
 }
 
 .SVG {
-    cursor: pointer;
+    cursor: grab;
 }
 
 @keyframes vibrate {
