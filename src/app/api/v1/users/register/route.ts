@@ -1,101 +1,84 @@
-import {NextRequest, NextResponse} from "next/server";
-import {validPassword} from "@/server/utils/validPassword";
+import { NextRequest, NextResponse } from "next/server";
+import { validPassword } from "@/server/utils/validPassword";
 import createFirebaseUser from "@/server/utils/createFirebaseUser";
-import {cookies} from "next/headers";
-import {buildUserObject} from "@/server/utils/ObjectBuilder";
-import {deleteFirebaseUser} from "@/server/utils/deleteFirebaseUser";
-import {db} from "@/server/utils/mongoDB";
-import {POSTRequestDataSchema, POSTResponseData} from "@/app/api/v1/users/register/types";
+import { buildUserObject } from "@/server/utils/ObjectBuilder";
+import { deleteFirebaseUser } from "@/server/utils/deleteFirebaseUser";
+import { db } from "@/server/utils/mongoDB";
+import { POSTRequestDataSchema } from "@/app/api/v1/users/register/types";
+import { BasicResponseData } from "@/app/api/type";
+import { POSTRequestDataGoogleSchema } from "@/app/api/v1/users/login/types";
+import {setUserCookies} from "@/server/utils/apiHelpers";
 import {getUserInfo} from "@/server/utils/getUserInfo";
 
-
-export async function POST (req: NextRequest) {
-
-    const body = await req.json();
-    const validatedData = POSTRequestDataSchema.parse(body);
-
-    const { hasUpperCase, hasNumber ,validLength} = validPassword(validatedData.password);
-
-    if (!hasUpperCase || !hasNumber || !validLength){
-        return NextResponse.json<POSTResponseData>({
-            success: false,
-            message: `Invalid password`,
-            data: [`${!hasUpperCase ? "Minimum one uppercase, ": ""}${!hasNumber ? "Minimum one number, " : ""}${!validLength ? "Between 8 and 25 character": ""}`]
-
-        },{
-            status: 400
-        })
+const insertUserIntoDB = async (userUID: string, name: string, email: string) => {
+    try {
+        const user = buildUserObject({ uid: userUID, name, email });
+        const collection = db.collection("users");
+        const result = await collection.insertOne(user);
+        return { success: true, insertedId: result.insertedId };
+    } catch (error) {
+        await deleteFirebaseUser();
+        return { success: false, error };
     }
-    else {
-        //create firebase user
-        const result: POSTResponseData  = await createFirebaseUser(validatedData.email,validatedData.password);
-        if (!result.success){
-            return NextResponse.json<POSTResponseData>({
-                success: false,
-                message: result.message,
-            },{
-                status: 400
-            })
+};
 
-        }
-        else {
-            const cookiesStore = await cookies();
-            cookiesStore.set('JWT', result.data.JWT, {
-                sameSite: 'none',
-                secure: true
-            });
+const handleFirebaseError = (message: string, status: number = 400) =>
+    NextResponse.json<BasicResponseData>({ success: false, message }, { status });
 
-            const userUID = result.data.decodedJWT.user_id;
+export async function POST(req: NextRequest) {
+    try {
+        const body = await req.json();
+        const normalRegister = POSTRequestDataSchema.safeParse(body);
+        const googleRegister = POSTRequestDataGoogleSchema.safeParse(body);
 
-            //Create User (model)
-            const userData = {
-                uid: userUID,
-                name: validatedData.name,
-                email: validatedData.email
+        if (normalRegister.success) {
+            const { name, email, password } = normalRegister.data;
+            const { hasUpperCase, hasNumber, validLength } = validPassword(password);
+
+            if (!hasUpperCase || !hasNumber || !validLength) {
+                return handleFirebaseError("Invalid password", 400);
             }
 
-            const user = buildUserObject(userData);
+            const result: BasicResponseData = await createFirebaseUser(email, password);
+            if (!result.success) return handleFirebaseError(result.message);
 
-            //Create user for MongoDB
+            const { JWT, decodedJWT } = result.data;
+            const userUID = decodedJWT.user_id;
+            const dbResult = await insertUserIntoDB(userUID, name, email);
+            if (!dbResult.success) return handleFirebaseError("Adding User Failed in MongoDB.", 500);
+            const userInfo = await getUserInfo(userUID);
+            await setUserCookies(JWT, userInfo);
 
-            try {
-                const collection = db.collection('users');
-                const result = await collection.insertOne(user);
-
-                const userInfo = await getUserInfo(userUID);
-                cookiesStore.set("userInfo", JSON.stringify(userInfo), {
-                    sameSite: "none",
-                    secure: true,
-                    httpOnly: false,
-
-                });
-
-                const responseBody: POSTResponseData = {
-                    success: true,
-                    message: "User created.",
-                    data: result.insertedId
-                }
-                return NextResponse.json<POSTResponseData>(responseBody, {
-                    status: 200
-                })
-
-            } catch (error) {
-                await deleteFirebaseUser()
-                const responseBody: POSTResponseData = {
-                    success: false,
-                    message: "Adding User Failed in MongoDB.",
-                    data: [error]
-                }
-                return NextResponse.json<POSTResponseData>(responseBody, {
-                    status: 500
-                })
-            }
-
-
+            return NextResponse.json<BasicResponseData>(
+                { success: true, message: "User created.", data: dbResult.insertedId },
+                { status: 200 }
+            );
         }
 
+        if (googleRegister.success) {
+            const { userInfo, isNewUser } = googleRegister.data;
+            const authHeader = req.headers.get("Authorization");
 
+            if (!authHeader?.startsWith("Bearer ")) return handleFirebaseError("Authorization header missing.", 401);
+            const JWT = authHeader.substring(7);
+            if (!isNewUser) return handleFirebaseError("This is not a new user, wrong API request.", 500);
+
+            const userUID = userInfo.uid;
+            const dbResult = await insertUserIntoDB(userUID, userInfo.displayName, userInfo.email);
+            if (!dbResult.success) return handleFirebaseError("Adding User Failed in MongoDB.", 500);
+            const userInfoDb = await getUserInfo(userUID);
+
+            await setUserCookies(JWT, userInfoDb);
+
+            return NextResponse.json<BasicResponseData>(
+                { success: true, message: "User created.", data: dbResult.insertedId },
+                { status: 200 }
+            );
+        }
+
+        return handleFirebaseError("Invalid request data", 400);
+    } catch (error) {
+        console.error("Register error:", error);
+        return handleFirebaseError("Internal Server Error.", 500);
     }
-
-
 }

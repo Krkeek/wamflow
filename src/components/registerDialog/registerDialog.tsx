@@ -95,7 +95,7 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
         if (googleSignInResult.success){
             let response;
             if (googleSignInResult.isNewUser){
-                 response = await fetch('/api/v1/users/register/google',{
+                 response = await fetch('/api/v1/users/register/',{
                     method: "POST",
                     headers:{
                         "Content-Type" : "application/json",
@@ -109,7 +109,7 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                 });
 
             } else {
-                response = await fetch('/api/v1/users/login/google',{
+                response = await fetch('/api/v1/users/login/',{
                     method: "POST",
                     headers:{
                         "Content-Type" : "application/json",
