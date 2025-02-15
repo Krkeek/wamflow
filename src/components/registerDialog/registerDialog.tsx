@@ -91,6 +91,7 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
     }
 
     const handleSubmitWithProvider = async (provider: string) => {
+        dispatch(setIsLoading(true))
         const signInResult = await signInWithProvider(provider);
 
         if (signInResult.success){
@@ -141,6 +142,7 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
             dispatch(setNotificationBox({message: " " + signInResult.message, isWarning: true}));
 
         }
+        dispatch(setIsLoading(false))
     }
 
     const githubSubmit = async () => {
