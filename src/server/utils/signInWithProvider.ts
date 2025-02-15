@@ -1,5 +1,6 @@
-import { signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo, GithubAuthProvider } from "firebase/auth";
 import {auth} from "@/firebase";
+import {SIGN_IN_PROVIDER} from "@/constants";
 
 
 
@@ -13,9 +14,20 @@ interface ResponseData {
 
 }
 
-export const signInWithGoogle = async (): Promise<ResponseData> => {
-    const provider = new GoogleAuthProvider();
-
+export const signInWithProvider = async (signInProvider: string): Promise<ResponseData> => {
+    let provider;
+    if (signInProvider === SIGN_IN_PROVIDER.GOOGLE) {
+        provider = new GoogleAuthProvider();
+    }
+    else if (signInProvider === SIGN_IN_PROVIDER.GITHUB) {
+        provider = new GithubAuthProvider();
+    }
+    else {
+        return {
+            success: false,
+            message: "No signInProvider provided",
+        };
+    }
     try {
         const result = await signInWithPopup(auth, provider);
         if (result){
@@ -32,17 +44,14 @@ export const signInWithGoogle = async (): Promise<ResponseData> => {
         else {
             return {
                 success: false,
-                message: "Error while signInWithGoogle"
+                message: "Error while signInWithProvider"
             };
         }
 
     } catch (error: any) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
         return {
             success: false,
-            message: errorCode + " : " + errorMessage
+            message: error.code
         };
     }
-
 };

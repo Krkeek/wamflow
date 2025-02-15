@@ -5,11 +5,11 @@ import {FormEvent, useState} from "react";
 import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 import {useAppDispatch} from "@/libs/redux/hooks";
 import {passwordMatch} from "@/utils/passwordMatch";
-import {signInWithGoogle} from "@/server/utils/signInWithGoogle";
+import {signInWithProvider} from "@/server/utils/signInWithProvider";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
 import {getUserStatus} from "@/utils/getUserStatus";
 import {setIsLoading} from "@/libs/redux/features/loadingSlice";
-
+import {SIGN_IN_PROVIDER} from "@/constants";
 interface RegisterDialogProps {
     isOpen: boolean;
     setIsOpenAction: (isOpen: boolean) => void;
@@ -90,21 +90,22 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
         dispatch(setIsLoading(false))
     }
 
-    const googleSubmit = async () => {
-        const googleSignInResult = await signInWithGoogle();
-        if (googleSignInResult.success){
+    const handleSubmitWithProvider = async (provider: string) => {
+        const signInResult = await signInWithProvider(provider);
+
+        if (signInResult.success){
             let response;
-            if (googleSignInResult.isNewUser){
+            if (signInResult.isNewUser){
                  response = await fetch('/api/v1/users/register/',{
                     method: "POST",
                     headers:{
                         "Content-Type" : "application/json",
-                        "Authorization": `Bearer ${googleSignInResult.accessToken}`,
+                        "Authorization": `Bearer ${signInResult.accessToken}`,
                         "Access-Control-Allow-Origin" : "*"
                     },
                     body: JSON.stringify({
-                        userInfo: googleSignInResult.userInfo,
-                        isNewUser: googleSignInResult.isNewUser,
+                        userInfo: signInResult.userInfo,
+                        isNewUser: signInResult.isNewUser,
                     })
                 });
 
@@ -113,12 +114,12 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                     method: "POST",
                     headers:{
                         "Content-Type" : "application/json",
-                        "Authorization": `Bearer ${googleSignInResult.accessToken}`,
+                        "Authorization": `Bearer ${signInResult.accessToken}`,
                         "Access-Control-Allow-Origin" : "*"
                     },
                     body: JSON.stringify({
-                        userInfo: googleSignInResult.userInfo,
-                        isNewUser: googleSignInResult.isNewUser,
+                        userInfo: signInResult.userInfo,
+                        isNewUser: signInResult.isNewUser,
                     })
                 });
             }
@@ -137,13 +138,14 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
 
         }
         else {
-            dispatch(setNotificationBox({message: "Error while signing in with Google", isWarning: true}));
+            dispatch(setNotificationBox({message: " " + signInResult.message, isWarning: true}));
 
         }
     }
 
     const githubSubmit = async () => {
 
+        const githubSignInResult = await signInWithProvider(SIGN_IN_PROVIDER.GITHUB);
     }
 
     if (!isOpen) return null;
@@ -182,13 +184,13 @@ export const RegisterDialog = ({isOpen, setIsOpenAction}: RegisterDialogProps) =
                             className={`${styles.LoginSentence}`}>{isRegister ? "Already have an account? " : "Create a new account? "}<span
                             onClick={() => setIsRegister(!isRegister)}> {isRegister ? "Sign in" : "Register"}</span>
                         </div>
-                        <button onClick={googleSubmit} type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
+                        <button onClick={() =>handleSubmitWithProvider(SIGN_IN_PROVIDER.GOOGLE)} type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
                             <Image
                                 className={`${styles.OtherButtonImage}`} width={15} height={15}
                                 src={'/assets/google.webp'} alt={'google'}/>
                             Sign in with Google
                         </button>
-                        <button onClick={githubSubmit} type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
+                        <button onClick={() => handleSubmitWithProvider(SIGN_IN_PROVIDER.GITHUB)} type={"button"} className={`${styles.Button} ${styles.ProviderButton}`}>
                             <Image
                                 className={`${styles.OtherButtonImage}`} width={15} height={15}
                                 src={'/assets/github.webp'} alt={'github'}/>
