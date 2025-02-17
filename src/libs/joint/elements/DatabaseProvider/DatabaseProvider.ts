@@ -15,12 +15,12 @@ export const DatabaseProvider = shapes.standard.Cylinder.extend({
             type: 'DatabaseProvider',
             attrs: {
                 body: {
-                    fill: 'white',
+                    fill: '#E9ECEF',
                     stroke: 'black',
                     strokeWidth: 2.2,
                 },
                 top: {
-                    fill: 'white',
+                    fill: '#E9ECEF',
                     stroke: 'black',
                     strokeWidth: 2.2
                 },

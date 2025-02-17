@@ -17,7 +17,7 @@ export const ProcessUnit = shapes.standard.Circle.extend({
             type: 'ProcessUnit',
             attrs: {
                 body: {
-                    fill: 'white',
+                    fill: '#E9ECEF',
                     stroke: 'black',
                     strokeWidth: 2.2
                 },

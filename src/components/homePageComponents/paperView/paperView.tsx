@@ -18,7 +18,6 @@ const PaperView = (props: propsType) =>{
 
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
-        console.log(graph);
         const elementId = e.dataTransfer.getData("elementId");
         const mousePosition = props.paper?.clientToLocalPoint(e.clientX, e.clientY);
 
@@ -33,10 +32,11 @@ const PaperView = (props: propsType) =>{
 
     return(
         <>
-                <div ref={props.pageRef} className={`${styles.Container}`}
+            <div ref={props.pageRef} className={`${styles.Container}`}
                      onDrop={handleDrop}
                      onDragOver={handleDragOver}
-                ></div>
+                >
+            </div>
         </>
     );
 }

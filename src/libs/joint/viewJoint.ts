@@ -10,12 +10,13 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: 
     return  new dia.Paper({
         el: divElement,
         model: graph,
-        width: !isMobileView ? '65vw' : '100vw',
-        height: '100%',
+        width: !isMobileView ? '200vw' : '100vw',
+        height: '200vh',
         gridSize: 1,
         cellViewNamespace: shapes,
-        drawGrid: {name: "mesh", args: {color: 'rgba(0, 0, 0, 0.4)'}},
-        drawGridSize: 100,
+   /*     drawGrid: {name: "mesh", args: {color: 'rgba(0, 0, 0, 0.4)'}},
+        drawGridSize: 100,*/
+        background: {color: '#E9ECEF'},
          defaultLink: () => {
             if (linkSelected === 'invocation')
                  return new Invocation();

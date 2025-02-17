@@ -20,7 +20,7 @@ export const SecurityRealm = dia.Element.define("SecurityRealm",{
                 refDResetOffset:  `M7.2 121S0 121 0 114.95L0 6.05S0 0 7.2 0L280.8 0S288 0 289.44 6.05L288 114.95S288 121 280.8 121ZM259.2 0 289.44 24.2`,
                 strokeWidth: 2.2,
                 stroke: 'black',
-                fill: 'white',
+                fill: '#E9ECEF',
                 cursor: 'move',
 
             },

@@ -4,9 +4,15 @@
     border: 1px solid var(--grid-color);
     border-top: none;
     border-left: none;
+    position: relative;
 }
 
 
+.Title {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 @media screen and (max-width: 768px) {
     .Container {
         min-width: 100vw;

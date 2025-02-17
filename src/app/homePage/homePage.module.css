@@ -34,8 +34,21 @@
 
 }
 .Middle {
-    width: 65vw !important;
-    height: 100%;
+    border-radius: 7px;
+    height: fit-content;
+    background-color: var(--secondary-color-two);
+
+}
+.MiddlePaper {
+    width: 65vw;
+    max-height: 80vh;
+    overflow: scroll;
+}
+.DragSentence {
+text-align: center;
+    padding: 1rem 0;
+    color: var(--text-color-two);
+    font-size: 0.9rem;
 }
 
 .RightSide {

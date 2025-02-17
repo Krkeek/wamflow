@@ -127,11 +127,16 @@ const HomePage = () =>{
                                 : <ElementsContainer  />
                         }
                     </div>
-                    <div className={`${styles.Middle} ${toggleContainer && isMobileView && styles.ContainerBlur}`}   onClick={handleCloseContainer}>
+                    <div className={`${styles.Middle} ${toggleContainer && isMobileView && styles.ContainerBlur}`}
+                         onClick={handleCloseContainer}>
+                        <div className={`${styles.DragSentence}`}>Drop Sheet</div>
+
+                        <div  className={`${styles.MiddlePaper}`} >
                             <PaperView paper={paper} pageRef={paperRef}/>
+                        </div>
                     </div>
                     <div className={`${styles.RightSide}`}>
-                        <RightSideWrapper />
+                        <RightSideWrapper paper={paper} />
                     </div>
                 </div>
             </div>

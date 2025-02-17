@@ -6,6 +6,7 @@ type IProps = {
     alignItems?: 'center' |'flex-start' | 'flex-end'
     margin?: string;
     transform?: string
+    onClick?: () => void
 
 }
 
@@ -14,7 +15,7 @@ const ControlButton = (props: IProps) => {
 
      return (
          <>
-             <div style={{ alignItems: props.alignItems, margin: props.margin, transform: props.transform}} className={`${styles.Container}`}>
+             <div onClick={props.onClick} style={{ alignItems: props.alignItems, margin: props.margin, transform: props.transform}} className={`${styles.Container}`}>
 
                  {
                      props.imgUrl !== undefined ? (
