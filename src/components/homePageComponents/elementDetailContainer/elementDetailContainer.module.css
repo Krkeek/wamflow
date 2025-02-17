@@ -1,10 +1,7 @@
 .Container {
-    width: 90%;
-    background-color: var(--secondary-color-two);
     min-height: 40vh;
     padding: 8% 5%;
     box-sizing: border-box;
-    border-radius: 5px;
 }
 .Top {
     display: flex;
@@ -199,6 +196,10 @@
     transform: translate(-50%,-50%);
 
 
+}
+
+.RightSideWrapper {
+    background-color: red;
 }
 @media screen and (min-width: 768px) and (max-width: 1300px){
     /*Tablet*/

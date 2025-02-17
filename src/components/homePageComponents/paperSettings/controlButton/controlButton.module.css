@@ -1,0 +1,13 @@
+
+.Container {
+    background-color: rgba(128, 128, 128, 0.2);
+    width: 1.8rem;
+    height: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    margin: 0 0.2rem;
+    font-weight: bold;
+    cursor: pointer;
+}

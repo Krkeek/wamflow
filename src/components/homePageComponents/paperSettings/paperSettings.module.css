@@ -1,0 +1,27 @@
+
+.Container {
+    padding: 8% 5%;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+
+.Header {
+}
+
+.Column {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: var(--text-color-two);
+
+}
+
+.Expandable {
+    margin-top: 1.5rem;
+}
+
+.Collapsed {
+    padding: 2.5% 5% !important;
+
+}

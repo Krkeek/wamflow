@@ -9,7 +9,6 @@ import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 import ElementProperty from "@/components/homePageComponents/elementDetailContainer/elementProperty/elementProperty";
 import ModalDialog from "@/components/infrastructure/modalDialog/modalDialog";
-import {setConfirmDialog} from "@/libs/redux/features/confirmDialogSlice";
 import {IElementProperty} from "../../../../declarations";
 import ManagePropertiesDialog from "@/components/managePropertiesDialog/managePropertiesDialog";
 import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
@@ -27,6 +26,7 @@ const ElementDetailContainer = () =>{
     const [managePropertiesDialog, setManagePropertiesDialog] = useState(false);
 
     const [elementUpdated, setElementUpdated] = useState(false);
+    const [expandController, setExpandController] = useState(false);
 
     const [formData, setFormData] = useState<{
         name: string;
@@ -159,188 +159,194 @@ const ElementDetailContainer = () =>{
         })
         graph.addCell(duplicatedElements);
         dispatch(setIsLoading(false));
-
     }
 
     return(
         <>
+                {
+                    elementCellView ?
+                        (
+                            <div className={`${styles.Container}`}>
+                                <div className={`${styles.Top}`}>
+                                    <div
+                                        className={`${styles.LeftSide}`}>{elementCellView.prop('customData/title')}</div>
+                                    <div className={`${styles.RightSide}`}>
+                                        <button onClick={handleDeleteElement} className={`${styles.TopButtons}`}><Image
+                                            src={'/assets/trash.webp'}
+                                            alt={'trash'}
+                                            width={25} height={25}/></button>
 
-            {
-                elementCellView ?
-                (
-                    <div className={`${styles.Container}`}>
-                        <div className={`${styles.Top}`}>
-                            <div className={`${styles.LeftSide}`}>{elementCellView.prop('customData/title')}</div>
-                            <div className={`${styles.RightSide}`}>
-                                    <button onClick={handleDeleteElement} className={`${styles.TopButtons}`}><Image
-                                        src={'/assets/trash.webp'}
-                                        alt={'trash'}
-                                        width={25} height={25}/></button>
+                                        <button onClick={toggleMenu} className={`${styles.TopButtons}`}><Image
+                                            src={'/assets/menuBurger.webp'}
+                                            alt={'menu'}
+                                            width={25} height={25}/></button>
+                                        {elementMenuOpened && (
+                                            <div className={styles.MenuDiv}>
+                                                <ModalDialog
+                                                    title={'Element Settings'}
+                                                    menuElement={[
+                                                        {
+                                                            title: "Manage Properties",
+                                                            onClickEvent: handleManageProperties
 
-                                    <button onClick={toggleMenu} className={`${styles.TopButtons}`}><Image
-                                        src={'/assets/menuBurger.webp'}
-                                        alt={'menu'}
-                                        width={25} height={25}/></button>
-                                {elementMenuOpened && (
-                                    <div className={styles.MenuDiv}>
-                                        <ModalDialog
-                                            title={'Element Settings'}
-                                            menuElement={[
-                                                {
-                                                    title: "Manage Properties",
-                                                    onClickEvent: handleManageProperties
+                                                        },
+                                                        {
+                                                            title: "Save as Draft",
 
-                                                },
-                                                {
-                                                    title: "Save as Draft",
+                                                        },
+                                                        {
+                                                            title: "Duplicate",
+                                                            onClickEvent: handleDuplicateElements
 
-                                                },
-                                                {
-                                                    title: "Duplicate",
-                                                    onClickEvent: handleDuplicateElements
+                                                        },
+                                                        {
+                                                            title: "Reset",
+                                                            onClickEvent: handleResetElement
+                                                        },
 
-                                                },
-                                                {
-                                                    title: "Reset",
-                                                    onClickEvent: handleResetElement
-                                                },
-
-                                            ]} closeDialog={toggleMenu}/>
+                                                    ]} closeDialog={toggleMenu}/>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
+                                </div>
+                                <div className={`${styles.PropertiesWrapper}`}>
+                                    <label className={`${styles.Label}`}>Name</label>
+                                    <div className={`${styles.UriDiv}`}>
+                                        <input className={`${styles.Input}`}
+                                               placeholder={`${elementCellView.prop('customData/name')}`}
+                                               value={formData.name} // Set the value from formData
+                                               onChange={e => {
+                                                   setFormData(prevState => ({
+                                                       ...prevState,
+                                                       name: e.target.value
+                                                   }))
+                                               }}
+                                        />
+                                        <button className={`${styles.EyeButton}`}><Image onClick={handleShowName}
+                                                                                         src={!elementCellView.prop('customData/showName') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
+                                                                                         alt={'trash'}
+                                                                                         width={25} height={25}/>
+                                        </button>
+                                    </div>
+
+                                    <label className={`${styles.Label}`}>Uri</label>
+                                    <div className={`${styles.UriDiv}`}>
+                                        <input className={`${styles.Input}`}
+                                               placeholder={`${elementCellView.prop('customData/uri')}`}
+                                               value={formData.uri}
+                                               onChange={e => {
+                                                   setFormData(prevState => ({
+                                                       ...prevState,
+                                                       uri: e.target.value
+                                                   }))
+                                               }}
+                                        />
+                                        <button className={`${styles.EyeButton}`}><Image onClick={handleShowUri}
+                                                                                         src={!elementCellView.prop('customData/showUri') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
+                                                                                         alt={'trash'}
+                                                                                         width={25} height={25}/>
+                                        </button>
+                                    </div>
+
+
+                                    {formData.properties.map((property, index) => (
+                                        property.active &&
+                                        <ElementProperty property={property} key={index} setFormData={setFormData}
+                                                         formData={formData}/>
+                                    ))}
+
+
+                                </div>
+
+
+                                <div className={`${styles.DimensionsDiv}`}>
+                                    <div className={`${styles.InputView}`}>
+                                        <p>W</p>
+                                        <input type={'text'} className={`${styles.WidthInput}`}
+                                               placeholder={elementCellView.size().width}
+
+                                               onChange={e => {
+                                                   const value = parseFloat(e.target.value);
+                                                   setFormData(prevState => ({
+                                                       ...prevState,
+                                                       width: value
+                                                   }))
+                                               }}
+
+                                        />
+                                        <p>H</p>
+                                        <input type={'text'} className={`${styles.WidthInput}`}
+                                               placeholder={elementCellView.size().height}
+
+                                               onChange={e => {
+
+                                                   const value = parseFloat(e.target.value);
+                                                   setFormData(prevState => ({
+                                                       ...prevState,
+                                                       height: value
+                                                   }))
+                                               }}
+                                        />
+                                    </div>
+                                    <p>pixels</p>
+                                </div>
+                                <div className={`${styles.ScaleDiv}`}>
+                                    <div className={`${styles.InputView}`}>
+                                        <p>Scale</p>
+                                        <input type={'text'} className={`${styles.WidthInput}`}
+                                               placeholder={'x1'}
+                                               onChange={e => {
+                                                   const value = parseFloat(e.target.value);
+                                                   setFormData(prevState => ({
+                                                       ...prevState,
+                                                       scale: value
+                                                   }))
+
+                                               }}
+
+                                        />
+                                    </div>
+                                </div>
+                                <div className={`${styles.PositionDiv}`}>
+                                    <button className={`${styles.PositionButton}`}><Image
+                                        onClick={() => elementCellView.toFront()}
+                                        src={'/assets/front.webp'}
+                                        alt={'front'}
+                                        width={21} height={30}/>
+                                        <div className={`${styles.Indicator} ${styles.IndicatorActive} `}></div>
+
+                                    </button>
+                                    <button className={`${styles.PositionButton}`}><Image
+                                        src={'/assets/back.webp'}
+                                        onClick={() => elementCellView.toBack()}
+                                        alt={'back'}
+                                        width={21} height={30}/>
+                                        <div className={`${styles.Indicator}  ${styles.IndicatorActive} `}></div>
+                                    </button>
+                                </div>
+                                <button onClick={handleSaveData}
+                                        className={`${styles.SaveButton}`}>Save
+                                </button>
+                                <button onClick={handleDiscardChanges} style={{backgroundColor: "var(--danger-color)"}}
+                                        className={`${styles.SaveButton}`}>Discard Changes
+                                </button>
                             </div>
-                        </div>
-                        <div className={`${styles.PropertiesWrapper}`}>
-                            <label className={`${styles.Label}`}>Name</label>
-                            <div className={`${styles.UriDiv}`}>
-                                <input className={`${styles.Input}`}
-                                       placeholder={`${elementCellView.prop('customData/name')}`}
-                                       value={formData.name} // Set the value from formData
-                                       onChange={e => {
-                                           setFormData(prevState => ({
-                                               ...prevState,
-                                               name: e.target.value
-                                           }))
-                                       }}
-                                />
-                                <button className={`${styles.EyeButton}`}><Image onClick={handleShowName}
-                                                                                 src={!elementCellView.prop('customData/showName') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
-                                                                                 alt={'trash'}
-                                                                                 width={25} height={25}/></button>
+                        ) :
+                        (
+                            <div className={`${styles.Container} ${styles.EmptyContainer}`}>
+                                No component selected
                             </div>
+                        )
 
-                            <label className={`${styles.Label}`}>Uri</label>
-                            <div className={`${styles.UriDiv}`}>
-                                <input className={`${styles.Input}`}
-                                       placeholder={`${elementCellView.prop('customData/uri')}`}
-                                       value={formData.uri}
-                                       onChange={e => {
-                                           setFormData(prevState => ({
-                                               ...prevState,
-                                               uri: e.target.value
-                                           }))
-                                       }}
-                                />
-                                <button className={`${styles.EyeButton}`}><Image onClick={handleShowUri}
-                                                                                 src={!elementCellView.prop('customData/showUri') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
-                                                                                 alt={'trash'}
-                                                                                 width={25} height={25}/></button>
-                            </div>
-
-
-                            {formData.properties.map((property, index) => (
-                                property.active && <ElementProperty property={property} key={index} setFormData={setFormData} formData={formData}/>
-                            ))}
-
-
-                        </div>
-
-
-                        <div className={`${styles.DimensionsDiv}`}>
-                            <div className={`${styles.InputView}`}>
-                                <p>W</p>
-                                <input type={'text'} className={`${styles.WidthInput}`}
-                                       placeholder={elementCellView.size().width}
-
-                                       onChange={e => {
-                                           const value = parseFloat(e.target.value);
-                                           setFormData(prevState => ({
-                                               ...prevState,
-                                               width: value
-                                           }))
-                                       }}
-
-                                />
-                                <p>H</p>
-                                <input type={'text'} className={`${styles.WidthInput}`}
-                                       placeholder={elementCellView.size().height}
-
-                                       onChange={e => {
-
-                                           const value = parseFloat(e.target.value);
-                                           setFormData(prevState => ({
-                                               ...prevState,
-                                               height: value
-                                           }))
-                                       }}
-                                />
-                            </div>
-                            <p>pixels</p>
-                        </div>
-                        <div className={`${styles.ScaleDiv}`}>
-                            <div className={`${styles.InputView}`}>
-                                <p>Scale</p>
-                                <input type={'text'} className={`${styles.WidthInput}`}
-                                       placeholder={'x1'}
-                                       onChange={e => {
-                                           const value = parseFloat(e.target.value);
-                                           setFormData(prevState => ({
-                                               ...prevState,
-                                               scale: value
-                                           }))
-
-                                       }}
-
-                                />
-                            </div>
-                        </div>
-                        <div className={`${styles.PositionDiv}`}>
-                            <button className={`${styles.PositionButton}`}><Image
-                                onClick={() => elementCellView.toFront()}
-                                src={'/assets/front.webp'}
-                                alt={'front'}
-                                width={21} height={30}/>
-                                <div className={`${styles.Indicator} ${styles.IndicatorActive} `}></div>
-
-                            </button>
-                            <button className={`${styles.PositionButton}`}><Image
-                                src={'/assets/back.webp'}
-                                onClick={() => elementCellView.toBack()}
-                                alt={'back'}
-                                width={21} height={30}/>
-                                <div className={`${styles.Indicator}  ${styles.IndicatorActive} `}></div>
-                            </button>
-                        </div>
-                        <button onClick={handleSaveData}
-                                className={`${styles.SaveButton}`}>Save
-                        </button>
-                        <button onClick={handleDiscardChanges} style={{backgroundColor: "var(--danger-color)"}}
-                                className={`${styles.SaveButton}`}>Discard Changes
-                        </button>
-                    </div>
-                ) :
-                    (
-                        <div className={`${styles.Container} ${styles.EmptyContainer}`}>
-                        No component selected
-                        </div>
-                    )
-            }
+                }
             {
-                managePropertiesDialog && <ManagePropertiesDialog onPropertiesUpdated={handlePropertiesUpdate}  elementCellView={elementCellView} close={() => setManagePropertiesDialog(false)} />
+                    managePropertiesDialog && <ManagePropertiesDialog onPropertiesUpdated={handlePropertiesUpdate}
+                                                                      elementCellView={elementCellView}
+                                                                      close={() => setManagePropertiesDialog(false)}/>
 
+                }
+
+            </>
+            );
             }
-
-        </>
-    );
-}
-export default ElementDetailContainer
+            export default ElementDetailContainer

@@ -29,6 +29,8 @@ import RegisterDialog from "@/components/registerDialog/registerDialog";
 import {IGetUserStatus} from "../../../declarations";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
 import LoadingDialog from "@/components/infrastructure/loadingDialog/loadingDialog";
+import PaperSettings from "@/components/homePageComponents/paperSettings/paperSettings";
+import RightSideWrapper from "@/components/rightSideWrapper/rightSideWrapper";
 
 
 const HomePage = () =>{
@@ -129,7 +131,7 @@ const HomePage = () =>{
                             <PaperView paper={paper} pageRef={paperRef}/>
                     </div>
                     <div className={`${styles.RightSide}`}>
-                        <ElementDetailContainer  />
+                        <RightSideWrapper />
                     </div>
                 </div>
             </div>

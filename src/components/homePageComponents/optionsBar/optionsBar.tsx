@@ -9,7 +9,6 @@ import ExportWrapper from "@/components/homePageComponents/optionsBar/exportWrap
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
-import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 
 type propsType = {
     paperRef: HTMLDivElement | null,

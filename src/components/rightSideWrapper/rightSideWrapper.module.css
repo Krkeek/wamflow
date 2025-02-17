@@ -1,0 +1,26 @@
+.Container {
+    width: 90%;
+    background-color: var(--secondary-color-two);
+    box-sizing: border-box;
+    border-radius: 5px;
+
+}
+.Controllers {
+    background-color: white;
+
+}
+
+.ControllerButton {
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px 5px 0 0;
+    padding: 0.5rem 1rem;
+    opacity: 0.4;
+
+
+}
+
+.ControllerButtonFocused {
+    background-color: var(--secondary-color-two);
+    opacity: 1;
+}
