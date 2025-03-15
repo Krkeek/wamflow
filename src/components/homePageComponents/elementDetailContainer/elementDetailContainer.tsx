@@ -213,6 +213,7 @@ const ElementDetailContainer = () =>{
                                     <label className={`${styles.Label}`}>Name</label>
                                     <div className={`${styles.UriDiv}`}>
                                         <input
+                                            className={`${styles.Input}`}
                                                placeholder={`${elementCellView.prop('customData/name')}`}
                                                value={formData.name} // Set the value from formData
                                                onChange={e => {
@@ -221,6 +222,7 @@ const ElementDetailContainer = () =>{
                                                        name: e.target.value
                                                    }))
                                                }}
+                                            autoFocus
                                         />
                                         <button tabIndex={-1} className={`${styles.EyeButton}`}><Image onClick={handleShowName}
                                                                                          src={!elementCellView.prop('customData/showName') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
@@ -231,7 +233,7 @@ const ElementDetailContainer = () =>{
 
                                     <label className={`${styles.Label}`}>Uri</label>
                                     <div className={`${styles.UriDiv}`}>
-                                        <input className={`${styles.Input} arrow-togglable`}
+                                        <input className={`${styles.Input}`}
                                                placeholder={`${elementCellView.prop('customData/uri')}`}
                                                value={formData.uri}
                                                onChange={e => {
