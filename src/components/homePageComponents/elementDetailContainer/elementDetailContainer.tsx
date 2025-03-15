@@ -20,13 +20,12 @@ const ElementDetailContainer = () =>{
     const graph = useContext(GraphContext);
     const dispatch = useAppDispatch()
     const elementSelected = useAppSelector(state => state.elementSelected.value);
-    const elementCellView = graph.getCell(elementSelected);
+    let elementCellView = graph.getCell(elementSelected);
 
     const [elementMenuOpened, setElementMenuOpened] = useState(false);
     const [managePropertiesDialog, setManagePropertiesDialog] = useState(false);
-
     const [elementUpdated, setElementUpdated] = useState(false);
-    const [expandController, setExpandController] = useState(false);
+
 
     const [formData, setFormData] = useState<{
         name: string;
@@ -161,6 +160,7 @@ const ElementDetailContainer = () =>{
         dispatch(setIsLoading(false));
     }
 
+
     return(
         <>
                 {
@@ -212,7 +212,7 @@ const ElementDetailContainer = () =>{
                                 <div className={`${styles.PropertiesWrapper}`}>
                                     <label className={`${styles.Label}`}>Name</label>
                                     <div className={`${styles.UriDiv}`}>
-                                        <input className={`${styles.Input}`}
+                                        <input
                                                placeholder={`${elementCellView.prop('customData/name')}`}
                                                value={formData.name} // Set the value from formData
                                                onChange={e => {
@@ -222,7 +222,7 @@ const ElementDetailContainer = () =>{
                                                    }))
                                                }}
                                         />
-                                        <button className={`${styles.EyeButton}`}><Image onClick={handleShowName}
+                                        <button tabIndex={-1} className={`${styles.EyeButton}`}><Image onClick={handleShowName}
                                                                                          src={!elementCellView.prop('customData/showName') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
                                                                                          alt={'trash'}
                                                                                          width={25} height={25}/>
@@ -231,7 +231,7 @@ const ElementDetailContainer = () =>{
 
                                     <label className={`${styles.Label}`}>Uri</label>
                                     <div className={`${styles.UriDiv}`}>
-                                        <input className={`${styles.Input}`}
+                                        <input className={`${styles.Input} arrow-togglable`}
                                                placeholder={`${elementCellView.prop('customData/uri')}`}
                                                value={formData.uri}
                                                onChange={e => {
@@ -240,8 +240,9 @@ const ElementDetailContainer = () =>{
                                                        uri: e.target.value
                                                    }))
                                                }}
+
                                         />
-                                        <button className={`${styles.EyeButton}`}><Image onClick={handleShowUri}
+                                        <button tabIndex={-1} className={`${styles.EyeButton}`}><Image onClick={handleShowUri}
                                                                                          src={!elementCellView.prop('customData/showUri') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
                                                                                          alt={'trash'}
                                                                                          width={25} height={25}/>
@@ -308,7 +309,7 @@ const ElementDetailContainer = () =>{
                                     </div>
                                 </div>
                                 <div className={`${styles.PositionDiv}`}>
-                                    <button className={`${styles.PositionButton}`}><Image
+                                    <button tabIndex={-1} className={`${styles.PositionButton}`}><Image
                                         onClick={() => elementCellView.toFront()}
                                         src={'/assets/front.webp'}
                                         alt={'front'}
@@ -316,7 +317,7 @@ const ElementDetailContainer = () =>{
                                         <div className={`${styles.Indicator} ${styles.IndicatorActive} `}></div>
 
                                     </button>
-                                    <button className={`${styles.PositionButton}`}><Image
+                                    <button tabIndex={-1} className={`${styles.PositionButton}`}><Image
                                         src={'/assets/back.webp'}
                                         onClick={() => elementCellView.toBack()}
                                         alt={'back'}

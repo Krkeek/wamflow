@@ -9,7 +9,6 @@ import {dia} from "@joint/core";
 import DiagramHeader from "@/components/homePageComponents/diagramHeader/diagramHeader";
 import OptionsBar from "@/components/homePageComponents/optionsBar/optionsBar";
 import ElementsContainer from "@/components/homePageComponents/elementsContainer/elementsContainer";
-import ElementDetailContainer from "@/components/homePageComponents/elementDetailContainer/elementDetailContainer";
 import PaperView from "@/components/homePageComponents/paperView/paperView";
 import LinksContainer from "@/components/homePageComponents/linksContainer/linksContainer";
 import NotificationBox from "@/components/infrastructure/notificationBox/notificationBox";
@@ -29,7 +28,6 @@ import RegisterDialog from "@/components/registerDialog/registerDialog";
 import {IGetUserStatus} from "../../../declarations";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
 import LoadingDialog from "@/components/infrastructure/loadingDialog/loadingDialog";
-import PaperSettings from "@/components/homePageComponents/paperSettings/paperSettings";
 import RightSideWrapper from "@/components/rightSideWrapper/rightSideWrapper";
 
 
@@ -132,7 +130,7 @@ const HomePage = () =>{
                         <div className={`${styles.DragSentence}`}>Drop Sheet</div>
 
                         <div  className={`${styles.MiddlePaper}`} >
-                            <PaperView paper={paper} pageRef={paperRef}/>
+                            <PaperView isMobileView={isMobileView} toggleContainer={toggleContainer} dispatch={dispatch} elementSelected={elementSelected} paper={paper} pageRef={paperRef}/>
                         </div>
                     </div>
                     <div className={`${styles.RightSide}`}>

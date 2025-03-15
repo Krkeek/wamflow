@@ -37,5 +37,7 @@ export const createJointElement = (elementId: string, graph: any, x: number, y: 
 
         element.position(centerX, centerY);
         element.addTo(graph);
+
+        return element;
     }
 };

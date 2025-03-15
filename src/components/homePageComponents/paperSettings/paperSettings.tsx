@@ -33,10 +33,10 @@ const PaperSettings = ({ paper }: IProps) => {
         setPosition(newPosition);
     };
 
-    const handleFitToContent = () => {
+/*    const handleFitToContent = () => {
         if (!paper) return;
         paper.transformToFitContent();
-    }
+    }*/
 
     return (
         <div className={styles.Container}>
@@ -57,7 +57,9 @@ const PaperSettings = ({ paper }: IProps) => {
                     <ControlButton onClick={() => handleZoom(false)} alignItems="flex-start" value="_" />
                 </div>
                 <div className={styles.Column}>
+{/*
                     <button onClick={handleFitToContent}>Fit to Content</button>
+*/}
 
                 </div>
 
