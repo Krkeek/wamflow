@@ -2,6 +2,7 @@
     position: absolute;
     top: 115%;
     right: 15%;
+    z-index: 1;
 }
 
 .Container {

@@ -13,7 +13,7 @@ import {IElementProperty} from "../../../../declarations";
 import ManagePropertiesDialog from "@/components/managePropertiesDialog/managePropertiesDialog";
 import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 import {setIsLoading} from "@/libs/redux/features/loadingSlice";
-
+import useHotkeys from "@reecelucas/react-use-hotkeys";
 
 const ElementDetailContainer = () =>{
 
@@ -160,6 +160,13 @@ const ElementDetailContainer = () =>{
         dispatch(setIsLoading(false));
     }
 
+    useHotkeys("Enter", () => {
+        console.log("Enter");
+    });
+
+    useHotkeys("Backspace", () => {
+        console.log("Backspace");
+    });
 
     return(
         <>

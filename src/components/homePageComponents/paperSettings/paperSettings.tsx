@@ -45,10 +45,10 @@ const PaperSettings = ({ paper }: IProps) => {
 
                 <div className={styles.Column}>
                     Move
-                    <ControlButton onClick={() => handleTranslate(20, 0)} transform="rotate(-90deg)" margin="0 0 0 1rem" imgUrl="/assets/arrow.png" />
-                    <ControlButton onClick={() => handleTranslate( 0, 20)} imgUrl="/assets/arrow.png" />
-                    <ControlButton onClick={() => handleTranslate(0, -20)} transform="rotate(180deg)" imgUrl="/assets/arrow.png" />
-                    <ControlButton onClick={() => handleTranslate(-20 ,0)} transform="rotate(90deg)" imgUrl="/assets/arrow.png" />
+                    <ControlButton onClick={() => handleTranslate(-70, 0)} transform="rotate(-90deg)" margin="0 0 0 1rem" imgUrl="/assets/arrow.png" />
+                    <ControlButton onClick={() => handleTranslate( 0, -70)} imgUrl="/assets/arrow.png" />
+                    <ControlButton onClick={() => handleTranslate(0, 70)} transform="rotate(180deg)" imgUrl="/assets/arrow.png" />
+                    <ControlButton onClick={() => handleTranslate(70 ,0)} transform="rotate(90deg)" imgUrl="/assets/arrow.png" />
                 </div>
 
                 <div className={styles.Column}>
