@@ -1,7 +1,7 @@
 'use client'
 import styles from './elementDetailContainer.module.css'
 import Image from "next/image";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {saveElementData} from "@/libs/saveElementData";
 import {resizeElement} from "@/libs/resizeElement";
@@ -25,8 +25,24 @@ const ElementDetailContainer = () =>{
     const [elementMenuOpened, setElementMenuOpened] = useState(false);
     const [managePropertiesDialog, setManagePropertiesDialog] = useState(false);
     const [elementUpdated, setElementUpdated] = useState(false);
+    const lastSaveTime = useRef<number>(0);
 
+    const [initialFormData, setInitialFormData] = useState<{
+        name: string;
+        uri: string;
+        height: number;
+        width: number;
+        scale: number;
+        properties: IElementProperty[];
+    }>({
+        name: "",
+        uri: "",
+        height: 0,
+        width: 0,
+        scale: 1,
+        properties:[]
 
+    });
     const [formData, setFormData] = useState<{
         name: string;
         uri: string;
@@ -45,18 +61,20 @@ const ElementDetailContainer = () =>{
     })
 
     useEffect(() => {
-        if (elementCellView){
-            setFormData({
-                name: elementCellView.prop('customData/name') || '',
-                uri: elementCellView.prop('customData/uri') || '',
+        if (elementCellView) {
+            const updatedFormData = {
+                name: elementCellView.prop("customData/name") || "",
+                uri: elementCellView.prop("customData/uri") || "",
                 height: elementCellView.size().height || 0,
                 width: elementCellView.size().width || 0,
                 scale: 1,
-                properties: elementCellView.prop('properties') || ''
-            });
+                properties: elementCellView.prop("properties") || [],
+            };
+
+            setFormData(updatedFormData);
+            setInitialFormData(updatedFormData);
         }
     }, [elementCellView]);
-
 
     useEffect(() => {
         if (elementCellView){
@@ -76,29 +94,43 @@ const ElementDetailContainer = () =>{
         setElementUpdated(!elementUpdated)
     }
 
-    const handleSaveData = () =>{
-        dispatch(setIsLoading(true))
-        saveElementData(formData, elementCellView);
-        resizeElement(formData, elementCellView, dispatch)
+    const handleSaveData = () => {
 
+        const now = Date.now();
 
-        //Deselect the previous element and reset the form
-        const prevElement = graph.getCell(elementSelected);
-        if (prevElement){
-            prevElement.attr('path/stroke','black');
-            prevElement.attr('body/stroke','black');
-            prevElement.attr('top/stroke','black');
-
+        if (now - lastSaveTime.current < 2000) {
+            console.log("You need to wait 2 seconds before saving again.");
+            return;
         }
-        handleDiscardChanges()
-        dispatch(setIsLoading(false))
-        dispatch(setNotificationBox({message:`Your changes have been saved`}));
 
+        lastSaveTime.current = now;
+
+        dispatch(setIsLoading(true));
+
+        const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initialFormData);
+        if (isFormUnchanged) {
+            dispatch(setNotificationBox({ message: `No new changes to save` }));
+            dispatch(setIsLoading(false));
+            return;
+        }
+
+        saveElementData(formData, elementCellView);
+        resizeElement(formData, elementCellView, dispatch);
+
+        const prevElement = graph.getCell(elementSelected);
+        if (prevElement) {
+            prevElement.attr('path/stroke', 'black');
+            prevElement.attr('body/stroke', 'black');
+            prevElement.attr('top/stroke', 'black');
+        }
+        handleDiscardChanges(true);
+        dispatch(setIsLoading(false));
+        dispatch(setNotificationBox({ message: `Your changes have been saved` }));
     }
 
     const handleDeleteElement = () =>{
         dispatch(setIsLoading(true))
-        handleDiscardChanges();
+        handleDiscardChanges(true);
 
         elementCellView.remove();
         dispatch(setIsLoading(false))
@@ -109,7 +141,7 @@ const ElementDetailContainer = () =>{
         setElementMenuOpened(prevValue => !prevValue);
     }
 
-    const handleDiscardChanges = () => {
+    const handleDiscardChanges = (afterAction: boolean) => {
 
         setElementMenuOpened(false);
         dispatch(setElementSelected(null))
@@ -122,7 +154,12 @@ const ElementDetailContainer = () =>{
             properties: []
 
         })
-        dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
+        if (!afterAction) {
+            const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initialFormData);
+            if (!isFormUnchanged){
+                dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
+            }
+        }
     }
 
     const handleManageProperties = () =>{
@@ -160,12 +197,20 @@ const ElementDetailContainer = () =>{
         dispatch(setIsLoading(false));
     }
 
-    useHotkeys("Enter", () => {
-        console.log("Enter");
-    });
+    useHotkeys("Enter",() => {
+            if (elementCellView && !managePropertiesDialog && !elementMenuOpened) {
+                handleSaveData();
+            }
+        },
+        {
+            ignoredElementWhitelist: ['INPUT'],
+        }
+    );
 
     useHotkeys("Backspace", () => {
-        console.log("Backspace");
+        if (elementCellView && !managePropertiesDialog && !elementMenuOpened) {
+            handleDeleteElement()
+        }
     });
 
     return(
@@ -220,7 +265,7 @@ const ElementDetailContainer = () =>{
                                     <label className={`${styles.Label}`}>Name</label>
                                     <div className={`${styles.UriDiv}`}>
                                         <input
-                                            className={`${styles.Input}`}
+                                            className={`${styles.Input} move`}
                                                placeholder={`${elementCellView.prop('customData/name')}`}
                                                value={formData.name} // Set the value from formData
                                                onChange={e => {
@@ -229,7 +274,6 @@ const ElementDetailContainer = () =>{
                                                        name: e.target.value
                                                    }))
                                                }}
-                                            autoFocus
                                         />
                                         <button tabIndex={-1} className={`${styles.EyeButton}`}><Image onClick={handleShowName}
                                                                                          src={!elementCellView.prop('customData/showName') ? '/assets/eyeClosed.webp' : '/assets/eyeOpened.webp'}
@@ -240,7 +284,7 @@ const ElementDetailContainer = () =>{
 
                                     <label className={`${styles.Label}`}>Uri</label>
                                     <div className={`${styles.UriDiv}`}>
-                                        <input className={`${styles.Input}`}
+                                        <input className={`${styles.Input} move`}
                                                placeholder={`${elementCellView.prop('customData/uri')}`}
                                                value={formData.uri}
                                                onChange={e => {
@@ -337,7 +381,7 @@ const ElementDetailContainer = () =>{
                                 <button onClick={handleSaveData}
                                         className={`${styles.SaveButton}`}>Save
                                 </button>
-                                <button onClick={handleDiscardChanges} style={{backgroundColor: "var(--danger-color)"}}
+                                <button onClick={() => handleDiscardChanges(false)} style={{backgroundColor: "var(--danger-color)"}}
                                         className={`${styles.SaveButton}`}>Discard Changes
                                 </button>
                             </div>
