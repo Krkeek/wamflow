@@ -11,13 +11,11 @@ type IProps = {
 
 const PaperSettings = ({ paper }: IProps) => {
     const [scale, setScale] = useState({ sx: 1, sy: 1 });
-    const [position, setPosition] = useState({ tx: 0, ty: 0 });
     const graph: Graph = useContext(GraphContext);
 
     useEffect(() => {
         if (paper) {
             setScale(paper.scale());
-            setPosition(paper.translate());
         }
     }, [paper]);
 
@@ -29,11 +27,66 @@ const PaperSettings = ({ paper }: IProps) => {
         setScale(newScale);
     };
 
+
     const handleTranslate = (dx: number, dy: number) => {
         if (!paper) return;
-        const newPosition = { tx: position.tx + dx, ty: position.ty + dy };
-        paper.translate(newPosition.tx, newPosition.ty);
-        setPosition(newPosition);
+
+        const graph = paper.model;
+        const elements = graph.getElements();
+        const links = graph.getLinks();
+
+        const bbox = graph.getBBox();
+
+        const paperWidth = paper.getComputedSize().width;
+        const paperHeight = paper.getComputedSize().height;
+
+        if (bbox){
+            const newX = bbox.x + dx;
+            const newY = bbox.y + dy;
+            const newRight = bbox.x + bbox.width + dx;
+            const newBottom = bbox.y + bbox.height + dy;
+
+            if (newX < 0 || newY < 0 || newRight > paperWidth || newBottom > paperHeight) {
+                return;
+            }
+
+            elements.forEach(element => {
+                const position = element.position();
+                element.position(position.x + dx, position.y + dy);
+            });
+
+            links.forEach(link => {
+                const vertices = link.vertices();
+                link.vertices(vertices.map(v => ({ x: v.x + dx, y: v.y + dy })));
+            });
+        }
+    };
+
+    const moveAllElementsToOrigin = () => {
+        if (!paper) return;
+
+        const graph = paper.model;
+        const elements = graph.getElements();
+
+        const bbox = elements.reduce(
+            (bbox, element) => {
+                const elementBbox = element.getBBox();
+                bbox.x = Math.min(bbox.x, elementBbox.x);
+                bbox.y = Math.min(bbox.y, elementBbox.y);
+                bbox.width = Math.max(bbox.x + bbox.width, elementBbox.x + elementBbox.width) - bbox.x;
+                bbox.height = Math.max(bbox.y + bbox.height, elementBbox.y + elementBbox.height) - bbox.y;
+                return bbox;
+            },
+            { x: Infinity, y: Infinity, width: 0, height: 0 }
+        );
+
+        const offsetX = bbox.x - 20;
+        const offsetY = bbox.y - 20;
+
+        elements.forEach(element => {
+            const position = element.position();
+            element.position(position.x - offsetX, position.y - offsetY);
+        });
     };
 
     const handleToggleElementNames = () => {
@@ -76,17 +129,11 @@ const PaperSettings = ({ paper }: IProps) => {
         }
     }
 
-    const handleRelocateElements = () => {
-        if (!paper) return;
-        paper.translate(0,0);
-    }
-
 
     return (
         <div className={styles.Container}>
             <div className={styles.Header}>Control Center</div>
             <div className={styles.Expandable}>
-
                 <div className={styles.Column}>
                     Translate
                     <ControlButton onClick={() => handleTranslate(-70, 0)} transform="rotate(-90deg)"
@@ -96,10 +143,11 @@ const PaperSettings = ({ paper }: IProps) => {
                                    imgUrl="/assets/arrow.png"/>
                     <ControlButton onClick={() => handleTranslate(70, 0)} transform="rotate(90deg)"
                                    imgUrl="/assets/arrow.png"/>
+                    <ControlButton onClick={moveAllElementsToOrigin} value={'Origin'} width={'fit-content'}
+                                   fontWeight={'400'} padding={'0 0.6rem'} fontSize={'0.9rem'} minWidth={'2.5rem'}/>
                 </div>
-
                 <div className={styles.Column}>
-                    Scale
+                    Zoom
                     <ControlButton onClick={() => handleZoom(true)} margin="0 0 0 1rem" value="+"/>
                     <ControlButton onClick={() => handleZoom(false)} alignItems="flex-start" value="_"/>
                 </div>
@@ -116,10 +164,7 @@ const PaperSettings = ({ paper }: IProps) => {
                 </div>
                 <div className={styles.Column}>
                     Paper
-                    <ControlButton onClick={handleRelocateElements} margin="0 0 0 1rem" value={'Fit To Content'}
-                                   width={'fit-content'} fontWeight={'400'} padding={'0 0.6rem'} fontSize={'0.9rem'}
-                                   minWidth={'2.5rem'}/>
-                    <ControlButton onClick={handleClearPaper} value={'Clear All'}
+                    <ControlButton onClick={handleClearPaper} margin="0 0 0 1rem" value={'Clear All'}
                                    width={'fit-content'} fontWeight={'400'} padding={'0 0.6rem'} fontSize={'0.9rem'}
                                    minWidth={'2.5rem'}/>
                 </div>
