@@ -16,10 +16,6 @@ const RightSideWrapper = (props: IProps) => {
     const linkSelected = useAppSelector(state => state.linkSelected.value);
     const elementSelected = useAppSelector(state => state.elementSelected.value);
 
-    useEffect(() => {
-        console.log(linkSelected);
-    }, [linkSelected]);
-
     return (
         <div className={`${styles.Container}`}>
             <div className={`${styles.Controllers}`}>
@@ -27,7 +23,9 @@ const RightSideWrapper = (props: IProps) => {
                     onClick={() => setControlCenterActive(false)}
                     className={`${styles.ControllerButton} ${!controlCenterActive ? styles.ControllerButtonFocused : ''}`}
                 >
-                    Element
+                    {
+                        !elementSelected && linkSelected ? 'Link' : 'Element'
+                    }
                 </button>
                 <button
                     onClick={() => setControlCenterActive(true)}

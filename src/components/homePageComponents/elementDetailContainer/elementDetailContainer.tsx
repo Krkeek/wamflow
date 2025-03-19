@@ -97,7 +97,6 @@ const ElementDetailContainer = () =>{
     const handleSaveData = () => {
 
         const now = Date.now();
-
         if (now - lastSaveTime.current < 2000) {
             console.log("You need to wait 2 seconds before saving again.");
             return;
@@ -145,6 +144,14 @@ const ElementDetailContainer = () =>{
 
         setElementMenuOpened(false);
         dispatch(setElementSelected(null))
+        const prevElement = graph.getCell(elementSelected);
+        if (prevElement){
+            prevElement.attr('path/stroke','black');
+            prevElement.attr('body/stroke','black');
+            prevElement.attr('top/stroke','black');
+
+        }
+
         setFormData({
             name: "",
             uri: "",

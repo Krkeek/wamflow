@@ -54,7 +54,7 @@ export const paperEventListener     = (props: PropsType) =>{
             props.dispatch(setToggleContainer(false))
     })
 
-    paper.on('link:pointerclick', function(linkView) {
+    paper.on('link:pointerdown', function(linkView) {
         if (linkSelected !== null){
             const prevLink = graph.getCell(linkSelected);
             if (prevLink){

@@ -39,8 +39,6 @@
 
 .Input::placeholder {
     color: var(--placeHolder-color);
-
-
 }
 
 .UriDiv {
