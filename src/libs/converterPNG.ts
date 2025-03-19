@@ -37,8 +37,6 @@ const preparePaper = (paper: Paper) => {
 
 
 const resetPaperSetting = (paper: Paper) =>{
-    paper.setDimensions('65vw','100%');
-    paper.translate(0, 0);
-    paper.setGrid( {name: "mesh", args: {color: 'rgba(0, 0, 0, 0.4)'}})
-
+    paper.setDimensions('200vw','200vh');
+    paper.translate(0,0);
 }

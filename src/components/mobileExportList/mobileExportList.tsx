@@ -10,6 +10,7 @@ import {GraphContext} from "@/libs/joint/GraphContext";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {dia} from "@joint/core";
 import Paper = dia.Paper;
+import {setLinkSelected} from "@/libs/redux/features/linkSelectedSlice";
 
 type PropsType = {
     paperRef: HTMLDivElement | null | any,
@@ -23,6 +24,7 @@ const MobileExportList = (props: PropsType) =>{
     const dispatch = useAppDispatch()
     const projectName = useAppSelector(state => state.projectInfo.name)
     const elementSelected = useAppSelector(state => state.elementSelected.value)
+    const linkSelected = useAppSelector(state => state.linkSelected.value)
 
 
     const handleExportPNG = () =>{
@@ -48,6 +50,14 @@ const MobileExportList = (props: PropsType) =>{
 
         }
         dispatch(setElementSelected(null))
+        if (linkSelected !== null){
+            const prevLink = graph.getCell(linkSelected);
+            if (prevLink){
+                prevLink.attr('line/stroke','black');
+            }
+            dispatch(setLinkSelected(null))
+        }
+
     }
 
     const handleExportJSON = () =>{

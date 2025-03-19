@@ -17,11 +17,13 @@ export const viewJoint = (divElement: HTMLDivElement, graph: any, linkSelected: 
         background: {color: '#E9ECEF'},
          defaultLink: () => {
             if (linkSelected === 'invocation')
+
                  return new Invocation();
             else if (linkSelected === 'trustRelationship')
                 return new TrustRelationship();
             else
                 return new LegacyRelationship();
+
 
          },
         linkPinning: false,

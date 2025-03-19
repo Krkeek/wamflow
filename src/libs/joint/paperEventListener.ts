@@ -78,8 +78,20 @@ export const paperEventListener     = (props: PropsType) =>{
             props.dispatch(setToggleContainer(false))
     });
 
+    paper.on('link:pointerup', function(linkView) {
 
-    //When clicking on a blank place on the paper
+        const linkModel = linkView.model;
+        const sourceCell = linkModel.getSourceElement();
+        const targetCell = linkModel.getTargetElement();
+
+        // If the link is not connected to any element (both source and target are null)
+        if (!sourceCell || !targetCell) {
+            props.dispatch(setLinkSelected(null));
+        }
+
+    });
+
+        //When clicking on a blank place on the paper
     paper.on('blank:pointerclick',()=>{
         const prevElement = graph.getCell(elementSelected);
         if (prevElement){

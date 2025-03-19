@@ -1,17 +1,9 @@
 import styles from './exportWrapper.module.css'
 import Image from "next/image";
-import {exportPNG} from "@/libs/converterPNG";
-import {exportRDF} from "@/libs/converterRDF";
-import {exportJSON} from "@/libs/converterJSON";
-import {useContext, useEffect, useRef} from "react";
-import {GraphContext} from "@/libs/joint/GraphContext";
+import { useRef} from "react";
 import {dia} from "@joint/core";
 import Paper = dia.Paper;
-import ID = dia.Cell.ID;
-import {deactivateConnectionMode} from "@/libs/activeConnectionMode";
-import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
-import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
-import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
+
 import MobileExportList from "@/components/mobileExportList/mobileExportList";
 
 

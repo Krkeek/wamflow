@@ -136,7 +136,7 @@ const HomePage = () =>{
                     <div className={`${!isMobileView ? styles.LeftSide : styles.MobileContainers}` } style={toggleContainer && isMobileView ? {display: 'flex'} : {display: "none"} }>
                         {
                             connectionMode
-                                ? <LinksContainer />
+                                ? <LinksContainer paper={paper}/>
                                 : <ElementsContainer  />
                         }
                     </div>

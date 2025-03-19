@@ -126,6 +126,7 @@ const LinkDetailContainer = () => {
         }
     });
 
+
     return (
         <>
             <div className={`${styles.Container}`}>
