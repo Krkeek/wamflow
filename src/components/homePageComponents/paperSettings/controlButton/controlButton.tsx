@@ -7,6 +7,11 @@ type IProps = {
     margin?: string;
     transform?: string
     onClick?: () => void
+    width?: number | 'fit-content'
+    fontWeight?: string
+    padding?: string
+    fontSize?: string
+    minWidth?: string
 
 }
 
@@ -15,7 +20,7 @@ const ControlButton = (props: IProps) => {
 
      return (
          <>
-             <div onClick={props.onClick} style={{ alignItems: props.alignItems, margin: props.margin, transform: props.transform}} className={`${styles.Container}`}>
+             <div onClick={props.onClick} style={{ alignItems: props.alignItems, margin: props.margin, transform: props.transform, width: props.width, fontWeight: props.fontWeight, padding: props.padding, fontSize: props.fontSize, minWidth: props.minWidth}} className={`${styles.Container}`}>
 
                  {
                      props.imgUrl !== undefined ? (
