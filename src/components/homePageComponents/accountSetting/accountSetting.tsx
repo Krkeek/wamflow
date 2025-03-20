@@ -46,6 +46,9 @@ const AccountSetting = (props: IProps) => {
             dispatch(setUserStatus(getUserStatus()));
             dispatch(setNotificationBox({message:`You have been logged out`}));
         }
+        else {
+            dispatch(setNotificationBox({message:`Something went wrong while logging out`, isWarning: true}));
+        }
         dispatch(setIsLoading(false))
 
     }
