@@ -14,13 +14,14 @@ import ManagePropertiesDialog from "@/components/managePropertiesDialog/managePr
 import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 import useHotkeys from "@reecelucas/react-use-hotkeys";
+import {dia} from "@joint/core";
 
 const ElementDetailContainer = () =>{
 
     const graph = useContext(GraphContext);
     const dispatch = useAppDispatch()
     const elementSelected = useAppSelector(state => state.elementSelected.value);
-    let elementCellView = graph.getCell(elementSelected);
+    let elementCellView: dia.Cell = graph.getCell(elementSelected);
 
     const [elementMenuOpened, setElementMenuOpened] = useState(false);
     const [managePropertiesDialog, setManagePropertiesDialog] = useState(false);
@@ -65,8 +66,8 @@ const ElementDetailContainer = () =>{
             const updatedFormData = {
                 name: elementCellView.prop("customData/name") || "",
                 uri: elementCellView.prop("customData/uri") || "",
-                height: elementCellView.size().height || 0,
-                width: elementCellView.size().width || 0,
+                height: elementCellView.getBBox().height || 0,
+                width: elementCellView.getBBox().width || 0,
                 scale: 1,
                 properties: elementCellView.prop("properties") || [],
             };
@@ -324,7 +325,7 @@ const ElementDetailContainer = () =>{
                                     <div className={`${styles.InputView}`}>
                                         <p>W</p>
                                         <input type={'text'} className={`${styles.WidthInput}`}
-                                               placeholder={elementCellView.size().width}
+                                               placeholder={elementCellView.getBBox().width.toString()}
 
                                                onChange={e => {
                                                    const value = parseFloat(e.target.value);
@@ -337,7 +338,7 @@ const ElementDetailContainer = () =>{
                                         />
                                         <p>H</p>
                                         <input type={'text'} className={`${styles.WidthInput}`}
-                                               placeholder={elementCellView.size().height}
+                                               placeholder={elementCellView.getBBox().height.toString()}
 
                                                onChange={e => {
 

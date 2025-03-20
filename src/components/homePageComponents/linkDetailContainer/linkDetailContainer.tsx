@@ -106,6 +106,7 @@ const LinkDetailContainer = () => {
 
     const handleShowLabel = () =>{
         linkCellView.prop('customData/showLabel', !linkCellView.prop('customData/showLabel'))
+        // @ts-ignore
         linkCellView.updateLabel();
         setLinkUpdated(!linkUpdated);
     }
