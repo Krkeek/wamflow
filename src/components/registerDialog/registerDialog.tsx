@@ -17,6 +17,7 @@ interface RegisterDialogProps {
 }
 
 const RegisterDialog = ({ isOpen, setIsOpenAction }: RegisterDialogProps) => {
+
     const dispatch = useAppDispatch();
     const [isRegister, setIsRegister] = useState(false);
 

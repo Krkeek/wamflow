@@ -4,20 +4,15 @@ import React, { useContext, useEffect, useRef} from "react";
 import {createJointElement} from "@/libs/joint/createJointElement";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
-import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
 import {PaperContext} from "@/libs/joint/PaperContext";
+import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 
-type propsType = {
-    elementSelected: any,
-    dispatch: any,
-    toggleContainer: boolean,
-    isMobileView: boolean,
-}
-
-const PaperView = (props: propsType) =>{
+const PaperView = () =>{
+    const dispatch = useAppDispatch()
     const graph = useContext(GraphContext);
     const paper = useContext(PaperContext);
     const canvas = useRef<HTMLDivElement>(null);
+    const elementSelected = useAppSelector(state => state.elementSelected.value)
 
 
     const handleDrop = (e: React.DragEvent) => {
@@ -25,12 +20,11 @@ const PaperView = (props: propsType) =>{
         const elementId = e.dataTransfer.getData("elementId");
         const mousePosition = paper?.clientToLocalPoint(e.clientX, e.clientY);
 
-        // @ts-ignore
         const element = createJointElement(elementId, graph, mousePosition.x, mousePosition.y);
 
         //Auto select the dropped element
-        if (props.elementSelected !== null){
-            const prevElement = graph.getCell(props.elementSelected);
+        if (elementSelected !== null){
+            const prevElement = graph.getCell(elementSelected);
             if (prevElement){
                 prevElement.attr('path/stroke','black');
                 prevElement.attr('body/stroke','black');
@@ -38,14 +32,11 @@ const PaperView = (props: propsType) =>{
 
             }
         }
-        props.dispatch(setElementSelected(null));
-        props.dispatch(setElementSelected(element.id))
+        dispatch(setElementSelected(null));
+        dispatch(setElementSelected(element.id))
         element.attr('path/stroke','#023E8A');
         element.attr('body/stroke','#023E8A');
         element.attr('top/stroke','#023E8A');
-        if (props.toggleContainer && props.isMobileView)
-            props.dispatch(setToggleContainer(false))
-
     };
 
     const handleDragOver = (e: React.DragEvent) => {

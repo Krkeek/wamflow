@@ -68,4 +68,4 @@ export const defaultPaper = new dia.Paper({
 
     }
 });
-export const PaperContext = createContext<any>(defaultPaper);
+export const PaperContext = createContext<dia.Paper>(defaultPaper);

@@ -11,11 +11,9 @@ import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setLinkSelected} from "@/libs/redux/features/linkSelectedSlice";
 import {PaperContext} from "@/libs/joint/PaperContext";
 
-type PropsType = {
-}
 
 
-const MobileExportList = (props: PropsType) =>{
+const MobileExportList = () =>{
 
     const graph = useContext(GraphContext);
     const paper = useContext(PaperContext);

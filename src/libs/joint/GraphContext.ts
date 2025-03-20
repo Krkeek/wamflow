@@ -16,4 +16,4 @@ const namespace = {...shapes, SecurityRealm,  Application, Service, IdentityProv
 export const defaultGraph = new dia.Graph({
     projectTitle: 'Untitled'
 },{cellNamespace: namespace});
-export const GraphContext = createContext<any>(defaultGraph);
+export const GraphContext = createContext<dia.Graph>(defaultGraph);

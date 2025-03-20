@@ -5,16 +5,13 @@ import Element from "@/components/homePageComponents/elementsContainer/element/e
 import React from "react";
 import {useAppDispatch} from "@/libs/redux/hooks";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
-import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
 
 
 const ElementsContainer = () =>{
 
     const dispatch = useAppDispatch()
-
     const handleDragStart = (e: React.DragEvent, elementId: string) => {
         e.dataTransfer.setData("elementId", elementId);
-        dispatch(setToggleContainer(false));
         dispatch(setConnectionMode(false));
     };
 

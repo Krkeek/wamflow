@@ -1,28 +1,21 @@
 import styles from './exportWrapper.module.css'
 import Image from "next/image";
 import { useRef} from "react";
-import {dia} from "@joint/core";
-import Paper = dia.Paper;
-
 import MobileExportList from "@/components/mobileExportList/mobileExportList";
 
 
-
-type PropsType = {
-}
-
-const ExportWrapper = (props: PropsType) =>{
-    const exportList = useRef(null)
+const ExportWrapper = () =>{
+    const exportList = useRef<HTMLDivElement | null>(null)
     const handleExtendExport = (status: boolean) =>{
         if (status){
             if (exportList){
-                // @ts-ignore
+                if (exportList.current)
                 exportList.current.classList.add(styles.ActiveExportList)
             }
         }
         else {
             if (exportList){
-                // @ts-ignore
+                if (exportList.current)
                 exportList.current.classList.remove(styles.ActiveExportList)
             }
 

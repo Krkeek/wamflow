@@ -1,16 +1,13 @@
 import styles from './rightSideWrapper.module.css'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PaperSettings from "@/components/homePageComponents/paperSettings/paperSettings";
 import ElementDetailContainer from "@/components/homePageComponents/elementDetailContainer/elementDetailContainer";
-import { dia } from "@joint/core";
-import Paper = dia.Paper;
 import { useAppSelector } from "@/libs/redux/hooks";
 import LinkDetailContainer from "@/components/homePageComponents/linkDetailContainer/linkDetailContainer";
 
-type IProps = {
-};
 
-const RightSideWrapper = (props: IProps) => {
+
+const RightSideWrapper = () => {
     const [controlCenterActive, setControlCenterActive] = useState<boolean>(false);
     const linkSelected = useAppSelector(state => state.linkSelected.value);
     const elementSelected = useAppSelector(state => state.elementSelected.value);
