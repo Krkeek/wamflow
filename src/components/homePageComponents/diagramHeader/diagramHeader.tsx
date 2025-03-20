@@ -11,13 +11,14 @@ import MobileExportList from "@/components/mobileExportList/mobileExportList";
 import {dia} from "@joint/core";
 import Paper = dia.Paper;
 import {setIsLoading} from "@/libs/redux/features/loadingSlice";
+import {PaperContext} from "@/libs/joint/PaperContext";
 
 type DiagramHeaderProps = {
-    paperRef: HTMLDivElement | null,
-    paper: Paper | null
 }
 const DiagramHeader = (props: DiagramHeaderProps) =>{
 
+
+    const paper = useContext(PaperContext)
     const dispatch = useAppDispatch();
     const projectName = useAppSelector(state => state.projectInfo.name)
     const exportList = useRef(null)
@@ -75,7 +76,7 @@ const DiagramHeader = (props: DiagramHeaderProps) =>{
             {
                 isMobileView &&
                 <div ref={exportList} className={`${styles.MobileExportListDiv} ${extendList ? styles.ActiveExportList : " " }`}>
-                    <MobileExportList paperRef={props.paperRef} paper={props.paper}/>
+                    <MobileExportList />
                 </div>
             }
         </>

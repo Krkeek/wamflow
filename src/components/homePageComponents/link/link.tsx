@@ -4,13 +4,11 @@ import Image from "next/image";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setLinkName} from "@/libs/redux/features/linkNameSlice";
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
-import {dia} from "@joint/core";
-import {useEffect, useState} from "react";
-import {util} from "protobufjs";
+import {useContext, useEffect, useState} from "react";
+import {PaperContext} from "@/libs/joint/PaperContext";
 
 type propsType = {
     link: LinkInterface,
-    paper: dia.Paper | null;
 }
 
 const Link = (props: propsType) =>{
@@ -18,14 +16,14 @@ const Link = (props: propsType) =>{
     const dispatch = useAppDispatch()
     const linkNameSelected = useAppSelector(state => state.linkName.value)
     const [prevScale, setPrevScale] = useState<{sx: number, sy: number }>({sx: 1, sy: 1});
-
+    const paper = useContext(PaperContext);
 
     const handleSelectLink = () => {
-        if (!props.paper)
+        if (!paper)
             return;
 
-        const x = props.paper.scale().sx;
-        const y = props.paper.scale().sy;
+        const x = paper.scale().sx;
+        const y = paper.scale().sy;
         setPrevScale({sx: x, sy: y});
 
         // Dispatch actions to set link name and toggle container
@@ -37,7 +35,7 @@ const Link = (props: propsType) =>{
 
     useEffect(() => {
         if (prevScale)
-            props.paper?.scale(prevScale.sx, prevScale.sy);
+            paper?.scale(prevScale.sx, prevScale.sy);
     }, [linkNameSelected]);
 
     return(

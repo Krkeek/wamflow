@@ -3,7 +3,9 @@ import {dia} from "@joint/core";
 import Paper = dia.Paper;
 
 
-export const exportPNG = (target: any, paper: Paper | null, name: string) => {
+export const exportPNG = (paper: Paper | null, name: string) => {
+
+    const target = paper?.el;
 
     if (paper)
     preparePaper(paper)

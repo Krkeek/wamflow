@@ -1,16 +1,13 @@
 'use client'
 import styles from './paperView.module.css'
-import React, {RefObject, useContext} from "react";
+import React, { useContext, useEffect, useRef} from "react";
 import {createJointElement} from "@/libs/joint/createJointElement";
 import {GraphContext} from "@/libs/joint/GraphContext";
-import {dia} from "@joint/core";
-import Paper = dia.Paper;
 import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
+import {PaperContext} from "@/libs/joint/PaperContext";
 
 type propsType = {
-    pageRef: RefObject<HTMLDivElement | null>,
-    paper: Paper | null,
     elementSelected: any,
     dispatch: any,
     toggleContainer: boolean,
@@ -19,12 +16,14 @@ type propsType = {
 
 const PaperView = (props: propsType) =>{
     const graph = useContext(GraphContext);
+    const paper = useContext(PaperContext);
+    const canvas = useRef<HTMLDivElement>(null);
 
 
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
         const elementId = e.dataTransfer.getData("elementId");
-        const mousePosition = props.paper?.clientToLocalPoint(e.clientX, e.clientY);
+        const mousePosition = paper?.clientToLocalPoint(e.clientX, e.clientY);
 
         // @ts-ignore
         const element = createJointElement(elementId, graph, mousePosition.x, mousePosition.y);
@@ -53,10 +52,16 @@ const PaperView = (props: propsType) =>{
         e.preventDefault();
     };
 
+    //Add the paperRef to the Paper
+    useEffect(() => {
+        if (paper)
+            canvas.current?.appendChild(paper.el)
+    }, [paper]);
+
 
     return(
         <>
-            <div ref={props.pageRef} className={`${styles.Container}`}
+            <div ref={canvas} className={`${styles.Container}`}
                      onDrop={handleDrop}
                      onDragOver={handleDragOver}
                 >

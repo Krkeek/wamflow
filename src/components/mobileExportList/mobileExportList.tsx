@@ -8,19 +8,17 @@ import {exportJSON} from "@/libs/converterJSON";
 import {useContext, useRef} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
-import {dia} from "@joint/core";
-import Paper = dia.Paper;
 import {setLinkSelected} from "@/libs/redux/features/linkSelectedSlice";
+import {PaperContext} from "@/libs/joint/PaperContext";
 
 type PropsType = {
-    paperRef: HTMLDivElement | null | any,
-    paper: Paper | null
 }
 
 
 const MobileExportList = (props: PropsType) =>{
 
     const graph = useContext(GraphContext);
+    const paper = useContext(PaperContext);
     const dispatch = useAppDispatch()
     const projectName = useAppSelector(state => state.projectInfo.name)
     const elementSelected = useAppSelector(state => state.elementSelected.value)
@@ -29,7 +27,7 @@ const MobileExportList = (props: PropsType) =>{
 
     const handleExportPNG = () =>{
         reset();
-        exportPNG(props.paperRef, props.paper, projectName)
+        exportPNG(paper, projectName)
     }
 
 

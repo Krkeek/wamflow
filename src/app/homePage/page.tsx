@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useEffect, useRef, useState } from "react";
+import {createContext, RefObject, useContext, useEffect, useRef, useState} from "react";
 import { useAppDispatch, useAppSelector } from "@/libs/redux/hooks";
 import { setMobileView } from "@/libs/redux/features/mobileViewSlice";
 import { setProjectInfo } from "@/libs/redux/features/projectInfoSlice";
@@ -29,21 +29,25 @@ import {IGetUserStatus} from "../../../declarations";
 import {setUserStatus} from "@/libs/redux/features/userStatusSlice";
 import LoadingDialog from "@/components/infrastructure/loadingDialog/loadingDialog";
 import RightSideWrapper from "@/components/rightSideWrapper/rightSideWrapper";
+import {PaperContext} from "@/libs/joint/PaperContext";
 
 
 const HomePage = () =>{
-    const graph = useContext(GraphContext);
-    const isMobileView = useAppSelector(state => state.mobileView.value)
+
     const dispatch = useAppDispatch()
+    const graph = useContext(GraphContext);
+    const paper = useContext(PaperContext);
+
+
+    //Decided not to Support MobileView now
+    const isMobileView = useAppSelector(state => state.mobileView.value)
+
     const connectionMode = useAppSelector(state => state.connectionMode.value)
     const projectName = useAppSelector(state => state.projectInfo.name)
     const elementSelected = useAppSelector(state => state.elementSelected.value)
-    const linkName = useAppSelector(state => state.linkName.value)
     const linkSelected = useAppSelector(state => state.linkSelected.value)
-
     const toggleContainer = useAppSelector(state => state.toggleContainer.value)
-    const paperRef = useRef<HTMLDivElement>(null);
-    const [paper, setPaper] = useState<Paper | null >(null)
+
     const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
 
 
@@ -65,11 +69,11 @@ const HomePage = () =>{
 
     }, []);
 
-    useEffect(() => {
+/*    useEffect(() => {
         if (paperRef.current){
-            setPaper(viewJoint(paperRef.current, graph, linkName, isMobileView ))
+            setPaper(viewJoint(graph, linkName))
         }
-    },[linkName]);
+    },[linkName]);*/
 
     useEffect(() => {
         graph.set('projectTitle', projectName);
@@ -123,12 +127,13 @@ const HomePage = () =>{
         }
     }
 
+
     return(
         <>
             <div className={`${styles.Container} ContainerAnimation`}>
                 <div className={`${styles.TopBar} ${toggleContainer && isMobileView && styles.ContainerBlur}` } onClick={handleCloseContainer}>
-                  <DiagramHeader paper={paper} paperRef={paperRef.current} />
-                  <OptionsBar  paper={paper} paperRef={paperRef.current}/>
+                  <DiagramHeader />
+                  <OptionsBar />
                   <AccountSetting setOpenRegisterDialog={setOpenRegisterDialog} />
 
               </div>
@@ -136,7 +141,7 @@ const HomePage = () =>{
                     <div className={`${!isMobileView ? styles.LeftSide : styles.MobileContainers}` } style={toggleContainer && isMobileView ? {display: 'flex'} : {display: "none"} }>
                         {
                             connectionMode
-                                ? <LinksContainer paper={paper}/>
+                                ? <LinksContainer />
                                 : <ElementsContainer  />
                         }
                     </div>
@@ -145,11 +150,11 @@ const HomePage = () =>{
                         <div className={`${styles.DragSentence}`}>Drop Sheet</div>
 
                         <div  className={`${styles.MiddlePaper}`} >
-                            <PaperView isMobileView={isMobileView} toggleContainer={toggleContainer} dispatch={dispatch} elementSelected={elementSelected} paper={paper} pageRef={paperRef}/>
+                            <PaperView isMobileView={isMobileView} toggleContainer={toggleContainer} dispatch={dispatch} elementSelected={elementSelected} />
                         </div>
                     </div>
                     <div className={`${styles.RightSide}`}>
-                        <RightSideWrapper paper={paper} />
+                        <RightSideWrapper  />
                     </div>
                 </div>
             </div>

@@ -9,8 +9,6 @@ import MobileExportList from "@/components/mobileExportList/mobileExportList";
 
 
 type PropsType = {
-    paperRef: HTMLDivElement | null,
-    paper: Paper | null
 }
 
 const ExportWrapper = (props: PropsType) =>{
@@ -47,7 +45,7 @@ const ExportWrapper = (props: PropsType) =>{
                         className={`${styles.ExportButton} ${styles.ExportButtonExtended} ${styles.ActiveExportList}`}>Export
                         as
                     </button>
-                    <MobileExportList paperRef={props.paperRef} paper={props.paper}/>
+                    <MobileExportList />
 
                 </div>
             </div>

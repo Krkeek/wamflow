@@ -8,7 +8,6 @@ import { useAppSelector } from "@/libs/redux/hooks";
 import LinkDetailContainer from "@/components/homePageComponents/linkDetailContainer/linkDetailContainer";
 
 type IProps = {
-    paper: Paper | null;
 };
 
 const RightSideWrapper = (props: IProps) => {
@@ -37,7 +36,7 @@ const RightSideWrapper = (props: IProps) => {
             <div className={`${styles.Content}`}>
                 {
                     controlCenterActive ? (
-                        <PaperSettings paper={props.paper} />
+                        <PaperSettings />
                     ) : (
                         elementSelected && !linkSelected ? (
                             <ElementDetailContainer />

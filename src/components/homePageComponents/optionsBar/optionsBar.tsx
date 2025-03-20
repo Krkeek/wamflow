@@ -9,10 +9,9 @@ import ExportWrapper from "@/components/homePageComponents/optionsBar/exportWrap
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setConnectionMode} from "@/libs/redux/features/connectionModeSlice";
 import {setToggleContainer} from "@/libs/redux/features/mobileToggleContainerSlice";
+import {PaperContext} from "@/libs/joint/PaperContext";
 
 type propsType = {
-    paperRef: HTMLDivElement | null,
-    paper: Paper | null,
 
 }
 
@@ -51,7 +50,7 @@ const OptionsBar = (props: propsType) =>{
                 </div>
                 {
                     !mobileView ?
-                        <ExportWrapper paper={props.paper} paperRef={props.paperRef}/>
+                        <ExportWrapper />
                         :
                         <div className={`${styles.RightSide}`}>
                             <button onClick={handleButton} className={`${styles.MoreButton}`}>

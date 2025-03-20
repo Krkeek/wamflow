@@ -4,14 +4,14 @@ import { dia } from "@joint/core";
 import {useContext, useEffect, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import Graph = dia.Graph;
+import {PaperContext} from "@/libs/joint/PaperContext";
 
-type IProps = {
-    paper: dia.Paper | null;
-};
 
-const PaperSettings = ({ paper }: IProps) => {
+
+const PaperSettings = () => {
     const [scale, setScale] = useState({ sx: 1, sy: 1 });
     const graph: Graph = useContext(GraphContext);
+    const paper = useContext(PaperContext)
 
     useEffect(() => {
         if (paper) {
@@ -50,14 +50,14 @@ const PaperSettings = ({ paper }: IProps) => {
                 return;
             }
 
-            elements.forEach(element => {
+            elements.forEach((element: any) => {
                 const position = element.position();
                 element.position(position.x + dx, position.y + dy);
             });
 
-            links.forEach(link => {
+            links.forEach((link: any) => {
                 const vertices = link.vertices();
-                link.vertices(vertices.map(v => ({ x: v.x + dx, y: v.y + dy })));
+                link.vertices(vertices.map((v: any) => ({ x: v.x + dx, y: v.y + dy })));
             });
         }
     };
@@ -69,7 +69,7 @@ const PaperSettings = ({ paper }: IProps) => {
         const elements = graph.getElements();
 
         const bbox = elements.reduce(
-            (bbox, element) => {
+            (bbox: any, element: any) => {
                 const elementBbox = element.getBBox();
                 bbox.x = Math.min(bbox.x, elementBbox.x);
                 bbox.y = Math.min(bbox.y, elementBbox.y);
@@ -83,7 +83,7 @@ const PaperSettings = ({ paper }: IProps) => {
         const offsetX = bbox.x - 20;
         const offsetY = bbox.y - 20;
 
-        elements.forEach(element => {
+        elements.forEach((element: any) => {
             const position = element.position();
             element.position(position.x - offsetX, position.y - offsetY);
         });
