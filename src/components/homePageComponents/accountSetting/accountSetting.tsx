@@ -22,7 +22,6 @@ const AccountSetting = (props: IProps) => {
     const userStatus = useAppSelector(state => state.userStatus)
     const [initials, setInitials] = useState<string>();
 
-
     useEffect(() => {
         if (userStatus.userInfo){
           const initials = getInitials(userStatus.userInfo.accountDetails.name);

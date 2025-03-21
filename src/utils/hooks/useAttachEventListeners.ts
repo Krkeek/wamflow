@@ -3,19 +3,18 @@ import { setElementSelected } from "@/libs/redux/features/elementSelectedSlice";
 import { linkViewTools } from "@/libs/joint/linkTools/linkTools";
 import { useContext, useEffect } from "react";
 import { GraphContext } from "@/libs/joint/GraphContext";
-import { PaperContext } from "@/libs/joint/PaperContext";
 import { useAppDispatch, useAppSelector } from "@/libs/redux/hooks";
+import {dia} from "@joint/core";
 
-const useAttachEventListeners = () => {
+const useAttachEventListeners = (paper: dia.Paper | null) => {
     const dispatch = useAppDispatch();
     const graph = useContext(GraphContext);
-    const paper = useContext(PaperContext);
     const connectionMode = useAppSelector(state => state.connectionMode.value);
     const elementSelected = useAppSelector(state => state.elementSelected.value);
     const linkSelected = useAppSelector(state => state.linkSelected.value);
-
     useEffect(() => {
-        const onElementPointerDown = (cellView: any) => {
+        if (!paper) return;
+            const onElementPointerDown = (cellView: any) => {
             if (elementSelected !== null) {
                 const prevElement = graph.getCell(elementSelected);
                 if (prevElement) {
@@ -93,25 +92,25 @@ const useAttachEventListeners = () => {
             connectionMode && linkView.addTools(linkViewTools());
         };
 
-        const onBlankMouseOver = () => {
-            paper.removeTools();
-        };
+            const onBlankMouseOver = () => {
+                paper.removeTools();
+            };
 
-        paper.on('element:pointerdown', onElementPointerDown);
-        paper.on('link:pointerdown', onLinkPointerDown);
-        paper.on('link:pointerup', onLinkPointerUp);
-        paper.on('blank:pointerclick', onBlankPointerClick);
-        paper.on('link:mouseenter', onLinkMouseEnter);
-        paper.on('blank:mouseover', onBlankMouseOver);
+            paper.on('element:pointerdown', onElementPointerDown);
+            paper.on('link:pointerdown', onLinkPointerDown);
+            paper.on('link:pointerup', onLinkPointerUp);
+            paper.on('blank:pointerclick', onBlankPointerClick);
+            paper.on('link:mouseenter', onLinkMouseEnter);
+            paper.on('blank:mouseover', onBlankMouseOver);
 
-        return () => {
-            paper.off('element:pointerdown', onElementPointerDown);
-            paper.off('link:pointerdown', onLinkPointerDown);
-            paper.off('link:pointerup', onLinkPointerUp);
-            paper.off('blank:pointerclick', onBlankPointerClick);
-            paper.off('link:mouseenter', onLinkMouseEnter);
-            paper.off('blank:mouseover', onBlankMouseOver);
-        };
+            return () => {
+                paper.off('element:pointerdown', onElementPointerDown);
+                paper.off('link:pointerdown', onLinkPointerDown);
+                paper.off('link:pointerup', onLinkPointerUp);
+                paper.off('blank:pointerclick', onBlankPointerClick);
+                paper.off('link:mouseenter', onLinkMouseEnter);
+                paper.off('blank:mouseover', onBlankMouseOver);
+            };
     }, [dispatch, elementSelected, linkSelected, connectionMode, graph, paper]);
 };
 

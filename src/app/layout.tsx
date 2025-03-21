@@ -20,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <StoreProvider>
-          {children}
-      </StoreProvider>
+      <React.StrictMode>
+          <StoreProvider>
+              {children}
+          </StoreProvider>
+      </React.StrictMode>
       </body>
     </html>
 

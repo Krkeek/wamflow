@@ -24,7 +24,6 @@ const OptionsBar = () =>{
         }
     }, [connectionMode]);
 
-
     return(
         <>
             <div className={`${styles.Container}`}>

@@ -3,8 +3,11 @@ import {LinkInterface} from "../../../../declarations";
 import Image from "next/image";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setLinkName} from "@/libs/redux/features/linkNameSlice";
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import {PaperContext} from "@/libs/joint/PaperContext";
+import {TrustRelationship} from "@/libs/joint/links/TrustRelationship/TrustRelationship";
+import {Invocation} from "@/libs/joint/links/Invocation/Invocation";
+import {LegacyRelationship} from "@/libs/joint/links/LegacyRelationship/LegacyRelationship";
 
 type propsType = {
     link: LinkInterface,
@@ -14,26 +17,21 @@ const Link = (props: propsType) =>{
     const dispatch = useAppDispatch()
     const link = props.link;
     const linkNameSelected = useAppSelector(state => state.linkName.value)
-    const [prevScale, setPrevScale] = useState<{sx: number, sy: number }>({sx: 1, sy: 1});
     const paper = useContext(PaperContext);
 
     const handleSelectLink = () => {
         if (!paper)
             return;
 
-        const x = paper.scale().sx;
-        const y = paper.scale().sy;
-        setPrevScale({sx: x, sy: y});
-
         dispatch(setLinkName(link.id));
 
+        if (link.id === "invocation")
+            paper.options.defaultLink = new Invocation();
+        else if (link.id === "trustRelationship")
+            paper.options.defaultLink = new TrustRelationship();
+        else
+            paper.options.defaultLink = new LegacyRelationship();
     };
-
-    useEffect(() => {
-        if (prevScale)
-            paper?.scale(prevScale.sx, prevScale.sy);
-    }, [linkNameSelected]);
-
     return(
         <>
             <div className={`${styles.Container} `}>

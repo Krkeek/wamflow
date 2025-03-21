@@ -1,7 +1,7 @@
 "use client";
 import styles from './registerDialog.module.css';
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import {FormEvent, useEffect, useState} from "react";
 import { setNotificationBox } from "@/libs/redux/features/notificationBoxSlice";
 import { useAppDispatch } from "@/libs/redux/hooks";
 import { passwordMatch } from "@/utils/passwordMatch";
@@ -20,6 +20,8 @@ const RegisterDialog = ({ isOpen, setIsOpenAction }: RegisterDialogProps) => {
 
     const dispatch = useAppDispatch();
     const [isRegister, setIsRegister] = useState(false);
+
+    if (!isOpen) return null;
 
     const closeDialog = () => {
         setIsOpenAction(false);
@@ -118,8 +120,6 @@ const RegisterDialog = ({ isOpen, setIsOpenAction }: RegisterDialogProps) => {
         }
         dispatch(setIsLoading(false));
     };
-
-    if (!isOpen) return null;
 
     return (
         <form onSubmit={handleFormSubmit}>

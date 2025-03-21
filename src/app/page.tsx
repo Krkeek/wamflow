@@ -8,12 +8,7 @@ import {LandingPageAnimation} from "@/libs/gsap/LandingPageAnimation";
 import GraphProvider from "@/libs/joint/GraphProvider";
 gsap.registerPlugin(useGSAP);
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import PaperProvider from "@/libs/joint/PaperProvider";
-
 export default function Home() {
-
-
-
     useGSAP(()=>{
         const ctx = gsap.context(()=> LandingPageAnimation() )
         return ()=> ctx.revert()
@@ -22,15 +17,13 @@ export default function Home() {
     return (
     <>
         <GraphProvider>
-            <PaperProvider>
-                <div className={`${styles.GridContainer}`}>
+            <div className={`${styles.GridContainer}`}>
                     <div className={`${styles.BgImage} bgAnimation`}
                          style={{backgroundImage: 'url(\'/assets/diagram.png\')'}}>
                         <HeroSection/>
                         <FeatureSection/>
                     </div>
                 </div>
-            </PaperProvider>
         </GraphProvider>
         <SpeedInsights />
     </>
