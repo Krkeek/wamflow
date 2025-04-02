@@ -5,6 +5,8 @@ import {useContext, useEffect, useState} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import Graph = dia.Graph;
 import {PaperContext} from "@/libs/joint/PaperContext";
+import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
+import {useConfirmDialog} from "@/utils/contexts/ConfirmDialogContext";
 
 
 
@@ -12,6 +14,7 @@ const PaperSettings = () => {
     const [scale, setScale] = useState({ sx: 1, sy: 1 });
     const graph: Graph = useContext(GraphContext);
     const paper = useContext(PaperContext)
+    const { showConfirm } = useConfirmDialog();
 
     useEffect(() => {
         if (paper) {
@@ -120,13 +123,31 @@ const PaperSettings = () => {
     };
 
     const handleClearPaper = () => {
-        graph.clear();
+        showConfirm({
+            title: "Clear Paper",
+            message: "Are you sure you want to clear all paper?",
+            confirmText: "Clear",
+            cancelText: "Cancel",
+            onConfirm: () => {
+                graph.clear();
+            },
+        });
+
     }
     const handleRemoveLinks = () => {
-        const cells = graph.getElements();
-        for (const cell of cells) {
-            graph.removeLinks(cell);
-        }
+
+        showConfirm({
+            title: "Remove Links",
+            message: "Are you sure you want to remove all links?",
+            confirmText: "Remove",
+            cancelText: "Cancel",
+            onConfirm: () => {
+                const cells = graph.getElements();
+                for (const cell of cells) {
+                    graph.removeLinks(cell);
+                }
+            },
+        });
     }
 
 

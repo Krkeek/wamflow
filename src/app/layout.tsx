@@ -1,9 +1,9 @@
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import StoreProvider from "@/libs/redux/StoreProvider";
+import {ConfirmDialogProvider} from "@/utils/contexts/ConfirmDialogContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
       <React.StrictMode>
-          <StoreProvider>
-              {children}
-          </StoreProvider>
+              <StoreProvider>
+                  {children}
+              </StoreProvider>
       </React.StrictMode>
       </body>
     </html>

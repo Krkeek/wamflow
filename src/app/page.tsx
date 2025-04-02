@@ -8,6 +8,8 @@ import {LandingPageAnimation} from "@/libs/gsap/LandingPageAnimation";
 import GraphProvider from "@/libs/joint/GraphProvider";
 gsap.registerPlugin(useGSAP);
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import {ConfirmDialogProvider} from "@/utils/contexts/ConfirmDialogContext";
+import MuiThemeProvider from "@/utils/contexts/MuiThemeProvider";
 export default function Home() {
     useGSAP(()=>{
         const ctx = gsap.context(()=> LandingPageAnimation() )
@@ -16,6 +18,8 @@ export default function Home() {
 
     return (
     <>
+        <MuiThemeProvider>
+        <ConfirmDialogProvider>
         <GraphProvider>
             <div className={`${styles.GridContainer}`}>
                     <div className={`${styles.BgImage} bgAnimation`}
@@ -25,6 +29,8 @@ export default function Home() {
                     </div>
                 </div>
         </GraphProvider>
+        </ConfirmDialogProvider>
+        </MuiThemeProvider>
         <SpeedInsights />
     </>
     );

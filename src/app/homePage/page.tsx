@@ -18,6 +18,9 @@ import useAttachEventListeners from "@/utils/hooks/useAttachEventListeners";
 import {dia} from "@joint/core";
 import usePaper from "@/utils/hooks/usePaper";
 import { PaperContext } from "@/libs/joint/PaperContext";
+import {ConfirmDialogProvider} from "@/utils/contexts/ConfirmDialogContext";
+import MuiThemeProvider from "@/utils/contexts/MuiThemeProvider";
+import {muiTheme, MuiThemeContext} from "@/utils/contexts/MuiThemeContext";
 const NotificationBox = lazy(() => import('@/components/infrastructure/notificationBox/notificationBox'));
 const ConfirmDialog = lazy(() => import('@/components/infrastructure/confirmDialog/confirmDialog'));
 const RegisterDialog = lazy(() => import('@/components/registerDialog/registerDialog'));
@@ -43,6 +46,8 @@ const HomePage = memo(() =>{
 
     return(
             <>
+                <MuiThemeProvider>
+                <ConfirmDialogProvider>
                 <PaperContext.Provider value={paper}>
                 <div className={`${styles.Container} ContainerAnimation`}>
                                 <div className={`${styles.TopBar}`}>
@@ -75,6 +80,8 @@ const HomePage = memo(() =>{
                             <RegisterDialog isOpen={openRegisterDialog} setIsOpenAction={setOpenRegisterDialog}/>
                             <LoadingDialog/>
                 </PaperContext.Provider>
+                </ConfirmDialogProvider>
+                </MuiThemeProvider>
             </>
         );
 })

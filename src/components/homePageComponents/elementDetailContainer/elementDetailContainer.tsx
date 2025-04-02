@@ -15,6 +15,8 @@ import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 import useHotkeys from "@reecelucas/react-use-hotkeys";
 import {dia} from "@joint/core";
+import {setConfirmDialog} from "@/libs/redux/features/confirmDialogSlice";
+import {useConfirmDialog} from "@/utils/contexts/ConfirmDialogContext";
 
 const ElementDetailContainer = () =>{
 
@@ -27,6 +29,7 @@ const ElementDetailContainer = () =>{
     const [managePropertiesDialog, setManagePropertiesDialog] = useState(false);
     const [elementUpdated, setElementUpdated] = useState(false);
     const lastSaveTime = useRef<number>(0);
+    const { showConfirm } = useConfirmDialog();
 
     const [initialFormData, setInitialFormData] = useState<{
         name: string;
@@ -130,11 +133,18 @@ const ElementDetailContainer = () =>{
 
     const handleDeleteElement = () =>{
         dispatch(setIsLoading(true))
-        handleDiscardChanges(true);
-
-        elementCellView.remove();
+        showConfirm({
+            title: "Delete Element",
+            message: "Are you sure you want to delete this element?",
+            confirmText: "Delete",
+            cancelText: "Cancel",
+            onConfirm: () => {
+                handleDiscardChanges(true);
+                elementCellView.remove();
+                dispatch(setNotificationBox({message: elementCellView.prop('customData/title')+ ` has been deleted`}));
+            },
+        });
         dispatch(setIsLoading(false))
-        dispatch(setNotificationBox({message: elementCellView.prop('customData/title')+ ` has been deleted`}));
     }
 
     const toggleMenu = () => {
@@ -143,31 +153,39 @@ const ElementDetailContainer = () =>{
 
     const handleDiscardChanges = (afterAction: boolean) => {
 
-        setElementMenuOpened(false);
-        dispatch(setElementSelected(null))
-        const prevElement = graph.getCell(elementSelected);
-        if (prevElement){
-            prevElement.attr('path/stroke','black');
-            prevElement.attr('body/stroke','black');
-            prevElement.attr('top/stroke','black');
+        showConfirm({
+            title: "Discard Changes",
+            message: "Are you sure you want to discard all changes?",
+            confirmText: "Discard",
+            cancelText: "Cancel",
+            onConfirm: () => {
+                setElementMenuOpened(false);
+                dispatch(setElementSelected(null))
+                const prevElement = graph.getCell(elementSelected);
+                if (prevElement){
+                    prevElement.attr('path/stroke','black');
+                    prevElement.attr('body/stroke','black');
+                    prevElement.attr('top/stroke','black');
 
-        }
+                }
 
-        setFormData({
-            name: "",
-            uri: "",
-            height: 0,
-            width: 0,
-            scale: 1,
-            properties: []
+                setFormData({
+                    name: "",
+                    uri: "",
+                    height: 0,
+                    width: 0,
+                    scale: 1,
+                    properties: []
 
-        })
-        if (!afterAction) {
-            const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initialFormData);
-            if (!isFormUnchanged){
-                dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
-            }
-        }
+                })
+                if (!afterAction) {
+                    const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initialFormData);
+                    if (!isFormUnchanged){
+                        dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
+                    }
+                }
+            },
+        });
     }
 
     const handleManageProperties = () =>{
@@ -185,13 +203,20 @@ const ElementDetailContainer = () =>{
 
 
     const handleResetElement = () => {
-        dispatch(setIsLoading(true));
-        setElementMenuOpened(false)
-        elementCellView.prop('properties', [], { rewrite: true });
-        setFormData({...formData, properties: []})
-        setElementUpdated(!elementUpdated)
-        dispatch(setIsLoading(false));
-
+        showConfirm({
+            title: "Reset Element",
+            message: "Are you sure you want to reset this element?",
+            confirmText: "Reset",
+            cancelText: "Cancel",
+            onConfirm: () => {
+                dispatch(setIsLoading(true));
+                setElementMenuOpened(false)
+                elementCellView.prop('properties', [], { rewrite: true });
+                setFormData({...formData, properties: []})
+                setElementUpdated(!elementUpdated)
+                dispatch(setIsLoading(false));
+            },
+        });
     }
 
     const handleDuplicateElements = () =>{

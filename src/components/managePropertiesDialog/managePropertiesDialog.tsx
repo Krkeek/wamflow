@@ -6,6 +6,8 @@ import Image from "next/image";
 import {useDispatch} from "react-redux";
 import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
+import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
+import {useConfirmDialog} from "@/utils/contexts/ConfirmDialogContext";
 
 interface IProps {
     elementCellView: any;
@@ -20,6 +22,7 @@ const ManagePropertiesDialog = (props: IProps) => {
     const [properties, setProperties] = useState<IElementProperty[]>([]);
     const inputRefs = useRef<any>({});
     const dispatch = useDispatch();
+    const { showConfirm } = useConfirmDialog();
 
     useEffect(() => {
         setProperties(props.elementCellView.prop("properties") || []);
@@ -81,8 +84,17 @@ const ManagePropertiesDialog = (props: IProps) => {
     };
 
     const handleDiscardChanges = () => {
-        props.close();
-        dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
+        showConfirm({
+            title: "Discard Changes",
+            message: "Are you sure you want to discard all changes?",
+            confirmText: "Discard",
+            cancelText: "Cancel",
+            onConfirm: () => {
+                props.close();
+                dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
+
+            },
+        });
 
     }
 

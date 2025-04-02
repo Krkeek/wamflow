@@ -1,31 +1,30 @@
-import styles from './confirmDialog.module.css';
-import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
-import {setConfirmDialog} from "@/libs/redux/features/confirmDialogSlice";
-
-
+import {useConfirmDialog} from "@/utils/contexts/ConfirmDialogContext";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 const ConfirmDialog = () => {
+    const { dialogOptions, hideConfirm } = useConfirmDialog();
 
-    const dispatch = useAppDispatch();
-    const trigger = useAppSelector(state => state.confirmDialog.trigger);
-    const confirmMessage = useAppSelector(state => state.confirmDialog.message);
-
-    if (!trigger) {
-        return null;
-    }
-
-    const handleConfirm = () => {
-        dispatch(setConfirmDialog({trigger: false}));
-    }
-    const handleCancel = () => {
-        dispatch(setConfirmDialog({trigger: false}));
-    }
+    if (!dialogOptions) return null;
 
     return (
-        <div className={`${styles.Container}`}>
-            <p>{confirmMessage}</p>
-            <button onClick={handleConfirm}>Confirm</button>
-        </div>
-    );
+        <Dialog open={Boolean(dialogOptions)} onClose={hideConfirm}>
+            <DialogTitle>{dialogOptions.title || "Are you sure?"}</DialogTitle>
+            <DialogContent>{dialogOptions.message || "Do you want to proceed?"}</DialogContent>
+            <DialogActions>
+                <Button sx={{ color: "black" }}  onClick={hideConfirm}>{dialogOptions.cancelText || "Cancel"}</Button>
+                <Button
+                    onClick={() => {
+                        if (dialogOptions.onConfirm) dialogOptions.onConfirm();
+                        hideConfirm();
+                    }}
+                    color="primary"
+                    sx={{color: "023E8A" }}
+                >
+                    {dialogOptions.confirmText || "Confirm"}
+                </Button>
+            </DialogActions>
+        </Dialog>
+)
+    ;
 };
 
 export default ConfirmDialog;
