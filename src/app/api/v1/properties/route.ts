@@ -1,13 +1,13 @@
 import {NextRequest, NextResponse} from "next/server";
 import {GETResponseData, POSTRequestDataSchema} from "@/app/api/v1/properties/types";
 import {db} from "@/server/utils/mongoDB";
-import {verifyAndCheckBlacklist} from "@/server/utils/verifyAndCheckBlacklist";
+import {verifyAuth} from "@/server/utils/verifyAuth";
 import {BasicResponseData} from "@/app/api/type";
 import {Property} from "@/server/models/Property";
 export async function GET (req: NextRequest) {
 
     try {
-        const isAuthenticated = await verifyAndCheckBlacklist(req);
+        const isAuthenticated = await verifyAuth(req);
         if (isAuthenticated instanceof NextResponse) {
             return isAuthenticated;
         }
@@ -55,7 +55,7 @@ export async function GET (req: NextRequest) {
 
 export async function POST(req: NextRequest) {
     try {
-        const isAuthenticated = await verifyAndCheckBlacklist(req);
+        const isAuthenticated = await verifyAuth(req);
 
         if (isAuthenticated instanceof NextResponse) {
             return isAuthenticated;

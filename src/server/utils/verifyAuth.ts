@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import redis from "@/server/utils/redis";
 import { getFirebasePublicKeys } from "@/server/utils/getFirebasePublicKey";
 import {verifyToken} from "@/middleware";
 import * as jose from 'jose'
 
 
-export const verifyAndCheckBlacklist = async (req: NextRequest) => {
+export const verifyAuth = async (req: NextRequest) => {
     try {
         const authHeader = req.headers.get('Authorization');
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -26,16 +25,6 @@ export const verifyAndCheckBlacklist = async (req: NextRequest) => {
             isVerified = await verifyToken(JWT, publicKeys[publicKey]);
             if (isVerified) {
                 break;
-            }
-        }
-
-        if (isVerified) {
-            const isBlacklisted = await redis?.get(`blacklist:${JWT}`);
-            if (isBlacklisted) {
-                return NextResponse.json({
-                    success: false,
-                    message: "Token is blacklisted.",
-                }, { status: 401 });
             }
         }
         decodedJWT = await jose.decodeJwt(JWT);

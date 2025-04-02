@@ -4,7 +4,7 @@ const Footer = ()=>{
     return(
         <>
             <div className={`${styles.Container}`}>
-                <p className={`${styles.CopyRight}`}>©2024 Wamflow. All Rights Reserved </p>
+                <p className={`${styles.CopyRight}`}>©2025 Wamflow. All Rights Reserved </p>
                 <div>
                     <Link className={`${styles.FooterLink}`} href={'#'}>Privacy Policy</Link>
                     <Link className={`${styles.FooterLink}`} href={'#'}>Imprint</Link>
