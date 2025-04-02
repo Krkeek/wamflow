@@ -34,4 +34,5 @@ const LoadingDialog = memo(() => {
     );
 });
 
+LoadingDialog.displayName = "LoadingDialog";
 export default LoadingDialog;

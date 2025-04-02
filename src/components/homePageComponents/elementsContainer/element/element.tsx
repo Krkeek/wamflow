@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import styles from './element.module.css';
 import { ShapeInterface } from "../../../../../declarations";
 import Image from "next/image";
+import HomePage from "@/app/homePage/page";
 
 type propsType = {
     shape: ShapeInterface,
@@ -29,4 +30,5 @@ const Element = memo((props: propsType) => {
     );
 });
 
+Element.displayName = 'Element';
 export default Element;

@@ -5,7 +5,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    background-color: var(--errorBox-bg-color);
+    background: rgba(181, 181, 187, 0.43);
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface ConfirmDialogState {
-    message: string | null,
+    message?: string | null,
     trigger: boolean
 }
 
 const initialState: ConfirmDialogState = {
-    message: null,
-    trigger: false
+    message: "Are you sure you want to confirm this action?",
+    trigger: true
 }
 
 export const confirmDialogSlice = createSlice({
     name: 'confirmDialog',
     initialState,
     reducers: {
-        setConfirmDialog: (state, action: PayloadAction<string>) => {
-            state.message = action.payload
-            state.trigger = !state.trigger
+        setConfirmDialog: (state, action: PayloadAction<ConfirmDialogState>) => {
+            state.trigger = action.payload.trigger
+            state.message = action.payload.message
         }
     }
 })
