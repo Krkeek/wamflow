@@ -153,39 +153,48 @@ const ElementDetailContainer = () =>{
 
     const handleDiscardChanges = (afterAction: boolean) => {
 
-        showConfirm({
-            title: "Discard Changes",
-            message: "Are you sure you want to discard all changes?",
-            confirmText: "Discard",
-            cancelText: "Cancel",
-            onConfirm: () => {
-                setElementMenuOpened(false);
-                dispatch(setElementSelected(null))
-                const prevElement = graph.getCell(elementSelected);
-                if (prevElement){
-                    prevElement.attr('path/stroke','black');
-                    prevElement.attr('body/stroke','black');
-                    prevElement.attr('top/stroke','black');
+        const action = () => {
+            setElementMenuOpened(false);
+            dispatch(setElementSelected(null))
+            const prevElement = graph.getCell(elementSelected);
+            if (prevElement){
+                prevElement.attr('path/stroke','black');
+                prevElement.attr('body/stroke','black');
+                prevElement.attr('top/stroke','black');
 
+            }
+
+            setFormData({
+                name: "",
+                uri: "",
+                height: 0,
+                width: 0,
+                scale: 1,
+                properties: []
+
+            })
+            if (!afterAction) {
+                const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initialFormData);
+                if (!isFormUnchanged){
+                    dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
                 }
+            }
+        }
 
-                setFormData({
-                    name: "",
-                    uri: "",
-                    height: 0,
-                    width: 0,
-                    scale: 1,
-                    properties: []
-
-                })
-                if (!afterAction) {
-                    const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initialFormData);
-                    if (!isFormUnchanged){
-                        dispatch(setNotificationBox({message:`All changes have been discarded`, isWarning: true}));
-                    }
-                }
-            },
-        });
+        if (!afterAction) {
+            showConfirm({
+                title: "Discard Changes",
+                message: "Are you sure you want to discard all changes?",
+                confirmText: "Discard",
+                cancelText: "Cancel",
+                onConfirm: () => {
+                    action()
+                },
+            });
+        }
+        else {
+            action()
+        }
     }
 
     const handleManageProperties = () =>{

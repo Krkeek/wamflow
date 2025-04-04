@@ -1,5 +1,5 @@
 'use client'
-import {lazy, memo, useState} from "react";
+import {lazy, memo, use, useEffect, useState} from "react";
 import { useAppSelector } from "@/libs/redux/hooks";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -21,6 +21,10 @@ import { PaperContext } from "@/libs/joint/PaperContext";
 import {ConfirmDialogProvider} from "@/utils/contexts/ConfirmDialogContext";
 import MuiThemeProvider from "@/utils/contexts/MuiThemeProvider";
 import {muiTheme, MuiThemeContext} from "@/utils/contexts/MuiThemeContext";
+import useAutoLoad from "@/utils/hooks/useAutoLoad";
+import SavingStatus from "@/components/savingStatus/savingStatus";
+import {useDispatch} from "react-redux";
+import {setGraphSaved} from "@/libs/redux/features/graphSavedSlice";
 const NotificationBox = lazy(() => import('@/components/infrastructure/notificationBox/notificationBox'));
 const ConfirmDialog = lazy(() => import('@/components/infrastructure/confirmDialog/confirmDialog'));
 const RegisterDialog = lazy(() => import('@/components/registerDialog/registerDialog'));
@@ -28,14 +32,15 @@ const LoadingDialog = lazy(() => import('@/components/infrastructure/loadingDial
 
 const HomePage = memo(() =>{
 
-
     const connectionMode = useAppSelector(state => state.connectionMode.value)
+    const savingStatus = useAppSelector(state => state.graphSaved.status)
     const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
     const paper: dia.Paper | null = usePaper();
 
     usePreventBackButton();
     useFetchUserStatus();
     useAttachEventListeners(paper);
+    useAutoLoad()
 
     useGSAP(()=>{
         const ctx = gsap.context(()=>{
@@ -43,6 +48,12 @@ const HomePage = memo(() =>{
         })
         return () => ctx.revert()
     })
+
+    const elementSel = useAppSelector(state => state.elementSelected.value)
+
+    useEffect(() => {
+        console.log("element Selected " + elementSel)
+    }, [elementSel]);
 
     return(
             <>
@@ -65,7 +76,10 @@ const HomePage = memo(() =>{
                                     </div>
 
                                     <div className={`${styles.Middle}`}>
-                                        <div className={`${styles.DragSentence}`}>Drop Sheet</div>
+                                        <div className={`${styles.DragSentence}`}>
+                                                <SavingStatus status={savingStatus} />
+                                                Drop Sheet
+                                           </div>
                                         <div className={`${styles.MiddlePaper}`}>
                                             <PaperView/>
                                         </div>

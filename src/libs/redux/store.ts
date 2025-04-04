@@ -8,6 +8,7 @@ import {confirmDialogSlice} from "@/libs/redux/features/confirmDialogSlice";
 import {userStatusSlice} from "@/libs/redux/features/userStatusSlice";
 import {loadingSlice} from "@/libs/redux/features/loadingSlice";
 import {linkSelectedSlice} from "@/libs/redux/features/linkSelectedSlice";
+import {graphSavedSlice} from "@/libs/redux/features/graphSavedSlice";
 
 export const makeStore = () => {
     return configureStore({
@@ -21,6 +22,7 @@ export const makeStore = () => {
             confirmDialog: confirmDialogSlice.reducer,
             userStatus: userStatusSlice.reducer,
             loading: loadingSlice.reducer,
+            graphSaved: graphSavedSlice.reducer,
         }
     })
 }

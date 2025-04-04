@@ -1,5 +1,4 @@
 import {useContext, useEffect} from 'react';
-import {dia} from "@joint/core";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setProjectInfo} from "@/libs/redux/features/projectInfoSlice";

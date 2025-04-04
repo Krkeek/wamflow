@@ -45,10 +45,11 @@
     overflow: scroll;
 }
 .DragSentence {
-text-align: center;
     padding: 1rem 0;
     color: var(--text-color-two);
     font-size: 0.9rem;
+    text-align: center;
+    position: relative;
 }
 
 .RightSide {

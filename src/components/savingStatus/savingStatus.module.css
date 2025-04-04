@@ -1,0 +1,9 @@
+.Container {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+
+}
+.Icon {
+    cursor: pointer;
+}

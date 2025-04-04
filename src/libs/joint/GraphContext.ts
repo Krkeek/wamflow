@@ -12,7 +12,7 @@ import {LegacyRelationship} from "@/libs/joint/links/LegacyRelationship/LegacyRe
 import {TrustRelationship} from "@/libs/joint/links/TrustRelationship/TrustRelationship";
 
 
-const namespace = {...shapes, SecurityRealm,  Application, Service, IdentityProvider, ProcessUnit, DatabaseProvider, Invocation, LegacyRelationship, TrustRelationship };
+export const namespace = {...shapes, SecurityRealm,  Application, Service, IdentityProvider, ProcessUnit, DatabaseProvider, Invocation, LegacyRelationship, TrustRelationship };
 export const defaultGraph = new dia.Graph({
     projectTitle: 'Untitled'
 },{cellNamespace: namespace});
