@@ -1,6 +1,6 @@
 import styles from './savingStatus.module.css'
 import Image from "next/image";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {GraphContext} from "@/libs/joint/GraphContext";
 import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import {setGraphSaved} from "@/libs/redux/features/graphSavedSlice";
@@ -14,7 +14,7 @@ const SavingStatus = (props:Props) => {
     const graph = useContext(GraphContext);
     const elementSelected = useAppSelector(state => state.elementSelected.value);
     const linkSelected = useAppSelector(state => state.linkSelected.value);
-
+    const userStatus = useAppSelector(state => state.userStatus.userInfo)
 
     const handleSaving = () => {
         if (props.status === 'unsaved') {
@@ -49,14 +49,20 @@ const SavingStatus = (props:Props) => {
         }
     }
 
+    if (!userStatus) return null;
 
     return (
-        <>
-            <div className={`${styles.Container}`}>
-                <Image onClick={handleSaving} className={`${styles.Icon}`} src={`/assets/${props.status}.webp`} alt={'status'} width={30} height={30} />
-            </div>
-        </>
-    )
+        <div className={styles.Container}>
+            <Image
+                onClick={handleSaving}
+                className={styles.Icon}
+                src={`/assets/${props.status}.webp`}
+                alt="status"
+                width={30}
+                height={30}
+            />
+        </div>
+    );
 }
 
 export default SavingStatus

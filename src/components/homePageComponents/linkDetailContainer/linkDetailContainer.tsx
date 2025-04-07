@@ -7,6 +7,7 @@ import {setNotificationBox} from "@/libs/redux/features/notificationBoxSlice";
 import {setLinkSelected} from "@/libs/redux/features/linkSelectedSlice";
 import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 import useHotkeys from "@reecelucas/react-use-hotkeys";
+import {useConfirmDialog} from "@/utils/contexts/ConfirmDialogContext";
 const LinkDetailContainer = () => {
 
     const dispatch = useAppDispatch()
@@ -15,6 +16,7 @@ const LinkDetailContainer = () => {
     let linkCellView = graph.getCell(linkSelected);
     const lastSaveTime = useRef<number>(0);
     const [linkUpdated, setLinkUpdated] = useState(false);
+    const { showConfirm } = useConfirmDialog();
 
     const [initialFormData, setInitialFormData] = useState<{
         label: string;
@@ -75,11 +77,20 @@ const LinkDetailContainer = () => {
 
     const handleDeleteElement = () => {
         dispatch(setIsLoading(true))
-        handleDiscardChanges(true);
 
-        linkCellView.remove();
+        showConfirm({
+            title: "Delete Link",
+            message: "Are you sure you want to delete this link?",
+            confirmText: "Delete",
+            cancelText: "Cancel",
+            onConfirm: () => {
+                handleDiscardChanges(true);
+                linkCellView.remove();
+                dispatch(setNotificationBox({message: linkCellView.prop('customData/title')+ ` Link has been deleted`}));
+
+            },
+        });
         dispatch(setIsLoading(false))
-        dispatch(setNotificationBox({message: linkCellView.prop('customData/title')+ ` Link has been deleted`}));
     }
 
     const handleDiscardChanges = (afterAction: boolean) => {

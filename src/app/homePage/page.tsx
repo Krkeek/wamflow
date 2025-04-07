@@ -1,6 +1,6 @@
 'use client'
-import {lazy, memo, use, useEffect, useState} from "react";
-import { useAppSelector } from "@/libs/redux/hooks";
+import {lazy, memo, use, useContext, useEffect, useState} from "react";
+import {useAppDispatch, useAppSelector} from "@/libs/redux/hooks";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import DiagramHeader from "@/components/homePageComponents/diagramHeader/diagramHeader";
@@ -18,13 +18,14 @@ import useAttachEventListeners from "@/utils/hooks/useAttachEventListeners";
 import {dia} from "@joint/core";
 import usePaper from "@/utils/hooks/usePaper";
 import { PaperContext } from "@/libs/joint/PaperContext";
-import {ConfirmDialogProvider} from "@/utils/contexts/ConfirmDialogContext";
+import {ConfirmDialogProvider, useConfirmDialog} from "@/utils/contexts/ConfirmDialogContext";
 import MuiThemeProvider from "@/utils/contexts/MuiThemeProvider";
-import {muiTheme, MuiThemeContext} from "@/utils/contexts/MuiThemeContext";
-import useAutoLoad from "@/utils/hooks/useAutoLoad";
 import SavingStatus from "@/components/savingStatus/savingStatus";
-import {useDispatch} from "react-redux";
-import {setGraphSaved} from "@/libs/redux/features/graphSavedSlice";
+import {GraphContext} from "@/libs/joint/GraphContext";
+import {runAutoLoad} from "@/utils/runAutoLoad";
+import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
+import {setLinkSelected} from "@/libs/redux/features/linkSelectedSlice";
+import {setProjectInfo} from "@/libs/redux/features/projectInfoSlice";
 const NotificationBox = lazy(() => import('@/components/infrastructure/notificationBox/notificationBox'));
 const ConfirmDialog = lazy(() => import('@/components/infrastructure/confirmDialog/confirmDialog'));
 const RegisterDialog = lazy(() => import('@/components/registerDialog/registerDialog'));
@@ -32,15 +33,17 @@ const LoadingDialog = lazy(() => import('@/components/infrastructure/loadingDial
 
 const HomePage = memo(() =>{
 
+    const dispatch = useAppDispatch();
     const connectionMode = useAppSelector(state => state.connectionMode.value)
     const savingStatus = useAppSelector(state => state.graphSaved.status)
     const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
     const paper: dia.Paper | null = usePaper();
+    const graph = useContext(GraphContext);
+
 
     usePreventBackButton();
     useFetchUserStatus();
     useAttachEventListeners(paper);
-    useAutoLoad()
 
     useGSAP(()=>{
         const ctx = gsap.context(()=>{
@@ -49,11 +52,20 @@ const HomePage = memo(() =>{
         return () => ctx.revert()
     })
 
-    const elementSel = useAppSelector(state => state.elementSelected.value)
 
     useEffect(() => {
-        console.log("element Selected " + elementSel)
-    }, [elementSel]);
+        const load = async () => {
+           const {shouldConfirm, res} = await runAutoLoad(dispatch, graph);
+           if (shouldConfirm) {
+               graph.fromJSON(res.data.graph);
+               dispatch(setElementSelected(res.data.elementSelected));
+               dispatch(setLinkSelected(res.data.linkSelected));
+               dispatch(setProjectInfo(graph.get('projectTitle')));
+           }
+        };
+        load()
+            .then().catch(err => console.log(err));
+    }, []);
 
     return(
             <>

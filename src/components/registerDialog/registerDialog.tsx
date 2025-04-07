@@ -1,7 +1,7 @@
 "use client";
 import styles from './registerDialog.module.css';
 import Image from "next/image";
-import {FormEvent, useEffect, useState} from "react";
+import {FormEvent, useContext, useEffect, useState} from "react";
 import { setNotificationBox } from "@/libs/redux/features/notificationBoxSlice";
 import { useAppDispatch } from "@/libs/redux/hooks";
 import { passwordMatch } from "@/utils/passwordMatch";
@@ -10,6 +10,12 @@ import { setUserStatus } from "@/libs/redux/features/userStatusSlice";
 import { getUserStatus } from "@/utils/getUserStatus";
 import { setIsLoading } from "@/libs/redux/features/loadingSlice";
 import { SIGN_IN_PROVIDER } from "@/constants";
+import {runAutoLoad} from "@/utils/runAutoLoad";
+import {GraphContext} from "@/libs/joint/GraphContext";
+import {useConfirmDialog} from "@/utils/contexts/ConfirmDialogContext";
+import {setElementSelected} from "@/libs/redux/features/elementSelectedSlice";
+import {setLinkSelected} from "@/libs/redux/features/linkSelectedSlice";
+import {setProjectInfo} from "@/libs/redux/features/projectInfoSlice";
 
 interface RegisterDialogProps {
     isOpen: boolean;
@@ -20,6 +26,9 @@ const RegisterDialog = ({ isOpen, setIsOpenAction }: RegisterDialogProps) => {
 
     const dispatch = useAppDispatch();
     const [isRegister, setIsRegister] = useState(false);
+    const graph = useContext(GraphContext);
+    const { showConfirm } = useConfirmDialog();
+
 
     if (!isOpen) return null;
 
@@ -82,13 +91,28 @@ const RegisterDialog = ({ isOpen, setIsOpenAction }: RegisterDialogProps) => {
         return await response.json();
     };
 
-    const handleResponse = (responseBody: any) => {
+    const handleResponse = async (responseBody: any) => {
         if (!responseBody.success) {
             showNotification(responseBody.message, true);
         } else {
             const username = getUserStatus().userInfo?.accountDetails.name;
-            dispatch(setNotificationBox({ message: `Logged in as ${username}` }));
+            dispatch(setNotificationBox({message: `Logged in as ${username}`}));
             dispatch(setUserStatus(getUserStatus()));
+            const {shouldConfirm, res} = await runAutoLoad(dispatch, graph);
+            if (shouldConfirm) {
+                showConfirm({
+                    title: "Load Saved Diagram",
+                    message: "This will overwrite your current diagram. Are you sure you want to continue?",
+                    confirmText: "Load Saved",
+                    cancelText: "Keep Current",
+                    onConfirm: () => {
+                        graph.fromJSON(res.data.graph);
+                        dispatch(setElementSelected(res.data.elementSelected));
+                        dispatch(setLinkSelected(res.data.linkSelected));
+                        dispatch(setProjectInfo(graph.get('projectTitle')));
+                    },
+                });
+            }
             closeDialog();
         }
     };
@@ -114,7 +138,7 @@ const RegisterDialog = ({ isOpen, setIsOpenAction }: RegisterDialogProps) => {
             });
 
             const responseBody = await response.json();
-            handleResponse(responseBody);
+            await handleResponse(responseBody);
         } else {
             showNotification("Error with provider: " + signInResult.message, true);
         }
