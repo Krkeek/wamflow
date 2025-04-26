@@ -2,7 +2,7 @@
 export interface ShapeInterface {
     id: string,
     name: string,
-    SVGUrl: string,
+    SVGUrl: string | null,
     code: string
 }
 

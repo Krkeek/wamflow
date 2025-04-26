@@ -10,9 +10,10 @@ import {DatabaseProvider} from "@/libs/joint/elements/DatabaseProvider/DatabaseP
 import {Invocation} from "@/libs/joint/links/Invocation/Invocation";
 import {LegacyRelationship} from "@/libs/joint/links/LegacyRelationship/LegacyRelationship";
 import {TrustRelationship} from "@/libs/joint/links/TrustRelationship/TrustRelationship";
+import {CustomElement} from "@/libs/joint/elements/CustomElement/CustomElement";
 
 
-export const namespace = {...shapes, SecurityRealm,  Application, Service, IdentityProvider, ProcessUnit, DatabaseProvider, Invocation, LegacyRelationship, TrustRelationship };
+export const namespace = {...shapes, SecurityRealm,  Application, Service, IdentityProvider, ProcessUnit, DatabaseProvider, Invocation, LegacyRelationship, TrustRelationship, CustomElement };
 export const defaultGraph = new dia.Graph({
     projectTitle: 'Untitled'
 },{cellNamespace: namespace});

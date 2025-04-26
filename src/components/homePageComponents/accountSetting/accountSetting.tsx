@@ -12,6 +12,9 @@ import {setIsLoading} from "@/libs/redux/features/loadingSlice";
 
 interface IProps {
     setOpenRegisterDialog: (state: boolean) => void;
+    setOpenManageElementsDialog: (state: boolean) => void;
+
+
 }
 
 const AccountSetting = (props: IProps) => {
@@ -49,7 +52,6 @@ const AccountSetting = (props: IProps) => {
             dispatch(setNotificationBox({message:`Something went wrong while logging out`, isWarning: true}));
         }
         dispatch(setIsLoading(false))
-
     }
 
     return(
@@ -76,7 +78,8 @@ const AccountSetting = (props: IProps) => {
                                         <ModalDialog title={userStatus.userInfo ? userStatus.userInfo.accountDetails.name : "null"} menuElement={[
                                             {
                                                 title: "Create Element",
-                                                url: '/assets/settingsMenu/createElements.webp'
+                                                url: '/assets/settingsMenu/createElements.webp',
+                                                onClickEvent: () => props.setOpenManageElementsDialog(true),
 
                                             },
                                             {

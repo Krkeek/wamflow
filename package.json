@@ -29,6 +29,7 @@
     "next": "15.1.6",
     "react": "^19",
     "react-dom": "^19",
+    "react-inlinesvg": "^4.2.0",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
     "zod": "^3.24.1"
