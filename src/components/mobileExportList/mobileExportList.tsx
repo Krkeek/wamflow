@@ -25,7 +25,7 @@ const MobileExportList = () =>{
 
     const handleExportPNG = () =>{
         reset();
-        exportPNG(paper, projectName)
+        exportPNG(paper, projectName, graph)
     }
 
 
