@@ -28,6 +28,7 @@ export const exportPNG = (paper: Paper | null, name: string) => {
 
 
 const preparePaper = (paper: Paper) => {
+    paper.drawBackground({ color: 'transparent' });
     paper.setGrid( {name: "mesh", args: {color: 'transparent'}})
     paper.fitToContent({
         allowNewOrigin: 'any',
